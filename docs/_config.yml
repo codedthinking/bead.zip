@@ -4,8 +4,8 @@ tagline: Reproducible Computational Research Made Simple
 description: >-
   Bead is a lightweight CLI tool that packages your computational workflows 
   into self-contained, versioned units with automatic dependency tracking.
-url: "https://bead.zip"
-baseurl: ""
+url: "https://codedthinking.github.io"
+baseurl: "/bead.zip"
 
 # GitHub Pages compatibility
 github: [metadata]

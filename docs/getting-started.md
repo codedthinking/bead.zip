@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: Getting Started
 description: Get up and running with Bead in 5 minutes
 ---

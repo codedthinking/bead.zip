@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: CLI Reference
 description: Complete command reference for Bead
 ---

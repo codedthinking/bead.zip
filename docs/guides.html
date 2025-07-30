@@ -1,0 +1,92 @@
+---
+layout: default
+title: Guides
+description: In-depth guides for mastering Bead
+---
+
+<div class="guides-page">
+  <div class="container">
+    <h1>Bead Guides</h1>
+    <p class="page-description">Learn how to use Bead effectively with these comprehensive guides.</p>
+    
+    <div class="guides-grid">
+      {% assign guides = site.guides | sort: 'order' %}
+      {% for guide in guides %}
+        <div class="guide-card">
+          <h2><a href="{{ guide.url }}">{{ guide.title }}</a></h2>
+          <p>{{ guide.description }}</p>
+          <a href="{{ guide.url }}" class="guide-link">Read Guide →</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="guides-cta">
+      <h2>Can't find what you're looking for?</h2>
+      <p>Check out our <a href="/reference">CLI Reference</a> or ask in <a href="https://github.com/e3bo/bead/discussions">GitHub Discussions</a>.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.guides-page {
+  padding: 3rem 0;
+  min-height: calc(100vh - 8rem);
+}
+
+.page-description {
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  margin-bottom: 3rem;
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.guide-card {
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+
+.guide-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.guide-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.guide-card h2 a {
+  color: var(--color-text);
+}
+
+.guide-card p {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.guide-link {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.guides-cta {
+  text-align: center;
+  padding: 3rem;
+  background: var(--color-bg-alt);
+  border-radius: 0.75rem;
+}
+
+.guides-cta h2 {
+  margin-bottom: 1rem;
+}
+</style>

@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<div class="guide-layout">
+  <div class="container">
+    <div class="guide-content">
+      <aside class="guide-sidebar">
+        <h3>Guides</h3>
+        <ul class="guide-nav">
+          {% assign guides = site.guides | sort: 'order' %}
+          {% for guide in guides %}
+            <li>
+              <a href="{{ guide.url }}" {% if page.url == guide.url %}class="active"{% endif %}>
+                {{ guide.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </aside>
+      
+      <article class="guide-main">
+        <h1>{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="guide-description">{{ page.description }}</p>
+        {% endif %}
+        
+        {{ content }}
+      </article>
+    </div>
+  </div>
+</div>

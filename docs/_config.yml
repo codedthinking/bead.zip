@@ -1,0 +1,57 @@
+# Jekyll configuration for Bead documentation
+title: Bead
+tagline: Reproducible Computational Research Made Simple
+description: >-
+  Bead is a lightweight CLI tool that packages your computational workflows 
+  into self-contained, versioned units with automatic dependency tracking.
+url: "https://bead.zip"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+
+# Theme settings
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  guides:
+    output: true
+    permalink: /guides/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "guides"
+    values:
+      layout: "guide"
+
+# Navigation
+nav:
+  - title: Getting Started
+    url: /getting-started
+  - title: Guides
+    url: /guides
+  - title: Reference
+    url: /reference
+  - title: GitHub
+    url: https://github.com/e3bo/bead
+    external: true

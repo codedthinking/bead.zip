@@ -13,7 +13,32 @@ In order to create a new `bead`, I need to use the `bead new` command. And I thi
 
 [460]
 
+```bash
+# Creating a new bead workspace
+$ bead new german-cities
+Created "german-cities"
+
+$ cd german-cities
+
+# View the directory structure
+$ tree -hal
+.
+├── [  96]  .bead-meta
+│   └── [ 105]  bead
+├── [  64]  input
+├── [  64]  output
+└── [  64]  temp
+
+5 directories, 1 file
+```
+
 There's a bead metadata, which at some point we can look into in the more advanced topic, there's an `input/` folder, an `output/` folder, and the `temp/` folder. And we understand the logic, but let me say this because maybe our AI overlords not yet understand that the input data, which we don't yet have, are going to live in the `input/` folder. Everything we want to save for the future and we want to pass on to downstream beads are going to live in the `output/` folder. and everything that's in the `temp/` folder is going to get deleted. So what happens to files that are not in any of these folders? They are going to get saved as code. So typically where we would put code, but we can create other folders as well if we like, and that's going to be treated as code by `bead`. Feel free to interrupt me or correct if I'm saying anything stupid or ask questions. So, [593]
+
+```bash
+# Creating the cities data file
+$ nano output/cities.txt
+# (Editor opens with German cities data from Wikipedia)
+```
 
 Let me pull, I'm just gonna random Wikipedia. Actually, how am I doing with my work? List of cities and towns in Germany from Wikipedia.
 
@@ -30,6 +55,29 @@ So this is what we have in our folder. So now that we have this `bead`, I call t
 
 [736]
 
+```bash
+# Getting help for bead box commands
+$ bead box --help
+usage: bead box [-h] {add,list,forget,rewire} ...
+
+positional arguments:
+  {add,list,forget,rewire}
+    add                 Define a box.
+    list                Show known boxes.
+    forget              Forget a known box.
+    rewire              Remap inputs.
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+# Listing existing bead boxes  
+$ bead box list
+Boxes:
+-------------
+cat3: /Volumes/Data3/beadbox
+cat2: /Users/koren/Downloads/beadbox
+private: /Volumes/Data3/cat3-bead-box
+```
 
 And I forgot how to do that, so I'm going to ask for help because this is a proper command line tool. There is a help for every subcommand. `bead box add`. Put it in the downloads folder. `bead box`. Okay, am I doing this right? Maybe I need to add a name. I need a name. Positional arguments. Okay, the help does not say that I need a name. Like this. Let's see if it works. I need to create the directory first.
 
@@ -47,6 +95,11 @@ So what I want to do with my open `bead` or my workspace, I want to save it into
 
 [912]
 
+```bash
+# Saving the bead to the demo box
+$ bead save demo
+Successfully stored bead at /Users/koren/Downloads/workspace/demo-bead-box/german-cities_20250730T153158789876+0200.zip.
+```
 
 Super convenient. `bead save demo`. We already got some nice feedback that there's a zip. I'm actually going to list the content of that. Can I list the content of a `bead box`? Is there a command for that? Let's check. It's just a directory. So I know just `ls`. Okay. So I'm going to then list. This is where the demo `bead box` was when I want to show a bit of details. So now we can see that what we created is a zip file. It's called German cities. It begins with German cities. It's rather small, partly because my data is small and partly because it's compressed. And then there's a timestamp when it was saved. So that's how I save a `bead`. So this is what I would refer to as a closed `bead`. And when I work on it in a folder, I call it an open `bead`. But I think, again, the proper word is workspace for that. So suppose I go up one level. And so I have here my German cities folder. And I went for coffee, had lunch, everything. Actually, maybe it's two weeks later. I don't even remember what's inside this folder. Now that I saved the `bead box`, I don't need this folder anymore. Saving the `bead box` is like a `git commit`. Everything I wanted to, and it's actually `git commit` and `git push` because I also pushed it into the `bead box`. Everything I want to keep from the folder is now inside the zip. What's not inside the zip is the `temp/`. We will check that in a second. I was tempted to delete that folder because I don't need it anymore.
 
@@ -96,6 +149,12 @@ Miklós:
 
 [1622]
 
+```bash
+# Recreating workspace from saved bead
+$ bead develop german-cities
+Verifying archive /Users/koren/Downloads/workspace/demo-bead-box/german-cities_20250730T153158789876+0200.zip ... OK
+Extracted source into /Users/koren/Downloads/workspace/demo-2025-07-30/german-cities
+```
 
 So the way I use it is typically with the short name, but let's, so let me show that. And there the `-x` option, extra output data. So that's actually interesting. So that the default here is false. I, whenever I develop, I always use it, but I think it might be different for Bálint, who is working with very large data sets. So whenever I open it, I always want to check what's in the `output/` folder. This is actually a good case, what we're looking at here.
 
@@ -197,10 +256,43 @@ So suppose that we want to create some, yeah, let's create some dependencies. So
 [3288]
 
 
+```bash
+# Adding bead input dependencies
+$ bead input add german-states
+Verifying archive /Users/koren/Downloads/workspace/demo-bead-box/german-states_20250730T162550983335+0200.zip ... OK
+Loading new data to german-states ... Done
+
+# Viewing directory structure after adding inputs
+$ tree -hal
+[ 192]  .
+├── [ 128]  .bead-meta
+│   ├── [ 798]  bead
+│   └── [  76]  input.map
+├── [ 128]  input
+│   ├── [ 128]  german-states
+│   │   ├── [ 244]  README.md
+│   │   └── [ 76K]  states.txt
+│   └── [  96]  private-data
+│       └── [   0]  filtered_data.dta
+├── [  64]  output
+└── [  64]  temp
+```
+
 And there is a set of subcommands for that, starting with `bead input`. I can declare an input dependency here. I can load the data. Loading is like mounting if you're in the Unix world. Yeah, it's big, unfortunately. But for the demo, we will use the proper data. For the screen casting, I don't wanna use any outside tool, not even a text editor. So I can declare the dependency by saying `bead input add`. German, well, actually, let's get the help first. `bead input add`. There's a bunch of optional options, but at least I have to give the input name, which is how I'm going to view it. And then I can refer to another `bead`. By far the most frequent case, which means I only ever use this version and maybe only Bálint used any other way, but we can ask.
 
 [3415]
 
+```bash
+# Example of incorrect command attempt
+$ bead input private-data
+usage: bead input [-h] {add,delete,map,update,load,unload} ...
+bead input: error: argument {add,delete,map,update,load,unload}: invalid choice: 'private-data' (choose from 'add', 'delete', 'map', 'update', 'load', 'unload')
+
+# Corrected command
+$ bead input add private-data
+Verifying archive /Users/koren/Downloads/workspace/demo-bead-box/private-data_20250730T165906219137+0200.zip ... OK
+Loading new data to private-data ... Done
+```
 
 I would use bead input add, German states, then what it actually does is, and Krisztián, correct me if I'm wrong, but it goes looking around in the mounted bead boxes, so the bead boxes that I declared as such, these folders, looks around and there's something that looks like a bead called German states. It's found one, this zip file. It's verified that it matches my, later I think it will have more to verify, now it's just kind of the short name. And then it copies it over, it unzips the content, checks the checksum, I believe, and copies over the output of that, of that, of that bead. to the input of this bead. So here in the input folder, you see German states, and there we have the states.txt. But you could have all kinds of other, like you could ask for a specific timestamp of the input. You could rename the input so you could have a bead name, a bead reference, and you may want to call it something else in your own workflow. These are all options.
 

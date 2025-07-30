@@ -17,6 +17,10 @@
   <!-- Syntax highlighting -->
   <link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}">
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+  <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}">
+  
   {% seo %}
 </head>
 <body>
@@ -24,7 +28,9 @@
     <div class="container">
       <div class="navbar-content">
         <a href="{{ '/' | relative_url }}" class="navbar-brand">
-          <span class="brand-icon">📦</span>
+          <span class="brand-icon">
+            <img src="{{ '/assets/brand-icon.svg' | relative_url }}" alt="Bead" width="24" height="24">
+          </span>
           <span class="brand-text">Bead</span>
         </a>
         

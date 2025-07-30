@@ -278,66 +278,72 @@ a:hover {
 
 /* Features Section */
 .features {
-  padding: 5rem 0;
+  padding: 4rem 0;
+  background: var(--color-bg-alt);
 }
 
 .section-title {
   text-align: center;
   margin-bottom: 3rem;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .feature-card {
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  padding: 2rem;
-  transition: all 0.3s;
+  border-radius: 0.5rem;
+  padding: 1.75rem;
+  transition: all 0.15s;
 }
 
 .feature-card:hover {
-  border-color: var(--color-primary-light);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
 }
 
 .feature-icon {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
+  opacity: 0.8;
 }
 
 .feature-card h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .feature-card p {
   color: var(--color-text-muted);
   margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
 /* Workflow Example */
 .workflow-example {
-  padding: 5rem 0;
+  padding: 4rem 0;
   background: var(--color-bg-alt);
 }
 
 .section-subtitle {
   text-align: center;
   color: var(--color-text-muted);
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   margin-bottom: 3rem;
 }
 
 .workflow-demo {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -345,7 +351,7 @@ a:hover {
 .workflow-step {
   flex: 1;
   min-width: 280px;
-  max-width: 350px;
+  max-width: 320px;
 }
 
 .workflow-step h3 {
@@ -353,25 +359,28 @@ a:hover {
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .step-number {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   background: var(--color-primary);
   color: white;
   border-radius: 50%;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .workflow-arrow {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: var(--color-primary);
-  font-weight: 700;
+  font-weight: 400;
+  margin-top: 2rem;
 }
 
 .workflow-step pre {
@@ -387,33 +396,35 @@ a:hover {
   color: var(--color-code-text);
 }
 
+
 /* Testimonial */
 .testimonial {
-  padding: 5rem 0;
+  padding: 4rem 0;
   background: var(--color-bg);
 }
 
 .testimonial-quote {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--color-text-muted);
+  line-height: 1.6;
 }
 
 .testimonial-quote cite {
   display: block;
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-style: normal;
   color: var(--color-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* CTA Section */
 .cta {
-  padding: 5rem 0;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: 4rem 0;
+  background: var(--color-primary);
   color: white;
   text-align: center;
 }
@@ -421,10 +432,11 @@ a:hover {
 .cta h2 {
   color: white;
   margin-bottom: 1rem;
+  font-size: 1.75rem;
 }
 
 .cta p {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   margin-bottom: 2rem;
   opacity: 0.9;
 }
@@ -433,6 +445,7 @@ a:hover {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cta .btn-primary {
@@ -446,19 +459,21 @@ a:hover {
 
 .cta .btn-secondary {
   background: transparent;
-  border-color: white;
+  border-color: rgba(255, 255, 255, 0.5);
   color: white;
 }
 
 .cta .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.1);
+  border-color: white;
 }
 
 /* Footer */
 .footer {
-  background: var(--color-bg-dark);
-  color: var(--color-text-light);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
   padding: 3rem 0 1.5rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .footer-content {
@@ -469,9 +484,10 @@ a:hover {
 }
 
 .footer-section h4 {
-  color: white;
-  font-size: 1rem;
+  color: var(--color-text);
+  font-size: 0.9375rem;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .footer-section ul {
@@ -483,18 +499,20 @@ a:hover {
 }
 
 .footer-section a {
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
 }
 
 .footer-section a:hover {
-  color: white;
+  color: var(--color-primary);
 }
 
 .footer-bottom {
   padding-top: 2rem;
-  border-top: 1px solid #374151;
+  border-top: 1px solid var(--color-border);
   text-align: center;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
 }
 
 /* Guide Layout */
@@ -616,18 +634,18 @@ a:hover {
 /* Inline code */
 code {
   font-family: var(--font-mono);
-  font-size: 0.875em;
-  background: var(--color-bg-alt);
+  font-size: 0.85em;
+  background: var(--color-code-bg);
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
-  border: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
 pre code {
   background: none;
   padding: 0;
   border: none;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 /* Content styles */
@@ -635,7 +653,7 @@ pre code {
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .guide-main h3 {
@@ -646,10 +664,11 @@ pre code {
 .guide-main pre {
   background: var(--color-code-bg);
   color: var(--color-code-text);
-  padding: 1.5rem;
-  border-radius: 0.5rem;
+  padding: 1.25rem;
+  border-radius: 0.375rem;
   overflow-x: auto;
   margin-bottom: 1.5rem;
+  border: 1px solid var(--color-border);
 }
 
 .guide-main ul,

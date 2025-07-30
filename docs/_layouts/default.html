@@ -23,7 +23,7 @@
   <nav class="navbar">
     <div class="container">
       <div class="navbar-content">
-        <a href="/" class="navbar-brand">
+        <a href="{{ '/' | relative_url }}" class="navbar-brand">
           <span class="brand-icon">📦</span>
           <span class="brand-text">Bead</span>
         </a>
@@ -33,7 +33,7 @@
             {% if item.external %}
               <a href="{{ item.url }}" class="navbar-link" target="_blank" rel="noopener">{{ item.title }}</a>
             {% else %}
-              <a href="{{ item.url }}" class="navbar-link {% if page.url == item.url %}active{% endif %}">{{ item.title }}</a>
+              <a href="{{ item.url | relative_url }}" class="navbar-link {% if page.url == item.url %}active{% endif %}">{{ item.title }}</a>
             {% endif %}
           {% endfor %}
         </div>
@@ -62,9 +62,9 @@
         <div class="footer-section">
           <h4>Documentation</h4>
           <ul>
-            <li><a href="/getting-started">Getting Started</a></li>
-            <li><a href="/guides">Guides</a></li>
-            <li><a href="/reference">CLI Reference</a></li>
+            <li><a href="{{ '/getting-started' | relative_url }}">Getting Started</a></li>
+            <li><a href="{{ '/guides' | relative_url }}">Guides</a></li>
+            <li><a href="{{ '/reference' | relative_url }}">CLI Reference</a></li>
           </ul>
         </div>
         

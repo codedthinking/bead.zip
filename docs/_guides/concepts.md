@@ -246,4 +246,4 @@ bead new customer-churn-model
 bead new survey-2024-responses
 ```
 
-Ready to dive deeper? Continue to [Dependency Management](/guides/dependencies) to learn about building complex computational graphs.
+Ready to dive deeper? Continue to [Dependency Management]({{ '/guides/dependencies' | relative_url }}) to learn about building complex computational graphs.

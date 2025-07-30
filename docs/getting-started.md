@@ -243,10 +243,10 @@ bead box forget <name>       # Remove box reference
 
 ## What's Next?
 
-- Read the [Core Concepts](/guides/concepts) guide to understand Bead's philosophy
-- Learn about [Dependency Management](/guides/dependencies) for complex workflows
-- Explore [Team Collaboration](/guides/collaboration) patterns
-- See [Real-World Examples](/guides/examples) from research teams
+- Read the [Core Concepts]({{ '/guides/concepts' | relative_url }}) guide to understand Bead's philosophy
+- Learn about [Dependency Management]({{ '/guides/dependencies' | relative_url }}) for complex workflows
+- Explore [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) patterns
+- See [Real-World Examples]({{ '/guides/examples' | relative_url }}) from research teams
 
 ## Getting Help
 

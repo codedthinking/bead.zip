@@ -385,4 +385,4 @@ $ python full_analysis.py
 $ bead save final
 ```
 
-Ready to collaborate? Continue to [Team Collaboration](/guides/collaboration) to learn how teams work together with Bead.
+Ready to collaborate? Continue to [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) to learn how teams work together with Bead.

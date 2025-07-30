@@ -11,7 +11,7 @@ layout: default
           {% assign guides = site.guides | sort: 'order' %}
           {% for guide in guides %}
             <li>
-              <a href="{{ guide.url }}" {% if page.url == guide.url %}class="active"{% endif %}>
+              <a href="{{ guide.url | relative_url }}" {% if page.url == guide.url %}class="active"{% endif %}>
                 {{ guide.title }}
               </a>
             </li>

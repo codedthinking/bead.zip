@@ -9,8 +9,7 @@ layout: home
     </div>
     <h1 class="hero-title">Finally, Reproducible Research<br>That Actually Works</h1>
     <p class="hero-subtitle">
-      Stop asking "what data did we use?" five times a day. Bead packages your computational workflows 
-      into self-contained units that remember exactly how your results were created.
+      Stop asking "what data did we use?" five times a day. Bead works with your existing tools—Git, Python, R, whatever—to package computational workflows into self-contained units that remember exactly how your results were created.
     </p>
     
     <div class="hero-actions">
@@ -66,7 +65,7 @@ layout: home
       <div class="feature-card">
         <div class="feature-icon">🎯</div>
         <h3>"Just Use Whatever Tool You Want"</h3>
-        <p>Python, R, Stata, Julia, shell scripts - Bead couldn't care less. It tracks files, not fancy frameworks.</p>
+        <p>Keep using Git, Docker, pip, Make—whatever you're comfortable with. Bead adds data tracking without forcing you to change your workflow.</p>
       </div>
 
       <div class="feature-card">
@@ -86,38 +85,36 @@ layout: home
 
 <section class="workflow-example">
   <div class="container">
-    <h2 class="section-title">How Teams Use Bead</h2>
-    <p class="section-subtitle">A typical multi-step analysis workflow</p>
+    <h2 class="section-title">How Bead Fits Your Existing Workflow</h2>
+    <p class="section-subtitle">Use Git for code, Bead for data tracking—they work together perfectly</p>
     
     <div class="workflow-demo">
       <div class="workflow-step">
-        <h3><span class="step-number">1</span> Data Collection</h3>
-        <pre><code class="language-bash"><span class="comment"># Download survey responses</span>
-<span class="prompt">$</span> bead new raw-survey-data
-<span class="prompt">$</span> python download_survey.py
-<span class="prompt">$</span> bead save data-archive</code></pre>
+        <h3><span class="step-number">1</span> Use Your Normal Tools</h3>
+        <pre><code class="language-bash"><span class="comment"># Git for code, conda for packages</span>
+<span class="prompt">$</span> git clone project-repo
+<span class="prompt">$</span> conda create -n analysis python=3.11
+<span class="prompt">$</span> pip install pandas numpy</code></pre>
       </div>
 
       <div class="workflow-arrow">→</div>
 
       <div class="workflow-step">
-        <h3><span class="step-number">2</span> Data Processing</h3>
-        <pre><code class="language-bash"><span class="comment"># Clean and validate</span>
-<span class="prompt">$</span> bead new clean-data
-<span class="prompt">$</span> bead input add raw-survey-data
-<span class="prompt">$</span> python clean_data.py
-<span class="prompt">$</span> bead save processed-data</code></pre>
+        <h3><span class="step-number">2</span> Add Bead for Data Tracking</h3>
+        <pre><code class="language-bash"><span class="comment"># Bead handles data dependencies</span>
+<span class="prompt">$</span> bead new analysis
+<span class="prompt">$</span> bead input add survey-data
+<span class="prompt">$</span> python analyze.py</code></pre>
       </div>
 
       <div class="workflow-arrow">→</div>
 
       <div class="workflow-step">
-        <h3><span class="step-number">3</span> Analysis & Results</h3>
-        <pre><code class="language-bash"><span class="comment"># Generate findings</span>
-<span class="prompt">$</span> bead new final-analysis
-<span class="prompt">$</span> bead input add clean-data
-<span class="prompt">$</span> R --file=analyze.R
-<span class="prompt">$</span> bead save results</code></pre>
+        <h3><span class="step-number">3</span> Save + Share Reproducibly</h3>
+        <pre><code class="language-bash"><span class="comment"># Commit code, package results</span>
+<span class="prompt">$</span> git commit -m "Add regression model"
+<span class="prompt">$</span> bead save results
+<span class="prompt">$</span> <span class="comment"># Share ZIP file - everything works</span></code></pre>
       </div>
     </div>
   </div>
@@ -126,9 +123,53 @@ layout: home
 <section class="testimonial">
   <div class="container">
     <blockquote class="testimonial-quote">
-      <p>"Before Bead, we spent hours every week trying to recreate old results. Now we just open the bead and everything's exactly where we left it."</p>
+      <p>"We still use Git for our code and Docker for environments. Bead just handles the data tracking part—no more guessing which dataset version created which results."</p>
       <cite>— Research Team Lead</cite>
     </blockquote>
+  </div>
+</section>
+
+<section class="tool-integration">
+  <div class="container">
+    <h2 class="section-title">Works With Tools You Already Use</h2>
+    <p class="section-subtitle">Bead doesn't replace your existing workflow—it makes it reproducible</p>
+    
+    <div class="tool-grid">
+      <div class="tool-card">
+        <h4>Git + Bead</h4>
+        <p>Git tracks code changes, Bead tracks data versions. Perfect together.</p>
+      </div>
+      
+      <div class="tool-card">
+        <h4>Docker + Bead</h4>
+        <p>Docker handles environments, Bead handles data lineage. No conflicts.</p>
+      </div>
+      
+      <div class="tool-card">
+        <h4>Conda + Bead</h4>
+        <p>Conda manages Python packages, Bead manages data dependencies.</p>
+      </div>
+      
+      <div class="tool-card">
+        <h4>Make + Bead</h4>
+        <p>Make runs your pipeline, Bead preserves the results for sharing.</p>
+      </div>
+      
+      <div class="tool-card">
+        <h4>Jupyter + Bead</h4>
+        <p>Explore in notebooks, package final results with Bead.</p>
+      </div>
+      
+      <div class="tool-card">
+        <h4>Any Language</h4>
+        <p>Python, R, Stata, Julia, shell scripts—if it reads files, Bead works.</p>
+      </div>
+    </div>
+    
+    <div class="integration-example">
+      <p><strong>Complete workflow example:</strong></p>
+      <code>git clone → conda install → bead input add → python analyze.py → git commit → bead save</code>
+    </div>
   </div>
 </section>
 

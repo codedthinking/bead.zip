@@ -6,7 +6,7 @@ description: Get up and running with reproducible research in 5 minutes
 
 # Getting Started with Bead
 
-Stop asking "what data did we use?" five times a day. This guide will get you up and running with reproducible research in just a few minutes.
+Stop asking "what data did we use?" five times a day. This guide will get you up and running with reproducible research in just a few minutes—without changing your existing workflow.
 
 ## Installation
 
@@ -206,19 +206,26 @@ Generated: 2025-07-30
 EOF
 ```
 
-### 3. Reproducible Environments
+### 3. Work With Your Existing Tools
 
-Include your software dependencies:
+Bead plays nicely with whatever you're already using:
 
 ```bash
-# For Python projects
+# Use Git for code versioning
+$ git add src/analyze.py
+$ git commit -m "Add analysis script"
+
+# Use conda/pip for package management
+$ conda install pandas numpy
 $ pip freeze > requirements.txt
 
-# For R projects  
-$ R -e "sessionInfo()" > session-info.txt
+# Use Make for automation
+$ make analyze
+$ bead save my-beads    # Package the results
 
-# For conda environments
+# Document your environment however you prefer
 $ conda env export > environment.yml
+$ R -e "sessionInfo()" > session-info.txt
 ```
 
 ## Common Commands Reference

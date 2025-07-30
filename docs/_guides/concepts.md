@@ -184,29 +184,163 @@ $ bead input add my-analysis
 # Previous outputs become new inputs
 ```
 
-## What Bead Is NOT
+## How Bead Compares to Other Tools
 
-Understanding what Bead doesn't do is as important as what it does:
+Researchers already use many tools. Here's how Bead fits in and what makes it different:
 
-### Not a Version Control System
-- Bead tracks computational snapshots, not code evolution
-- Use Git for code versioning within beads
-- Bead complements, doesn't replace, traditional VCS
+### Bead vs Git (Version Control)
 
-### Not a Workflow Engine
-- Bead doesn't execute your code
-- No job scheduling or parallelization
-- You control execution, Bead manages artifacts
+**Git tracks code changes. Bead tracks computational results.**
 
-### Not a Data Store
-- Bead manages references, not data hosting
-- No cloud storage or synchronization
-- You manage where bead boxes live
+| **Git** | **Bead** |
+|---------|----------|
+| Tracks files line-by-line | Tracks computational snapshots |
+| Shows what changed in code | Shows what data created results |
+| Manages code evolution | Manages analysis reproducibility |
+| Works on individual files | Works on complete computations |
+| Merge conflicts | No conflicts (immutable archives) |
 
-### Not a Package Manager
-- Bead doesn't install software dependencies
-- Use conda, pip, or system packages
-- Document environment in your bead
+**Use together**: Git for code development, Bead for research reproducibility.
+
+```bash
+# Typical workflow using both
+git add analysis.py          # Track code changes
+git commit -m "Fix regression bug"
+bead save results           # Capture computational snapshot
+```
+
+### Bead vs Docker (Environment Management)
+
+**Docker packages software environments. Bead packages data workflows.**
+
+| **Docker** | **Bead** |
+|------------|----------|
+| Solves "works on my machine" for software | Solves "what data did we use?" |
+| Packages operating system + dependencies | Packages data + code + results |
+| Runtime environment isolation | Data lineage and provenance |
+| Complex setup for simple analyses | Simple setup for complex workflows |
+| Great for deployment | Great for research reproduction |
+
+**Use together**: Docker for environment consistency, Bead for data tracking.
+
+### Bead vs Pip/Conda (Dependency Management)
+
+**Pip/Conda manage software packages. Bead manages data dependencies.**
+
+| **Pip/Conda** | **Bead** |
+|---------------|----------|
+| `pip install pandas==1.5.0` | `bead input add survey-data` |
+| Software library versions | Data file versions |
+| Install from package repos | Load from bead boxes |
+| Environment management | Workflow management |
+| Dependency conflicts possible | Content-hash verified |
+
+**Use together**: Conda for Python packages, Bead for data inputs.
+
+```bash
+# Complete setup
+conda install pandas numpy    # Software dependencies
+bead input add clean-data     # Data dependencies
+python analysis.py            # Run with both
+```
+
+### Bead vs Make/Snakemake (Build Systems)
+
+**Make runs workflows. Bead preserves workflows.**
+
+| **Make/Snakemake** | **Bead** |
+|-------------------|----------|
+| Executes computational steps | Captures computational results |
+| Dependency-based execution | Dependency-based sharing |
+| Rebuilds when inputs change | Remembers what inputs were used |
+| Automation focus | Reproducibility focus |
+| Rules and targets | Beads and boxes |
+
+**Use together**: Make for automation, Bead for preservation.
+
+```makefile
+# Makefile inside a bead
+analysis: input/survey.csv
+	python analyze.py
+	bead save results    # Preserve the completed analysis
+```
+
+### Bead vs DVC (Data Version Control)
+
+**Both solve data versioning, but differently.**
+
+| **DVC** | **Bead** |
+|---------|----------|
+| Git-like interface for data | Computational snapshot approach |
+| Tracks data files separately | Packages data + code together |
+| Requires git repository | Standalone tool |
+| Pipeline definition files | Implicit workflows via dependencies |
+| Complex for simple use cases | Simple for complex use cases |
+
+**Choose based on needs**: DVC if you love git workflows, Bead if you want simplicity.
+
+### Bead vs MLflow/Weights & Biases (ML Experiment Tracking)
+
+**MLflow tracks ML experiments. Bead tracks any computational research.**
+
+| **MLflow/W&B** | **Bead** |
+|----------------|----------|
+| ML model focus | General research focus |
+| Metrics and parameters | Complete workflows |
+| Web dashboards | File-based simplicity |
+| Model registry | Bead boxes |
+| Cloud-first | Local-first |
+
+**Use together**: MLflow for ML metrics, Bead for overall reproducibility.
+
+### Bead vs Jupyter Notebooks
+
+**Notebooks mix code and results. Beads separate them cleanly.**
+
+| **Jupyter** | **Bead** |
+|-------------|----------|
+| Interactive development | Reproducible archiving |
+| Code + output in one file | Code and data separate |
+| Great for exploration | Great for preservation |
+| Version control challenges | Built for versioning |
+| Individual analysis | Collaborative workflows |
+
+**Use together**: Jupyter for development, Bead for sharing results.
+
+```bash
+# Development cycle
+jupyter notebook explore.ipynb    # Interactive exploration
+# Convert insights to script
+python final_analysis.py         # Clean, reproducible code
+bead save analysis-results        # Archive the final version
+```
+
+## The Bead Niche: Computational Research Reproducibility
+
+**Bead fills a specific gap**: tracking the relationship between data, code, and results in research workflows.
+
+### What Makes Bead Different
+
+1. **Research-focused**: Built for scientists, analysts, and researchers
+2. **Data-centric**: Tracks which data created which results
+3. **Collaboration-friendly**: Easy sharing without complex setup
+4. **Tool-agnostic**: Works with Python, R, Stata, Julia, anything
+5. **Simple**: No servers, databases, or complex configuration
+
+### When to Use Bead
+
+✅ **Perfect for**:
+- Multi-step data analysis pipelines
+- Research that needs to be reproduced months later
+- Team collaboration on computational projects
+- Sharing analysis with exact reproducibility
+- Tracking data provenance and lineage
+
+❌ **Not the right tool for**:
+- Pure software development (use Git)
+- Managing software installations (use Conda/Docker)
+- Real-time data processing (use workflow engines)
+- Web application deployment (use Docker/Kubernetes)
 
 ## Common Patterns
 

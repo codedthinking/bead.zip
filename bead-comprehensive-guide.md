@@ -151,7 +151,46 @@ bead box rewire     # Remap input dependencies
 /Users/koren/Library/Application Support/bead_cli-6a4d9d98-8e64-4a2a-b6c2-8a753ea61daf
 ```
 
-### Creating and Saving Beads
+### Creating New Beads and Workspaces
+
+#### Creating a Brand New Bead
+
+```bash
+# Create and initialize new workspace directory
+bead new <DIRECTORY>
+
+# Examples:
+bead new my-analysis
+bead new /path/to/new-project
+bead new experiment-2025
+```
+
+**What `bead new` Does**:
+1. **Creates** directory with specified name
+2. **Initializes** standard bead structure (`.bead-meta/`, `input/`, `output/`, `temp/`, `src/`)
+3. **Sets up** empty bead metadata
+4. **Ready** for development immediately
+
+#### Checking Workspace Status
+
+```bash
+# Show current workspace information  
+bead status
+
+# Verbose output with detailed information
+bead status -v --verbose
+
+# Check specific workspace
+bead status --workspace /path/to/workspace
+```
+
+**Status Output Includes**:
+- Bead name and workspace location
+- Input dependencies and their load status
+- Timestamp information
+- Missing or outdated inputs (with verbose flag)
+
+### Saving Beads
 
 #### Saving Your Current Workspace
 
@@ -313,6 +352,27 @@ bead zap ./my-analysis      # Delete specific workspace
 - Deletes all data, code, and intermediate files
 - **WARNING**: This is irreversible - make sure you've saved important work!
 
+**Note**: The `bead nuke` command exists but is deprecated - use `bead zap` instead.
+
+### Advanced Bead Commands
+
+#### Version Information
+
+```bash
+# Show bead program version
+bead version
+```
+
+#### Extended Metadata Export
+
+```bash
+# Export extended metadata to file next to zip archive
+bead xmeta [workspace-directory]
+
+# This creates a .xmeta file alongside your bead archive
+# Useful for external tools that need detailed bead information
+```
+
 #### Workspace Verification
 
 ```bash
@@ -375,57 +435,124 @@ workspace/input/
 └── .../                  # Additional dependencies
 ```
 
-### Core Input Management Commands
+### Complete Input Management Commands
 
-#### Loading Missing Inputs
+The `bead input` command has six main subcommands for comprehensive dependency management:
 
 ```bash
-# Load a specific missing input
+bead input {add,delete,map,update,load,unload}
+```
+
+#### Adding New Input Dependencies
+
+```bash
+# Add and load data from another bead
+bead input add <INPUT-NAME> [BEAD-REF]
+
+# Examples:
+bead input add german-states                    # Uses german-states as bead name
+bead input add population-data census-2024     # Maps population-data to census-2024 bead
+bead input add raw-data /path/to/data.zip       # Uses specific archive file
+
+# Advanced options:
+bead input add historical-data census-2020 --time 20250730T120000000000+0200
+```
+
+**What `bead input add` Does**:
+1. **Defines** the dependency relationship in `.bead-meta/bead`
+2. **Searches** configured boxes for the specified bead
+3. **Extracts** output data from the bead to `input/<INPUT-NAME>/`
+4. **Creates** input mapping in `.bead-meta/input.map`
+5. **Documents** the dependency for future updates
+
+#### Loading Existing Dependencies
+
+```bash
+# Load data from already defined dependency
 bead input load <input-name>
 
 # Examples:
-bead input load german-states
-bead input load survey-data
-bead input load external-dataset
+bead input load german-states    # Load previously defined dependency
+bead input load --all           # Load all defined but missing inputs
 ```
 
-**What Happens During `bead input load`**:
-1. **Searches** all configured boxes for beads matching the input name
-2. **Resolves** the content_id hash from `.bead-meta/bead`
-3. **Extracts** the required output data from the matching bead
-4. **Places** data in `input/<input-name>/` directory
-5. **Updates** dependency tracking metadata
+**Difference between `add` and `load`**:
+- `add`: Define new dependency AND load data
+- `load`: Load data from existing dependency definition (faster)
 
-#### Updating Existing Inputs
+#### Updating Input Dependencies
 
 ```bash
-# Update an input to its latest version
+# Update specific input to newest version
 bead input update <input-name>
 
+# Update to specific version/time
+bead input update german-states --time 20250730T160000000000+0200
+
+# Update all inputs
+bead input update --all
+
 # Examples:
-bead input update german-states
-bead input update --all    # Update all inputs
+bead input update population-data
+bead input update survey-results --time 20250729T090000000000+0200
 ```
 
 **Update Process**:
-1. **Checks** all boxes for newer versions of the input bead
+1. **Searches** all boxes for newer versions of the input bead
 2. **Compares** timestamps and content hashes
 3. **Replaces** local input data if newer version found
 4. **Updates** `.bead-meta/input.map` with new content_id
-5. **Logs** changes for audit trail
+5. **Preserves** old data in temporary backup before replacement
 
-#### Input Status and Information
+#### Remapping Input Sources
 
 ```bash
-# List all inputs and their status
-bead input list
+# Change which bead an input loads from
+bead input map <input-name> <new-bead-ref>
 
-# Show detailed input information
-bead input info <input-name>
-
-# Check for input updates without applying them
-bead input check <input-name>
+# Examples:
+bead input map german-states german-states-v2
+bead input map test-data production-data
+bead input map survey-data /path/to/updated-survey.zip
 ```
+
+**Use Cases for Remapping**:
+- Switch from test data to production data
+- Point to corrected version of input data
+- Update to renamed bead sources
+- A/B testing with different input datasets
+
+#### Unloading Input Data
+
+```bash
+# Remove input data but keep dependency definition
+bead input unload <input-name>
+
+# Examples:
+bead input unload large-dataset    # Free disk space
+bead input unload temp-processing  # Remove temporary input
+```
+
+**When to Unload**:
+- Free disk space for large datasets
+- Remove temporary inputs no longer needed
+- Clean workspace while preserving dependency definitions
+
+#### Deleting Input Dependencies
+
+```bash
+# Completely remove input dependency and data
+bead input delete <input-name>
+
+# Examples:
+bead input delete deprecated-dataset
+bead input delete test-input
+```
+
+**Warning**: This completely removes:
+- Input data from `input/<input-name>/`
+- Dependency definition from `.bead-meta/bead`
+- Mapping from `.bead-meta/input.map`
 
 ### Advanced Dependency Scenarios
 
@@ -588,6 +715,121 @@ When multiple versions of an input exist:
 - Only downloads changed portions of large datasets
 - Compressed transfer of bead archives
 - Incremental updates when possible
+
+### Bead Web Visualization System
+
+Bead includes a powerful web-based visualization system for understanding and managing complex dependency networks across all your beads.
+
+#### Basic Web Visualization
+
+```bash
+# Generate basic dependency graph visualization
+bead web png dependency-graph.png
+bead web svg dependency-graph.svg
+
+# Open visualization in browser
+bead web png graph.png view graph.png
+```
+
+#### Web Processing Pipeline
+
+The `bead web` command implements a processing pipeline where each subcommand works on an input graph and yields an output graph:
+
+```bash
+# Complete pipeline example
+bead web \
+  / source-bead1 source-bead2 .. sink-bead1 sink-bead2 / \
+  heads \
+  color \
+  png filtered-graph.png \
+  view filtered-graph.png
+```
+
+#### Web Subcommands Reference
+
+**Graph Loading and Saving**:
+```bash
+# Load previously saved web metadata
+bead web load filename.web png current-state.png
+
+# Save current web metadata for later use
+bead web save network-snapshot.web
+```
+
+**Filtering and Analysis**:
+```bash
+# Filter by source and sink relationships
+bead web / data-ingestion processing .. analysis reporting /
+
+# Show only most recent computations per cluster
+bead web heads png latest-versions.png
+
+# Assign freshness colors (answers: "Are all inputs at latest version?")
+bead web color svg freshness-analysis.svg
+```
+
+**Dependency Repair and Maintenance**:
+```bash
+# Auto-repair broken connections (hackish - use with caution)
+bead web auto-rewire save repaired.web
+
+# Generate rewiring options file for manual review
+bead web rewire-options repair-options.json
+
+# Apply reviewed rewiring options
+bead web rewire repair-options.json save fixed-network.web
+```
+
+**Visualization Output Formats**:
+```bash
+# PNG format (good for presentations)
+bead web png network-overview.png
+
+# SVG format (scalable, good for documents)  
+bead web svg detailed-network.svg
+
+# Open any visualization file in browser
+bead web view network-overview.png
+```
+
+#### Web Pipeline Use Cases
+
+**Project Health Assessment**:
+```bash
+# Check if all beads use latest input versions
+bead web color png health-check.png view health-check.png
+```
+
+**Dependency Impact Analysis**:
+```bash
+# See what depends on a specific data source
+bead web / raw-dataset .. / png impact-analysis.png
+```
+
+**Network Cleanup**:
+```bash
+# Show only actively used beads (remove obsolete versions)
+bead web heads color png clean-network.png
+```
+
+**Broken Dependency Repair**:
+```bash
+# Step 1: Identify problems and solutions
+bead web rewire-options problems.json
+
+# Step 2: Edit problems.json manually to select preferred solutions
+
+# Step 3: Apply fixes
+bead web rewire problems.json png fixed-network.png
+```
+
+#### Web Visualization Best Practices
+
+1. **Regular Health Checks**: Use `color` command to identify stale dependencies
+2. **Impact Analysis**: Before major changes, use filtering to see affected beads
+3. **Cleanup Maintenance**: Use `heads` to focus on current work and identify obsolete beads
+4. **Documentation**: Save network snapshots before major reorganizations
+5. **Team Coordination**: Share visualizations to communicate project structure
 
 ---
 

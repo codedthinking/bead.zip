@@ -2,6 +2,8 @@
 
 ## Introduction
 
+This transcript captures a comprehensive demonstration of Bead, a command-line tool for reproducible computational research. Bead addresses the daily challenges researchers face in tracking data versions, reproducing results, and maintaining computational workflows. The tool was developed to solve the problem of tacit knowledge about data being destroyed when team members leave, leading to duplication of effort and inability to reproduce research results.
+
 Miklós: I'm just going to use the audio for this. And I've already started it with an ESC keyname. The shell, just a moment.
 
 Krisztián: Sorry, is the recording public or not?

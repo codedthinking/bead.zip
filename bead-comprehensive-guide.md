@@ -1,6 +1,8 @@
 # Bead: Comprehensive Guide to Reproducible Computational Research
 
-**Bead** is a command-line interface (CLI) tool designed to revolutionize how computational research is conducted, shared, and reproduced. It implements a paradigm where discrete computations are packaged as self-contained, versioned units called "beads" that follow the fundamental pattern:
+**Bead** is a command-line interface (CLI) tool designed to revolutionize how computational research is conducted, shared, and reproduced. Originally developed to address the fundamental challenges of reproducible research computing - questions like "What exact version of the data did we use?" and "How do we reproduce this result?" that researchers face multiple times every day.
+
+Bead implements a paradigm where discrete computations are packaged as self-contained, versioned units called "beads" that follow the fundamental pattern:
 
 ```
 output = code(*inputs)
@@ -30,7 +32,7 @@ Before bead, researchers faced these daily questions:
 - **"Which code did we run?"**
 - **"What happened to our intermediate files?"**
 
-These questions arise **3-5 times every single day** in active research environments, indicating fundamental problems with traditional approaches to computational research.
+These questions arise **3-5 times every single day** in active research environments, indicating fundamental problems with traditional approaches to computational research. Research by Kandel et al. (2012) identified that tacit knowledge about data is hard to find, efforts are duplicated, communication in diverse teams is sparse, and intermediate steps of analysis are rarely reused.
 
 ### Traditional Problems
 
@@ -39,6 +41,8 @@ These questions arise **3-5 times every single day** in active research environm
 3. **Data Scattered**: Input data, intermediate files, and outputs spread across different locations
 4. **Sharing Difficulties**: Hard to package and share complete computational workflows
 5. **Reproducibility Failures**: Inability to recreate exact conditions that produced specific results
+6. **Tool Fragmentation**: The multitude of software tools and work methods create frictions in the analytics process
+7. **Knowledge Loss**: When team members leave, tacit knowledge about data and processes is destroyed
 
 ### Bead's Solution
 
@@ -63,6 +67,7 @@ This creates a **directed acyclic graph (DAG)** of computational dependencies wh
 - **No assumptions** about programming languages, frameworks, or tools
 - **You manage execution** - bead only manages files and dependencies
 - **Convention over configuration** - minimal constraints, maximum flexibility
+- **Tool independence** - works with any workflow that uses the file system for scripts and data
 
 ### 3. **Explicit Dependency Management**
 - **Declare all inputs explicitly** via `bead input add`
@@ -73,6 +78,7 @@ This creates a **directed acyclic graph (DAG)** of computational dependencies wh
 - **Bead boxes** are simple directory-based storage
 - **No central server required** - works completely locally
 - **Easy sharing** via file systems, network drives, or manual transfer
+- **Supports diverse teams** - accommodates different work methods and tool preferences
 
 ### 5. **Human-Readable Archives**
 - **Standard zip format** - accessible even without bead tools
@@ -1761,6 +1767,36 @@ bead box list
 ```
 
 This comprehensive guide covers the full spectrum of Bead's capabilities, from basic box management to advanced enterprise workflows. The tool's strength lies in its simplicity of concept (discrete computational units) combined with powerful dependency management and sharing capabilities.
+
+## Background and Development
+
+Bead was developed to address fundamental challenges in computational research reproducibility. The tool emerged from research into knowledge flows in organizations, specifically addressing how tacit knowledge about data and computational processes can be preserved and shared effectively. The goal is to translate implicit knowledge about data into explicit, codified knowledge that can be retained and shared across diverse research teams.
+
+Key insights that informed Bead's design:
+- Computational data analysis offers unique opportunities to codify tacit knowledge because analysis is performed on machine-readable data using automatable steps
+- Much of the tacit knowledge about data can be preserved by encapsulating data, metadata, and dependency references in single packages
+- Lightweight, tool-agnostic solutions are more likely to be adopted by diverse teams than rigid, monolithic systems
+
+Bead represents a solution for transparent data analysis that works with diverse teams of researchers and analysts, accommodating different software tools, workflows, and organizational structures. The tool addresses problems identified across both academic research and business analytics environments, where the need for reliable data provenance and reproducible workflows is increasingly critical.
+
+### Training and Accessibility
+
+Bead is designed to be accessible to users with varying technical backgrounds:
+
+**Prerequisites**: 
+- Basic familiarity with command-line interfaces (Unix, Mac, or Windows shells)
+- No specific programming language requirements - works with Python, R, SQL, Stata, or any language capable of reading and writing files
+
+**Learning Outcomes**:
+- Understanding the fundamentals of reproducible research computing
+- Ability to create computational chains with multiple interdependent steps
+- Skills in dependency management and version control for data workflows
+
+**Accessibility Features**:
+- Clear, descriptive error messages and help documentation
+- Standard file formats that remain accessible even without Bead tools
+- Visual dependency graphs and web-based monitoring tools
+- Support for both interactive and automated workflows
 
 ---
 

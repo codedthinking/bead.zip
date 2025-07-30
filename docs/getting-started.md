@@ -1,12 +1,12 @@
 ---
 layout: page
 title: Getting Started
-description: Get up and running with Bead in 5 minutes
+description: Get up and running with reproducible research in 5 minutes
 ---
 
 # Getting Started with Bead
 
-Welcome to Bead! This guide will help you get up and running with reproducible computational research in just a few minutes.
+Stop asking "what data did we use?" five times a day. This guide will get you up and running with reproducible research in just a few minutes.
 
 ## Installation
 
@@ -40,7 +40,7 @@ bead version 1.0.0
 
 ## Your First Bead
 
-Let's create a simple data analysis workflow to understand the core concepts.
+Let's create a simple data analysis workflow to understand how Bead works.
 
 ### 1. Create a New Bead
 
@@ -58,11 +58,13 @@ drwxr-xr-x  temp/
 
 ### 2. Understanding the Directory Structure
 
+Bead creates these folders, each with a specific purpose:
+
+- **`input/`** - Dependencies from other beads (read-only, managed by Bead)
+- **`output/`** - Files you want to share with downstream beads
+- **`temp/`** - Temporary files (deleted when you save the bead)
 - **`.bead-meta/`** - Internal metadata (don't modify directly)
-- **`input/`** - Dependencies from other beads (read-only)
-- **`output/`** - Files to share with downstream beads
-- **`temp/`** - Temporary files (deleted on save)
-- **Everything else** - Your code and documentation
+- **Everything else** - Your code, documentation, and other files
 
 ### 3. Add Some Code
 

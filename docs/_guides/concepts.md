@@ -1,47 +1,65 @@
 ---
 title: Core Concepts
-description: Understanding Bead's fundamental principles and architecture
+description: Understanding Bead's fundamental principles and design
 order: 1
 ---
 
 ## The Bead Philosophy
 
-Bead implements a simple but powerful idea: every computation should be packaged as a self-contained, immutable unit that explicitly declares its dependencies.
+Research workflows are complex and hard to reproduce. Data files get moved, code gets updated, team members leave, and suddenly results can't be recreated. Bead solves this with a simple approach: **package everything needed to recreate a result into one self-contained unit**.
 
-### The Fundamental Equation
+This creates reproducible computational workflows without forcing you to change how you work.
+
+### The Fundamental Pattern
 
 ```
 output = code(*inputs)
 ```
 
-This equation drives everything in Bead:
-- **Output**: The results of your computation
-- **Code**: Your scripts, programs, and logic  
-- **Inputs**: Data from other beads (explicit dependencies)
+Every bead follows this pattern:
+- **Inputs**: The data you need (Bead tracks exactly which version)
+- **Code**: Your scripts, notebooks, whatever (Bead saves all of it)  
+- **Output**: The results you created (Bead packages it up nicely)
 
 ## Key Concepts
 
-### 1. Beads as Frozen Computations
+### 1. Immutable Computational Snapshots
 
-A bead is an immutable archive containing:
+When you save a bead, it becomes an immutable archive containing:
 - All code needed to run the computation
-- References to exact input data versions
+- References to exact input data versions  
 - Generated output files
 - Metadata about creation time and dependencies
 
-Think of it as a "computational photograph" - a snapshot of everything needed to reproduce a specific result.
+Think of it as a computational snapshot. You can always return to recreate the exact same results.
+
+## Who This Is Actually For
+
+**You'll love Bead if you:**
+- Work with data and write code to analyze it
+- Have ever asked "what data did I use for this?" 
+- Need to share analysis with teammates
+- Want to actually reproduce your own work months later
+- Use Python, R, Stata, Julia, shell scripts, or really anything
+- Care more about getting stuff done than learning new frameworks
+
+**You might want something else if you:**
+- Just need to track code changes (use Git)
+- Want a workflow orchestrator (try Airflow or similar)  
+- Need to manage software installations (use conda/Docker)
+- Are building web apps or mobile apps (this is for data analysis)
 
 ### 2. Workspace vs Archive
 
-**Workspace** (Open Bead)
-- Active directory where you work
-- Can modify files, run code, test ideas
+**Workspace** (Active Development)
+- Directory where you actively work on analysis
+- You can modify files, run code, test ideas
 - Temporary state during development
 
-**Archive** (Closed Bead)
-- Immutable ZIP file in a bead box
+**Archive** (Saved Bead)
+- Immutable ZIP file stored in a bead box
 - Timestamped and content-verified
-- The permanent record of your computation
+- The permanent, shareable record of your computation
 
 ```bash
 # Workspace: active development

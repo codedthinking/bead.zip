@@ -4,9 +4,9 @@ description: Patterns and practices for using Bead in team environments
 order: 3
 ---
 
-## Collaborative Research with Bead
+## Working Together with Bead
 
-Bead enables seamless collaboration between researchers by packaging complete computational environments that can be shared, reproduced, and built upon by team members.
+When you save a bead, your teammates can open it and get exactly the same setup you had. No missing files, no version confusion, no "it works on my machine" problems. They can run your analysis, modify it, and build on your work.
 
 ## Basic Collaboration Pattern
 
@@ -27,13 +27,13 @@ $ python analyze_cleaned.py
 $ bead save shared-storage
 ```
 
-This creates a clear handoff where each researcher's contribution is preserved and traceable.
+Now both researchers have their work saved, and anyone can see exactly what each person contributed.
 
 ## Team Organization Patterns
 
 ### 1. Distributed Development
 
-**Setup**: Each team member has their own development box plus shared boxes.
+**How it works**: Everyone has their own workspace plus shared storage for finished work.
 
 ```bash
 # Each researcher sets up their environment
@@ -42,14 +42,14 @@ $ bead box add shared-team /mnt/shared/team-beads
 $ bead box add archive /archive/project-beads
 ```
 
-**Workflow**:
-- Develop in personal boxes
-- Share via shared team box
-- Archive final versions
+**What people do**:
+- Work on their own computers
+- Save finished work to shared storage
+- Keep important versions in long-term archive
 
 ### 2. Hub-and-Spoke Model
 
-**Setup**: Central coordinator manages shared resources.
+**How it works**: One person manages the shared data, everyone else connects to it.
 
 ```bash
 # Project lead maintains central boxes
@@ -63,7 +63,7 @@ $ bead box add my-work ~/personal-beads
 
 ### 3. Pipeline Architecture
 
-**Teams work on different stages of a computational pipeline:**
+**Different teams handle different steps:**
 
 ```
 Raw Data → Cleaning → Analysis → Visualization → Paper
@@ -71,7 +71,7 @@ Raw Data → Cleaning → Analysis → Visualization → Paper
 Team A   Team B   Team C      Team D      Team E
 ```
 
-Each team produces beads that serve as inputs to the next stage.
+Team A finishes their work and saves a bead. Team B uses that bead as input for their step. And so on.
 
 ## Sharing Strategies
 
@@ -296,4 +296,4 @@ $ bead save daily-dashboard
 7. **Archive old versions** to manage storage costs
 8. **Train team members** on bead workflows and conventions
 
-Effective collaboration with Bead requires both technical setup and team coordination, but the result is seamless reproducible research that scales across large, distributed teams.
+Working together with Bead takes some coordination, but once your team gets the hang of it, everyone can build on each other's work without the usual headaches.

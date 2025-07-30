@@ -4,10 +4,10 @@ layout: home
 
 <section class="hero">
   <div class="container">
-    <h1 class="hero-title">Reproducible Research.<br>Simplified.</h1>
+    <h1 class="hero-title">Finally, Reproducible Research<br>That Actually Works</h1>
     <p class="hero-subtitle">
-      Bead packages your computational workflows into self-contained, versioned units with automatic dependency tracking. 
-      No more "what data did we use?" questions.
+      Stop asking "what data did we use?" five times a day. Bead packages your computational workflows 
+      into self-contained units that remember exactly how your results were created.
     </p>
     
     <div class="hero-actions">
@@ -18,7 +18,7 @@ layout: home
     <div class="hero-demo">
       <div class="code-example">
         <div class="code-header">
-          <span class="code-title">Create reproducible workflows in seconds</span>
+          <span class="code-title">From chaos to clarity in 4 commands</span>
         </div>
         <pre><code class="language-bash"><span class="comment"># Create a new computational unit</span>
 <span class="prompt">$</span> bead new german-cities
@@ -39,43 +39,43 @@ layout: home
 
 <section class="features">
   <div class="container">
-    <h2 class="section-title">Why Bead?</h2>
+    <h2 class="section-title">Solve Common Research Problems</h2>
     
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-icon">📦</div>
-        <h3>Self-Contained Archives</h3>
-        <p>Every bead is a complete, reproducible unit containing code, data references, and outputs in a simple zip file.</p>
+        <div class="feature-icon">🤯</div>
+        <h3>"What Data Did We Use?"</h3>
+        <p>Stop asking this 5 times a day. Every bead remembers exactly which version of data created your results - down to the byte.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <h3>Content-Based Verification</h3>
-        <p>Cryptographic hashes ensure you're always using the exact data version that produced your results.</p>
+        <div class="feature-icon">🔥</div>
+        <h3>"It Worked on My Machine"</h3>
+        <p>Your collaborator gets the exact same setup. No more missing files, wrong versions, or mysterious bugs.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🌳</div>
-        <h3>Dependency Tracking</h3>
-        <p>Build complex workflows as directed acyclic graphs. Bead manages the dependencies automatically.</p>
+        <div class="feature-icon">👥</div>
+        <h3>"How Did They Create This?"</h3>
+        <p>When team members leave, their work stays reproducible. All the context and dependencies are preserved in the bead.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🚀</div>
-        <h3>Language Agnostic</h3>
-        <p>Use Python, R, Julia, Stata, or any tool. Bead doesn't care - it just manages files and dependencies.</p>
+        <div class="feature-icon">🎯</div>
+        <h3>"Just Use Whatever Tool You Want"</h3>
+        <p>Python, R, Stata, Julia, shell scripts - Bead couldn't care less. It tracks files, not fancy frameworks.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">🏠</div>
-        <h3>Local-First Design</h3>
-        <p>No servers, no accounts, no cloud. Your data stays on your infrastructure under your control.</p>
+        <h3>"Keep Your Data Where You Want It"</h3>
+        <p>No cloud accounts, no vendor lock-in. Your sensitive data stays on your servers, under your control.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🤝</div>
-        <h3>Easy Collaboration</h3>
-        <p>Share beads via any file transfer method. Recipients can reproduce your exact computation.</p>
+        <div class="feature-icon">📦</div>
+        <h3>"Everything in One Neat Package"</h3>
+        <p>Each bead is a simple ZIP file with code, data, and results. Open it anywhere, even without Bead installed.</p>
       </div>
     </div>
   </div>
@@ -83,35 +83,38 @@ layout: home
 
 <section class="workflow-example">
   <div class="container">
-    <h2 class="section-title">Real-World Workflow</h2>
-    <p class="section-subtitle">See how teams use Bead to manage complex computational pipelines</p>
+    <h2 class="section-title">How Teams Use Bead</h2>
+    <p class="section-subtitle">A typical multi-step analysis workflow</p>
     
     <div class="workflow-demo">
       <div class="workflow-step">
         <h3><span class="step-number">1</span> Data Collection</h3>
-        <pre><code class="language-bash"><span class="prompt">$</span> bead new raw-survey-data
+        <pre><code class="language-bash"><span class="comment"># Download survey responses</span>
+<span class="prompt">$</span> bead new raw-survey-data
 <span class="prompt">$</span> python download_survey.py
-<span class="prompt">$</span> bead save data-v1</code></pre>
+<span class="prompt">$</span> bead save data-archive</code></pre>
       </div>
 
       <div class="workflow-arrow">→</div>
 
       <div class="workflow-step">
-        <h3><span class="step-number">2</span> Processing</h3>
-        <pre><code class="language-bash"><span class="prompt">$</span> bead new clean-data
+        <h3><span class="step-number">2</span> Data Processing</h3>
+        <pre><code class="language-bash"><span class="comment"># Clean and validate</span>
+<span class="prompt">$</span> bead new clean-data
 <span class="prompt">$</span> bead input add raw-survey-data
 <span class="prompt">$</span> python clean_data.py
-<span class="prompt">$</span> bead save processed</code></pre>
+<span class="prompt">$</span> bead save processed-data</code></pre>
       </div>
 
       <div class="workflow-arrow">→</div>
 
       <div class="workflow-step">
-        <h3><span class="step-number">3</span> Analysis</h3>
-        <pre><code class="language-bash"><span class="prompt">$</span> bead new paper-figures
+        <h3><span class="step-number">3</span> Analysis & Results</h3>
+        <pre><code class="language-bash"><span class="comment"># Generate findings</span>
+<span class="prompt">$</span> bead new final-analysis
 <span class="prompt">$</span> bead input add clean-data
 <span class="prompt">$</span> R --file=analyze.R
-<span class="prompt">$</span> bead save final</code></pre>
+<span class="prompt">$</span> bead save results</code></pre>
       </div>
     </div>
   </div>
@@ -120,7 +123,7 @@ layout: home
 <section class="testimonial">
   <div class="container">
     <blockquote class="testimonial-quote">
-      <p>"Before Bead, we asked 'what version of the data did we use?' 3-5 times every day. Now that question never comes up."</p>
+      <p>"Before Bead, we spent hours every week trying to recreate old results. Now we just open the bead and everything's exactly where we left it."</p>
       <cite>— Research Team Lead</cite>
     </blockquote>
   </div>
@@ -128,8 +131,8 @@ layout: home
 
 <section class="cta">
   <div class="container">
-    <h2>Ready to make your research reproducible?</h2>
-    <p>Install Bead and start packaging your computations in minutes.</p>
+    <h2>Ready to Make Your Research Reproducible?</h2>
+    <p>Join the researchers who can actually reproduce their own work. Install in 5 minutes, start saving time immediately.</p>
     <div class="cta-actions">
       <a href="{{ '/getting-started' | relative_url }}" class="btn btn-primary btn-large">Get Started</a>
       <a href="{{ '/guides' | relative_url }}" class="btn btn-secondary btn-large">Read the Guides</a>

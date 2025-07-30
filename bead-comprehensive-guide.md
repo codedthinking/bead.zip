@@ -8,10 +8,129 @@ output = code(*inputs)
 
 ## Table of Contents
 
-1. [Core Concepts and Architecture](#core-concepts-and-architecture)
-2. [Section 1: Bead Box Management and Basic Operations](#section-1-bead-box-management-and-basic-operations)
-3. [Section 2: Dependency Management with Bead Input Commands](#section-2-dependency-management-with-bead-input-commands)
-4. [Section 3: Advanced Workflows and Best Practices](#section-3-advanced-workflows-and-best-practices)
+1. [The Problem Bead Solves](#the-problem-bead-solves)
+2. [Core Design Principles](#core-design-principles)
+3. [What Bead Does and Doesn't Do](#what-bead-does-and-doesnt-do)
+4. [Core Concepts and Architecture](#core-concepts-and-architecture)
+5. [Common Use Cases](#common-use-cases)
+6. [Section 1: Bead Box Management and Basic Operations](#section-1-bead-box-management-and-basic-operations)
+7. [Section 2: Dependency Management with Bead Input Commands](#section-2-dependency-management-with-bead-input-commands)
+8. [Section 3: Advanced Workflows and Best Practices](#section-3-advanced-workflows-and-best-practices)
+9. [Edge Cases and Pitfalls](#edge-cases-and-pitfalls)
+
+---
+
+## The Problem Bead Solves
+
+### The Reproducibility Crisis in Computational Research
+
+Before bead, researchers faced these daily questions:
+- **"What version of the data did we use?"**
+- **"How do we reproduce this result?"** 
+- **"Which code did we run?"**
+- **"What happened to our intermediate files?"**
+
+These questions arise **3-5 times every single day** in active research environments, indicating fundamental problems with traditional approaches to computational research.
+
+### Traditional Problems
+
+1. **Version Confusion**: No systematic way to track which version of data was used for specific results
+2. **Dependency Hell**: Complex chains of scripts with unclear dependencies
+3. **Data Scattered**: Input data, intermediate files, and outputs spread across different locations
+4. **Sharing Difficulties**: Hard to package and share complete computational workflows
+5. **Reproducibility Failures**: Inability to recreate exact conditions that produced specific results
+
+### Bead's Solution
+
+Bead solves these problems by implementing **frozen computation** - each bead is an immutable snapshot of:
+- **Exact input data** (identified by content hash)
+- **Complete code** (all scripts and dependencies)
+- **Generated outputs** (results and artifacts)
+- **Metadata** (timestamps, dependencies, provenance)
+
+This creates a **directed acyclic graph (DAG)** of computational dependencies where each node represents a complete, reproducible computation.
+
+---
+
+## Core Design Principles
+
+### 1. **Immutability and Versioning**
+- Every bead save creates a **new immutable archive** with timestamp
+- **No in-place modifications** - changes create new versions
+- **Content-based addressing** ensures exact input matching
+
+### 2. **Language and Tool Agnostic**
+- **No assumptions** about programming languages, frameworks, or tools
+- **You manage execution** - bead only manages files and dependencies
+- **Convention over configuration** - minimal constraints, maximum flexibility
+
+### 3. **Explicit Dependency Management**
+- **Declare all inputs explicitly** via `bead input add`
+- **Content hash verification** ensures exact input matching
+- **Read-only input protection** prevents accidental data modification
+
+### 4. **Local-First with Distributed Capability**
+- **Bead boxes** are simple directory-based storage
+- **No central server required** - works completely locally
+- **Easy sharing** via file systems, network drives, or manual transfer
+
+### 5. **Human-Readable Archives**
+- **Standard zip format** - accessible even without bead tools
+- **Clear directory structure** separating code, data, and metadata
+- **Emergency access** - researchers can extract and use data manually
+
+---
+
+## What Bead Does and Doesn't Do
+
+### ✅ What Bead DOES:
+
+**File and Dependency Management:**
+- Creates immutable snapshots of computational workflows
+- Manages input/output dependencies with content verification
+- Provides versioned storage in "bead boxes"
+- Enables deterministic recreation of computational environments
+
+**Workflow Organization:**
+- Enforces clear separation of inputs, outputs, code, and temporary files
+- Maintains provenance and lineage tracking
+- Supports complex dependency graphs (DAGs)
+- Facilitates collaboration through standardized packaging
+
+**Reproducibility Guarantees:**
+- Ensures exact input data matching via content hashes
+- Preserves complete computational context
+- Enables time-travel to previous versions
+- Provides audit trails for scientific workflows
+
+### ❌ What Bead DOESN'T Do:
+
+**Execution Management:**
+- **Does NOT run your code** - you execute computations manually
+- **Does NOT manage software dependencies** - use conda, pip, etc.
+- **Does NOT provide job scheduling** - use your preferred job system
+- **Does NOT handle parallel processing** - manage this in your scripts
+
+**Data Storage and Sharing:**
+- **Does NOT provide cloud storage** - you manage bead box locations
+- **Does NOT handle large data optimization** - you choose file formats
+- **Does NOT provide access control** - use filesystem permissions
+- **Does NOT sync across machines** - you handle distribution
+
+**Development Environment:**
+- **Does NOT provide IDE integration** - use your preferred editor
+- **Does NOT manage virtual environments** - use conda, venv, etc.
+- **Does NOT provide debugging tools** - use language-specific debuggers
+
+### 🎯 The Philosophy: "Bead is Moving Files"
+
+As stated in the demo: *"We ask you to use files because bead is moving files, but that's it."*
+
+Bead is intentionally **minimal and focused** - it manages files and their relationships, leaving everything else to you and your preferred tools. This design makes it:
+- **Universally applicable** across all computational domains
+- **Non-intrusive** to existing workflows
+- **Future-proof** as technologies change
+- **Simple to understand** and debug
 
 ---
 
@@ -79,6 +198,215 @@ workspace/
 ├── Makefile              # Build automation (optional)
 └── README.md             # Project documentation
 ```
+
+---
+
+## Common Use Cases
+
+### 1. **Source Data Beads (Raw Data Collection)**
+
+**Scenario**: You obtain data from external sources (APIs, manual collection, surveys)
+
+**Step-by-Step Workflow**:
+```bash
+# 1. Create a new workspace for the data source
+bead new data-collection-survey
+
+# 2. Navigate to the workspace  
+cd data-collection-survey
+
+# 3. Add data files to output/ (since this produces data)
+cp /path/to/survey_responses.csv output/
+echo "Survey data collected on 2024-01-15" > output/README.md
+
+# 4. Add collection scripts (optional)
+mkdir src
+echo "#!/bin/bash\n# Script to download survey data\nwget survey-api.com/responses" > src/download.sh
+
+# 5. Save the source bead
+bead save data-archive
+```
+
+**Key Characteristics**:
+- **No inputs** - this is a source node in the DAG
+- **Data goes in `output/`** - this bead produces data for others to use
+- **Always use `-x` flag** when developing source beads
+- **Document thoroughly** - others depend on this data
+
+### 2. **Processing Beads (Data Transformation)**
+
+**Scenario**: Transform raw data into analysis-ready format
+
+**Step-by-Step Workflow**:
+```bash
+# 1. Create processing workspace
+bead new data-cleaning
+
+# 2. Add input dependencies
+bead input add survey-data  # References the source bead above
+
+# 3. Write processing code
+mkdir src
+cat > src/clean_data.py << 'EOF'
+import pandas as pd
+
+# Read from input (read-only)
+df = pd.read_csv('input/survey-data/survey_responses.csv')
+
+# Clean and process
+df_clean = df.dropna().reset_index(drop=True)
+
+# Save to output
+df_clean.to_csv('output/cleaned_survey.csv', index=False)
+EOF
+
+# 4. Run the processing
+python src/clean_data.py
+
+# 5. Document the processing
+echo "Cleaned survey data: removed NaN values" > output/README.md
+
+# 6. Save the processing bead
+bead save data-archive  
+```
+
+**Key Characteristics**:
+- **Has explicit inputs** via `bead input add`
+- **Transforms data** from input/ to output/
+- **Preserves lineage** - you can trace back to source data
+- **Intermediate files** go in temp/ (automatically deleted)
+
+### 3. **Analysis Beads (Sink Nodes)**
+
+**Scenario**: Final analysis that produces reports, figures, papers
+
+**Step-by-Step Workflow**:
+```bash
+# 1. Create analysis workspace
+bead new paper-analysis
+
+# 2. Add all required inputs
+bead input add cleaned-survey
+bead input add demographic-data
+bead input add economic-indicators
+
+# 3. Write analysis code
+mkdir src
+cat > src/analysis.R << 'EOF'
+# Load data from multiple inputs
+survey <- read.csv('input/cleaned-survey/cleaned_survey.csv')
+demo <- read.csv('input/demographic-data/demographics.csv')
+
+# Perform analysis
+model <- lm(outcome ~ predictor, data=survey)
+
+# Generate outputs
+pdf('output/regression_plot.pdf')
+plot(model)
+dev.off()
+
+# Save results
+write.csv(summary(model)$coefficients, 'output/model_results.csv')
+EOF
+
+# 4. Run analysis
+Rscript src/analysis.R
+
+# 5. Often never save these beads - keep as open workspaces
+# Or save occasionally: bead save results
+```
+
+**Key Characteristics**:
+- **Multiple inputs** from various processing beads
+- **Often kept as open workspaces** - not saved frequently
+- **Final outputs** are consumed by humans (papers, presentations)
+- **May use git** for version control within the workspace
+
+### 4. **Human-in-the-Loop Beads**
+
+**Scenario**: Some steps require manual intervention or cannot be fully automated
+
+**Step-by-Step Workflow**:
+```bash
+# 1. Create workspace for manual processing
+bead new manual-coding
+
+# 2. Add input data that needs manual review
+bead input add interview-transcripts  
+
+# 3. Set up for manual work
+mkdir manual_work
+cp input/interview-transcripts/*.txt manual_work/
+
+# 4. Perform manual coding/analysis
+# (Researcher manually codes interviews over several days)
+
+# 5. Document the manual process
+cat > output/coding_methodology.md << 'EOF'
+# Manual Coding Process
+- Used thematic analysis approach
+- Two researchers independently coded
+- Intercoder reliability: κ = 0.83
+- Coding completed over 5 days (Jan 15-20, 2024)
+EOF
+
+# 6. Save results
+cp manual_work/coded_themes.csv output/
+bead save analysis-archive
+```
+
+**Key Characteristics**:
+- **Documents manual processes** clearly
+- **Still maintains provenance** - inputs are tracked
+- **Human effort is captured** in the bead archive
+- **Reproducible** - others can see exactly what was done
+
+### 5. **Large Data Workflows**
+
+**Scenario**: Working with multi-gigabyte datasets
+
+**Step-by-Step Workflow**:
+```bash
+# 1. Use efficient data formats
+bead new large-data-processing
+
+# 2. Store large data efficiently
+# Use parquet, DuckDB, or compressed formats
+bead input add large-dataset  # This might be 400GB as mentioned in demo
+
+# 3. Process in chunks
+mkdir src  
+cat > src/process_chunks.py << 'EOF'
+import pandas as pd
+import duckdb
+
+# Connect to DuckDB for efficient processing
+conn = duckdb.connect()
+
+# Process large data efficiently
+conn.execute("""
+    CREATE TABLE results AS 
+    SELECT region, AVG(value) as avg_value 
+    FROM 'input/large-dataset/data.parquet' 
+    GROUP BY region
+""")
+
+# Export manageable results
+conn.execute("COPY results TO 'output/regional_averages.csv'")
+EOF
+
+# 4. Use temp/ for intermediate large files
+python src/process_chunks.py  # Creates temp files automatically cleaned
+
+# 5. Keep outputs small and manageable
+bead save processed-data
+```
+
+**Key Characteristics**:
+- **Choose appropriate file formats** (parquet, DuckDB, compressed)
+- **Use temp/** for large intermediate files
+- **Keep outputs manageable** - aggregate, summarize, filter
+- **Performance may not be ideal** due to compression/decompression
 
 ---
 
@@ -1433,3 +1761,281 @@ bead box list
 ```
 
 This comprehensive guide covers the full spectrum of Bead's capabilities, from basic box management to advanced enterprise workflows. The tool's strength lies in its simplicity of concept (discrete computational units) combined with powerful dependency management and sharing capabilities.
+
+---
+
+## Edge Cases and Pitfalls
+
+### 1. **Large Data Handling**
+
+**Issue**: Bead creates copies of data and zips archives, which can be problematic for very large datasets.
+
+**Symptoms**:
+- Slow save/load operations
+- Excessive disk space usage
+- Memory issues during compression
+
+**Solutions**:
+```bash
+# For large outputs, consider using -x flag sparingly
+bead develop -x large-data  # Only when you need to inspect outputs
+
+# Without -x, outputs aren't extracted
+bead develop large-data     # Faster for large datasets
+```
+
+**Real-world example**: The team successfully works with beads up to 400GB (compressed), but performance considerations apply.
+
+### 2. **Permission Issues with Input Folders**
+
+**Issue**: Input folders are intentionally read-only to prevent data modification.
+
+**Symptoms**:
+```bash
+$ rm input/data.csv
+rm: input/data.csv: Permission denied
+```
+
+**Solutions**:
+- Use `bead zap` to properly clean up workspaces
+- Never try to manually delete input folders
+- Accept that input data is immutable by design
+
+### 3. **Git Integration Complexities**
+
+**Issue**: Using git inside beads can create conflicts with bead's internal management.
+
+**Safe practices**:
+```bash
+# Create .gitignore to exclude bead-managed folders
+echo "input/" >> .gitignore
+echo "temp/" >> .gitignore
+echo "output/" >> .gitignore  # Often excluded
+echo ".bead-meta/" >> .gitignore  # Sometimes included for versioning
+```
+
+**Advanced usage** (with caution):
+```bash
+# Version the bead metadata to track input versions
+git add .bead-meta/bead
+git commit -m "Update to new input data version"
+```
+
+**Pitfall**: Never modify `.bead-meta` files through git operations - it can break bead's dependency tracking.
+
+### 4. **Workspace vs Archive Confusion**
+
+**Issue**: Users confuse open workspaces with saved beads.
+
+**Key differences**:
+- **Workspace** (open bead): Active directory where you work
+- **Archive** (closed bead): Immutable zip file in bead box
+
+**Common mistakes**:
+```bash
+# Wrong: Trying to share workspace directory
+cp -r my-analysis /shared/folder/  # DON'T DO THIS
+
+# Right: Save and share the bead archive
+bead save shared-box
+# Share the .zip file from the bead box
+```
+
+### 5. **Missing or Outdated Dependencies**
+
+**Issue**: Input beads might not be available or have been updated.
+
+**Detection**:
+```bash
+$ bead input load
+ERROR: Cannot find required input 'processed-data' with hash abc123...
+```
+
+**Solutions**:
+1. Check all bead boxes are mounted:
+   ```bash
+   bead box list
+   ```
+2. Update to latest version:
+   ```bash
+   bead input update
+   ```
+3. Or revert to previous version:
+   ```bash
+   bead input update --prev processed-data
+   ```
+
+### 6. **Accidental Data in Wrong Folders**
+
+**Issue**: Putting files in wrong folders leads to unexpected behavior.
+
+**Common mistakes**:
+- Source data in `temp/` → Lost on save
+- Code in `output/` → Treated as data
+- Generated files in code folders → Unnecessarily versioned
+
+**Prevention**:
+```bash
+# Check file placement before saving
+tree -d -L 2
+# Review what will be saved
+ls -la output/
+ls -la temp/  # These will be deleted!
+```
+
+### 7. **Circular Dependencies**
+
+**Issue**: Creating circular dependencies breaks the DAG requirement.
+
+**Example of what NOT to do**:
+```
+bead-A depends on bead-B
+bead-B depends on bead-C  
+bead-C depends on bead-A  # CIRCULAR!
+```
+
+**Solution**: Refactor into proper DAG structure, possibly extracting common data into separate source bead.
+
+### 8. **External Data References**
+
+**Issue**: Hard-coded paths to external data break reproducibility.
+
+**Anti-pattern**:
+```python
+# DON'T DO THIS
+data = pd.read_csv("/Users/myname/secret-data/file.csv")
+```
+
+**Better approach for unmovable data**:
+```makefile
+# In source bead that filters/anonymizes external data
+output/filtered_data.csv: 
+    python filter.py /secure/server/private/data.csv > $@
+```
+
+### 9. **Timestamp Precision Issues**
+
+**Issue**: Bead doesn't preserve original file timestamps.
+
+**Impact**: 
+- Make-based workflows might rebuild unnecessarily
+- Historical timestamp information is lost
+
+**Workaround**: Store important timestamps in metadata files if needed.
+
+### 10. **Storage Management**
+
+**Issue**: Multiple versions accumulate quickly, consuming disk space.
+
+**Symptoms**:
+```bash
+$ ls demo-box/ | wc -l
+247  # Too many versions!
+```
+
+**Solutions**:
+1. Use archival scripts to move old versions
+2. Implement retention policies
+3. Use different boxes for different lifecycle stages
+
+### 11. **Human-in-the-Loop Pitfalls**
+
+**Issue**: Manual steps break full automation.
+
+**Best practices**:
+- Document manual steps clearly in README
+- Use clear naming: `manual-review-needed/`
+- Consider semi-automation where possible
+
+### 12. **Common Command Mistakes**
+
+**Forgetting -x flag**:
+```bash
+# Mistake: Wondering where outputs went
+bead develop my-data
+ls output/  # Empty!
+
+# Fix: Use -x for data beads
+bead develop -x my-data
+```
+
+**Wrong bead reference**:
+```bash
+# Mistake: Using full path
+bead develop /path/to/beadbox/mybead_20241201.zip
+
+# Better: Use short name
+bead develop mybead
+
+# Or specific version
+bead develop mybead_20241201.zip
+```
+
+**Not checking what will be saved**:
+```bash
+# Always review before saving
+find . -type f -size +100M  # Large files?
+ls temp/  # Will be deleted!
+ls output/  # Will be shared!
+```
+
+### 13. **Analysis Bead Anti-Patterns**
+
+**Issue**: Never saving analysis beads (sink beads) can lose important state.
+
+**Problem scenario**:
+- Working on paper/analysis for months
+- Never use `bead save`
+- Risk losing dependency version information
+
+**Better approach**:
+```bash
+# Save periodically even if not sharing
+bead save analysis-checkpoint
+
+# Use git for fine-grained version control
+git add src/ .bead-meta/
+git commit -m "Update analysis with new methodology"
+```
+
+### 14. **Bead Box Management Issues**
+
+**Forgetting box locations**:
+```bash
+# Document your box setup
+cat > ~/.bead-boxes.md << 'EOF'
+# My Bead Box Configuration
+- local: ~/bead-boxes/local (development)
+- shared: /network/team/beads (collaboration)
+- archive: /backup/bead-archive (long-term storage)
+- private: /encrypted/private-beads (sensitive data)
+EOF
+```
+
+**Box naming conflicts**:
+```bash
+# Avoid generic names
+bead box add data ~/boxes  # Too generic!
+
+# Use descriptive names
+bead box add project-x-dev ~/project-x/dev-beads
+bead box add project-x-prod ~/project-x/prod-beads
+```
+
+### 15. **Content Hash Verification Failures**
+
+**Issue**: Modified files outside bead's control can cause hash mismatches.
+
+**Symptoms**:
+```
+ERROR: Content hash mismatch for input 'processed-data'
+Expected: abc123...
+Got: def456...
+```
+
+**Causes and solutions**:
+1. Manual file modification - never edit input files directly
+2. Filesystem corruption - verify disk integrity
+3. Transfer errors - re-download from source box
+
+These edge cases and pitfalls represent real-world challenges encountered by the bead community. Understanding them helps ensure smooth adoption and effective use of bead for reproducible computational research.

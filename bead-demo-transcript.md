@@ -11,8 +11,6 @@ Miklós: No, no, I just want to use it for I'm going to download the audio. I'm 
 
 In order to create a new `bead`, I need to use the `bead new` command. And I think I'm going to create a new `bead` of German cities because that's going to be relevant for some projects. I'm going to call it German cities. It created this folder. I go in. Let's see what's inside the folder.
 
-[460]
-
 ```bash
 # Creating a new bead workspace
 $ bead new german-cities
@@ -46,14 +44,9 @@ Andris: Is there a way to... I'm just going to copy paste from there.
 
 Miklós: Not a very sophisticated method now, but... Oh, and it actually has the state, which is great because that's what we actually need in the research. And because that's going to be the data file that I want to save, I'm going to directly put it in the `output/` folder. I just copied this over from Wikipedia. We would need to check the formatting and everything, but now I don't care. So now we have cities in the `output/` folder, so that's our data file. It's actually good practice to add the README as well. I would add it to the `output/` folder so that whenever somebody uses this `bead`, they will see what's inside the `output/` folder. And any data documentation should live in the `output/` folder as well. This was the link. And of course, there's Andris and, well, it was the editor, but that's okay. That's not a proper readme yet, but again, good enough for now.
 
-[714]
-
-
 ## Bead Boxes and Saving
 
 So this is what we have in our folder. So now that we have this `bead`, I call this an open `bead`. The official name is a workspace, I believe, Krisztián. Maybe this is something to discuss tomorrow, the naming. But this is one example where we have an open `bead` and I want to save it so that I can share it with someone else. Maybe Andris is interested in German cities because he wants to allocate the firm data that we got from Paltorai to East Germany and West Germany. When I will save the `bead`, it creates a zip file and put it into a special folder, and that special folder is called a `bead box`. And in order to check which `bead boxes` I have defined, I can use the command `bead box list`. I already have a bunch of `bead boxes`, but I'm going to create a new one for the sake of this demo.
-
-[736]
 
 ```bash
 # Getting help for bead box commands
@@ -88,12 +81,7 @@ Krisztián: There is also a help for the add command, so `bead box add`.
 
 Miklós: Okay, and then `bead box add`, and then I check the help. Oh, okay, okay. And then there's an environment, which I don't know what it is, I have to admit. So I will not touch it now, but maybe tomorrow we can discuss. So now my `bead boxes` include a demo.
 
-[888]
-
-
 So what I want to do with my open `bead` or my workspace, I want to save it into this demo `bead box`. The command for this is `bead save`. I suppose that I have to give the box. Let's see. Yes, box parameter is not optional. We can check how this works. `bead save`. Again, I say which workspace and something about the environment, which I still don't know, and where. And the where is going to be the demo. So I don't have to say the fully qualified path, I just need to use the short name of the box.
-
-[912]
 
 ```bash
 # Saving the bead to the demo box
@@ -102,9 +90,6 @@ Successfully stored bead at /Users/koren/Downloads/workspace/demo-bead-box/germa
 ```
 
 Super convenient. `bead save demo`. We already got some nice feedback that there's a zip. I'm actually going to list the content of that. Can I list the content of a `bead box`? Is there a command for that? Let's check. It's just a directory. So I know just `ls`. Okay. So I'm going to then list. This is where the demo `bead box` was when I want to show a bit of details. So now we can see that what we created is a zip file. It's called German cities. It begins with German cities. It's rather small, partly because my data is small and partly because it's compressed. And then there's a timestamp when it was saved. So that's how I save a `bead`. So this is what I would refer to as a closed `bead`. And when I work on it in a folder, I call it an open `bead`. But I think, again, the proper word is workspace for that. So suppose I go up one level. And so I have here my German cities folder. And I went for coffee, had lunch, everything. Actually, maybe it's two weeks later. I don't even remember what's inside this folder. Now that I saved the `bead box`, I don't need this folder anymore. Saving the `bead box` is like a `git commit`. Everything I wanted to, and it's actually `git commit` and `git push` because I also pushed it into the `bead box`. Everything I want to keep from the folder is now inside the zip. What's not inside the zip is the `temp/`. We will check that in a second. I was tempted to delete that folder because I don't need it anymore.
-
-[1117]
-
 
 But let me show you something why it's not going to be an easy task. Check the permission flags here. The `input/` folder is read. I'm sorry, write protected, so it's read only. There's a very good reason for that. We are not letting you touch the input data. You can only mount the input data or add input data via `bead`, and you're not supposed to modify the input data because it's an ultimate sin of data analysis. But because it's read-only, it's very hard to start deleting stuff. So we need a special command for deleting an open `bead` once we're done, and it's called `bead zap`, I believe, but let's check. So this is actually typically how I use `bead`. I never say which directory, so I'm working inside the `bead`. This is something to think about if anybody uses it in a different way. I guess it's still useful to have that option, to have the workspace directory option, but Andris Bálint, have you ever used the directory option when you're working with `bead`?
 
@@ -116,15 +101,9 @@ Bálint: If you want to delete multiple `bead` workspaces, then it's very useful
 
 Miklós: Okay, so like here I could be `beads`, I could be like multiple open `beads` or multiple workspaces and delete them with the `bead zap workspace1` and `workspace2`. So now we have deleted that. So there's nothing here except for the recording. You know, the zip is still there.
 
-[1202]
-
-
 ## Opening Beads and Sharing
 
 So how do I get back the stuff from the zip? Let me, suppose I sent my file to Andris and Andris is not yet a `bead` user. So what Andris sees is the zip file. So Andris received a copy of the zip file. Important to note here that `bead` does not do anything about sharing the `beads`. So you have your own `bead boxes`. If you live in an environment where these folders are shared, like on a network drive or you're on a server, then of course others will see these zip files as well. But it's your responsibility to get the zip file to your co-author, collaborator, whoever you're sharing it with. So `bead` is about the frozen computation and the dependency and version management and not about the actual sharing.
-
-[1291]
-
 
 So now we've happened to get a copy of the zip file. So let's see what's in there. I'm going to `unzip` it.
 
@@ -136,9 +115,6 @@ Andris: Dash D.
 
 Miklós: That's what I will call the folder, not a very pretty name, but that's like the name of the zip file. Now I'm inside the unzipped. This is not how you open a `bead`. This is basically kind of an emergency measure to open a `bead`. If you don't have `bead` in your tool because you're at an airport, there's no internet, something, but everything you need from the `bead` is there. It's just we have not used the proper `bead` tools. So inside the `bead`, there's some metadata, which, you know, again, in advanced topics, we can look into and in the `data/` folder, we have what we put in the `output/` folder before. We can check that this is the README and this is the actual data of the different cities. So if you give the zip file to someone else who has no idea what `bead` is, they still get the data. Good. They would even get the code. They would probably not be able to run like this because things are not in the right place in terms of the folders. But they still have all the metadata. So they still have everything, they just don't... They cannot really use it as a `bead` command line tool. So now I go back, I'm going to remove this folder. There was nothing write protected here, and I'm going to remove the zip file as well. Remember, we have a copy in the `bead box`, so it's okay. So this was Andris because he didn't have `bead`. He is at the beach and he has no `bead` there. So he was looking into the zip file.
 
-[1518]
-
-
 But Bálint has `bead`. So when I share this data with Bálint and he wants to continue working on the same data, he would open it in a different way. He would open it with `bead develop`. That's for help. And we can say, you know, what's the name of the `bead`? It's a `bead` ref. Archive file name or a `bead` name. So I guess we could give like the full archive file name. Krisztián, that means the full zip file.
 
 Bálint: That without the timestamp. So. Before the underscore German cities.
@@ -146,8 +122,6 @@ Bálint: That without the timestamp. So. Before the underscore German cities.
 Krisztián: But both will work, no? If you give the full name, I mean, it's a file path, it will work. If it's not, if you load it from a box, you either have to give the full path from the local directory to the box and its content, or just give German cities?
 
 Miklós:
-
-[1622]
 
 ```bash
 # Recreating workspace from saved bead
@@ -178,9 +152,6 @@ Bálint: No, what I wanted to- Okay, but you can check in the hidden bead meta d
 
 Miklós: So you do have a freeze time. Freeze time. The freeze time is when it was saved, which was right a couple minutes ago. I haven't yet saved the time. This timestamp is when I opened the bead, not when it was saved. The reason I'm asking, and I think this will become a feature request, this is not for our current documentation. You might as well open a feature request on GitHub. or stuff like make timestamps are important. I don't know if zip can store timestamps or whether it cares or not. So maybe if it's a complicated request, then forget it. This is something that would be nice to have, but definitely not essential. In any case, back to the demo, we see that cities is now newly modified. So we have a new version of the bead. I'm going to reflect the new version of the README as well.
 
-[2033]
-
-
 ## Versioning and Checksums
 
 Change log, we have... What is the... Remove down formatting lines. We are saving it. and now both files in the `output/` are new. There's no special comment for that, we just save it again and then it's gonna create any number of times we save it, it's gonna create a new version. `bead save`, I think we called our `bead box` demo. So you can check the timestamp here, that's now a different timestamp. Now we have two zip files in the `bead box`. German cities, but zip in between with different timestamps. Of course, every time you save a `bead box`, it's going to create a new, I'm sorry, every time you save a `bead`, it's going to create a new zip file. For large data, it can be quite a bit of overhead, but in our experience, Storage is typically not an issue. So it's better to have like multiple copies floating around than to lose a version. So every version is saved into a new zip file. Krisztián, I believe that there's no checksum checking or anything at this stage. So if I created or content checking, if I say `bead save demo`, it's going to create another one. with the same content in a different timestamp, right? Is there any checksum checking at the loading stage?
@@ -188,9 +159,6 @@ Change log, we have... What is the... Remove down formatting lines. We are savin
 Krisztián: Yes, it is verified. So there is a manifest file in the leads. And for every file, there is a checksum of secure hash, content hash for the file. And when extracting it, it is checked.
 
 Miklós: So then you can be certain that you're using the proper stuff and someone could have tampered with the zip or something. But it's not really a security feature because if someone wants to tamper, they will be able to. So it's just a nice, more like an error checking feature. Maybe here, one thing to illustrate is that I already saved a bunch of these, so I can zap this. I'm going to go back to my folder, the demo folder. Now I have three different versions of the German city. If I give it to Bálint and he starts working on it, he might want to work with a specific version.
-
-[2154]
-
 
 How do I do that? And I `bead develop`. I guess I could give the specific file, right? I will try. `bead develop -x`?
 
@@ -220,17 +188,11 @@ Andris: I guess it's the other way around, but Wikipedia. So, and then I'm savin
 
 Miklós:
 
-[2352]
-
-
 So what I have is I have the download script inside. It's not in input, not in output, not in temp. Let me also put something in the temp folder. So now I have stuff in the output folder, stuff in the temp folder, and I have stuff outside these folders. I can create any number of folders that I like. So for example, I could create, I don't know, src, and I could move over my file to src.
 
 Andris: Maybe a good question for the documentation, where is the best place to put your codes?
 
 Miklós: Yes, actually what I wanted to say now, and I think it's really nice. B does not assume anything about what code you use, how you run it. It's not executing the computation, you have to do it yourself. Everything beyond this is basically a matter of how you agree with your colleagues. It's a matter of convention and not hard rules. We were thinking about creating some entry points, and maybe in future versions it's going to happen. Suppose there's something like a make file in the top folder, then that could be a good place to try to run. But for now, we're just relying on human judgment that when Bálint opens this bid or Andris opens this bid, they will see what Andris sees. But Bálint will see that SRC download SH and he will realize that, okay, there's a script, let me run this. I think it's good practice to to be a bit more structured, so you have some sort of common understanding of how you're running computation inside your beads. So the way I do it, for example, is that whenever I have a bead, I also have a makefile. So every single one of my beads that I created has a makefile. And then the makefile does all the computations that are necessary. And the makefile lives in my root. in the root of the folder, but then I actually don't like to, unless it's a very short bit and there's only one or maybe two scripts, I don't like to keep my scripts in the root folder because then they clutter everything. I usually put my scripts away in some other folder. but then you need to tell the user what to run and having a make file or a main script is helpful for that. But again, this is just a matter of taste and negotiation with your collaborators. It's not enforced by the, what this is doing is, so far we have seen opening and saving these beads, newer and newer versions. And we're gonna check the input. input mounting or input loading in just a second. So let me save this again, because there's one other thing I want to illustrate. So we have saved it into the demo bead box again. And we're going to, now that we've saved, I can delete. And we're going to view the zip file. like this. And so now you can see where it gets put. So if Andris gets this file on the beach, and he does not have access to bead, he would find the actual data in the data folder. Very good, because that's probably what he needs. On the beach, he would probably not be able to run the code anyway. They are put in a separate folder. They are in the code folder. So what's code? Everything is code that's not input. not temp and not output. So my makefile is code and my src slash download is code. But notice what is not here. It's the, unfortunately I think scrolling is, maybe scrolling is also recorded in a SKU name. We put in the temp a junk file dot dat and it's not there. It's not there. So whatever was in the temp got deleted, got totally ignored. So temp is like git ignore in a way. What you put in temp is gonna die as soon as you save and delete the bit. I'm looking at Krisztián to see if I made any big mistakes so far. No, no, it's okay. So I think we covered everything about single beads, even more than I initially thought, but that's great.
-
-[2774]
-
 
 ## Dependency Management
 
@@ -246,15 +208,9 @@ Andris: It's a different, they want to keep details that create the, for example
 
 Miklós: I see, I see. That's a great question actually, because this is exactly kind of how you use it and what's the use case. Now we don't have a large data set, but the idea is that Temporary data should live in `temp/`. So it's like if you're a Stata user, I don't know how many of our `bead`, but certainly the databank people are. If you're a Stata user, it's like a temp file. So stuff that you're not saving for a long time because you're gonna delete very soon. And I actually, I love that feature of `bead`. I used to save all kinds of intermediate datasets. Now all this data set is needed for that. That data set is needed for the other data set. These are like intermediate steps in like a long process. And the script is creating the end file anyway. Then I just put all of these in `temp/`. And then as soon as I save, they get deleted and I couldn't care less. Now I understand that the databank people, they do care. So they want to keep these `.dta` files. which I suppose might be because maybe not everything is done by code or it takes very long to run. That could be another reason. I mean, if these are intermediate steps, I think ideally they would be separate `beads`. So then we could come back to this after you do a bit of dependency management with `bead`. that would be my recommended solution. Again, probably I would ask, why would you want to keep these intermediate data files? If you want to keep them because you just cannot reproduce them from script, then you need to save them into a `bead`. The `bead` is freezing what you did in the past and it gets Notice what I have not done with those zip files. I have not deleted those zip files. They are there. As long as I have storage, I'm going to have hundreds of these closed `beads` in my `bead box`. If I just care what this `.dta` file looked like in the past, put it in a `bead`, and you have access to it. If the issue is not so much, or maybe you are using a script, but it just takes a long time to run, then I suggest you use a `Makefile`. because then it only runs what you actually need to run and not every single step. But then you don't need to save the intermediate files for perpetuity because you can recreate everything. And if you're still working, you can still keep working because your intermediate files are reused if you have them in your open `temp/` folder. But if you still want to keep them and you don't want to use a `Makefile` and you don't want to put them in their own `bead`, you can put it in any folder that's not `input/`, not `temp/`, and not `output/`, and it's gonna live there forever. It's gonna save, it's gonna get saved. It's just increasing the size of your `bead`. So one way we can... I think let's get back to this in the dependency part, because these are like undeclared dependencies in a way. It could be that sometimes we have stuff that, yeah, it's not a `bead`. We could put in a `bead`, but it would be really painful for some reason, but we still need the data. I'm going to show you a case for that. Another thing that's related to data bank and actually data security, `bead box list`. I think it's good practice. Again, it's not something that's enforced by `bead`, but I think it's something you can agree with your colleagues, is to have different `bead boxes` depending on the level of data protection, for example. because `bead` does not do any of this. It's a zip file. If someone has access to that folder and they can read the zip file and open it, they can read what's inside. If you want to do any data protection measure, you would have to take care of this at the folder level. For example, in this case, what I'm showing here is we have different data protection levels, category one, two, three, and category three data should always live in encrypted folders. And so my cat three `bead box` is encrypted and actually my private `bead box` is also encrypted. And so when I wanna, and I'm working with private data, I would be, well, I would be saving into a different `bead box`. But again, that's on you. But at least `bead` is flexible enough to give you that option. You can use multiple boxes. Another reason to use multiple boxes, if you're sharing with colleagues, you might have one in your Dropbox folder, you might have one on your computational server. I typically have more than one `bead box`.
 
-[2835]
-
-
 ## Input Dependencies
 
 So suppose that we want to create some, yeah, let's create some dependencies. So for this we need at least two `beads` so that they can depend on one another. So I'm going to create a new `bead`, `bead new`. And let's say these are gonna be the German state. Of course, these are super mini `beads` in practice. such small datasets might be, and especially if they are so closely related, they might be lumped together. In German states, I'm going to, again, copy stuff from Wikipedia. Let's get a list of German states. Let's flag and everything, like what is going on here? Not that we care, but... Okay, at some point we're gonna get better demo data. So now we have `states.txt` and `README` in our `output/` folder. Now we already know how to save it. So we saved it. I'm going to `zap` it, go one level up. Let's see what's inside the `bead box`. Now there's a bunch of German cities, different timestamps and German states. So actually my point of the German cities was that I wanted to decide whether a city is in East Germany or West Germany. So I could open my German cities `bead` again. And then, in this other data, I already know which state belongs to East Germany and which belongs to West Germany. So I want to reference that data, and I want to load it as an input data here.
-
-[3288]
-
 
 ```bash
 # Adding bead input dependencies
@@ -279,8 +235,6 @@ $ tree -hal
 ```
 
 And there is a set of subcommands for that, starting with `bead input`. I can declare an input dependency here. I can load the data. Loading is like mounting if you're in the Unix world. Yeah, it's big, unfortunately. But for the demo, we will use the proper data. For the screen casting, I don't wanna use any outside tool, not even a text editor. So I can declare the dependency by saying `bead input add`. German, well, actually, let's get the help first. `bead input add`. There's a bunch of optional options, but at least I have to give the input name, which is how I'm going to view it. And then I can refer to another `bead`. By far the most frequent case, which means I only ever use this version and maybe only Bálint used any other way, but we can ask.
-
-[3415]
 
 ```bash
 # Example of incorrect command attempt
@@ -312,18 +266,9 @@ Andris: Is that correct, Krisztián?
 
 Miklós: Yes. Some of the things were just kind of conventions, but these are some hard hard constraints, which I think is important. So, bead puts hard constraints on you on things that really do matter for reproducibility. So, for example, do you have the right version of the data? It's super important for reproducibility. Before we had beads, Those of you who were around, remember that this question of what version of the data did we use? How do we reproduce this? Which code did we run? What happened? Like every day we ask this question at least three, four or five times every single day. So it's very important to make sure that you have the exact same version of the data that you need. So that's what be the input load is doing for you. So I guess what bead input add is doing is declaring a data dependency and then loading it. bead input load is just making sure that your already declared dependency is now available for you in the input folder here.
 
-[3668]
-
-
 I'm going to still keep this open in this workspace and go back one level. And I'm going to go back to my keep working on my states. I'm still not happy. Some, some of the data cleaning I haven't done yet. So bead develop -x, German States. So now I have two folders, German cities, German States. These are open workspaces. I can now edit my data. There's a lot of formatting here, which I don't like. Actually, I think this is all. That's the first data point, for example. Anyway, I made some changes. And because I made some changes, well, good practice to edit the readme as well. Remove some formatting. And then I'm ready to save. Now, I have two versions of German states. Actually, the newer version is a little bit smaller because I deleted some external junk. Now, let me go back to my German cities build. It's a workspace, sorry. Can I now load the German cities? German sorry state. And it's already loaded. Okay, so actually not only unload but load I can use without the name and then it would load all the inputs.
 
-[3812]
-
-
 What I'm looking for now is an update command. And luckily we have a We have an update command, let's see how it works. I guess we can update to a specific time, but in this, I don't need to give inputs, then everything is going to be updated. Let's try this, `bead input update`. Then it goes through all of my inputs, in this case, only German state. and all of the `bead boxes` and checks whether there's a newer version of the input that I need. And indeed there is, and then it loads it. I don't think we checked the timestamp before, but we could. we can check that this is the new stuff. It already has the new, it already removed some formatting. So we have updated the version. So when there's a new data release or your coworker or yourself make some change to the upstream `bead`, then you can update the input like this. Here, I think it's always updating to the latest available version, right? If there are multiple new versions.
-
-[3882]
-
 
 And you can also ask for a specific version. So, again, if you really care about reproducibility, you probably want to Make sure to load a very particular timestamped version. What did I want to cover here? Load, unload, update. Can we go back? We can probably go back with updating to a specific timestamp, no? That would be my guess.
 

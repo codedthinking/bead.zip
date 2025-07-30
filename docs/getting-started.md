@@ -250,8 +250,8 @@ bead box forget <name>       # Remove box reference
 
 ## Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/e3bo/bead/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/e3bo/bead/discussions)
+- **Issues**: [GitHub Issues](https://github.com/codedthinking/bead.zip/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/codedthinking/bead.zip/discussions)
 - **Documentation**: [Full Reference](/reference)
 
 Ready to make your research reproducible? Start creating beads!

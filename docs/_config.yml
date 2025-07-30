@@ -7,6 +7,9 @@ description: >-
 url: "https://bead.zip"
 baseurl: ""
 
+# GitHub Pages compatibility
+github: [metadata]
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
@@ -53,5 +56,5 @@ nav:
   - title: Reference
     url: /reference
   - title: GitHub
-    url: https://github.com/e3bo/bead
+    url: https://github.com/codedthinking/bead.zip
     external: true

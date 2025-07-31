@@ -6,28 +6,28 @@
 }
 
 :root {
-  /* Minimal, professional color scheme inspired by koren.dev */
-  --color-primary: #dc2626;
+  /* Koren brand color palette */
+  --color-primary: #E61E25;
   --color-primary-dark: #b91c1c;
   --color-primary-light: #ef4444;
-  --color-secondary: #64748b;
-  --color-secondary-dark: #475569;
-  --color-accent: #dc2626;
+  --color-secondary: #5D5A88;
+  --color-secondary-dark: #1D1D40;
+  --color-accent: #E61E25;
   --color-accent-light: #f87171;
   
   --color-bg: #ffffff;
   --color-bg-alt: #f8fafc;
-  --color-bg-dark: #0f172a;
-  --color-text: #0f172a;
-  --color-text-muted: #64748b;
-  --color-text-light: #94a3b8;
+  --color-bg-dark: #232324;
+  --color-text: #232324;
+  --color-text-muted: #5D5A88;
+  --color-text-light: #9795B5;
   
-  --color-border: #e2e8f0;
-  --color-code-bg: #1e293b;
-  --color-code-text: #e2e8f0;
+  --color-border: #D4D2E3;
+  --color-code-bg: #1D1D40;
+  --color-code-text: #D4D2E3;
   --color-code-bg-light: #f8fafc;
   
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Brockmann', Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
   
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -48,7 +48,8 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
+  font-family: 'Brockmann', Arial, sans-serif;
+  font-weight: 700;
   line-height: 1.3;
   margin-bottom: 0.75rem;
   color: var(--color-text);
@@ -62,13 +63,16 @@ h1 {
 h2 { 
   font-size: 1.875rem;
   letter-spacing: -0.015em;
+  font-weight: 700;
 }
 h3 { 
   font-size: 1.5rem;
   letter-spacing: -0.01em;
+  font-weight: 700;
 }
 h4 { 
   font-size: 1.25rem;
+  font-weight: 700;
 }
 
 p {
@@ -112,7 +116,8 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: 600;
+  font-family: 'Brockmann', Arial, sans-serif;
+  font-weight: 700;
   font-size: 1.125rem;
   color: var(--color-text);
   letter-spacing: -0.015em;
@@ -163,12 +168,13 @@ a:hover {
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-family: 'Brockmann', Arial, sans-serif;
+  font-size: 3.5rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 1.5rem;
   color: var(--color-text);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
 }
 
 .hero-subtitle {
@@ -282,10 +288,11 @@ a:hover {
 }
 
 .section-title {
+  font-family: 'Brockmann', Arial, sans-serif;
   text-align: center;
   margin-bottom: 3rem;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .feature-grid {
@@ -314,9 +321,10 @@ a:hover {
 }
 
 .feature-card h3 {
+  font-family: 'Brockmann', Arial, sans-serif;
   font-size: 1.125rem;
   margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .feature-card p {
@@ -358,8 +366,9 @@ a:hover {
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  font-family: 'Brockmann', Arial, sans-serif;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .step-number {
@@ -429,9 +438,11 @@ a:hover {
 }
 
 .cta h2 {
+  font-family: 'Brockmann', Arial, sans-serif;
   color: white;
   margin-bottom: 1rem;
   font-size: 1.75rem;
+  font-weight: 700;
 }
 
 .cta p {
@@ -483,10 +494,11 @@ a:hover {
 }
 
 .footer-section h4 {
+  font-family: 'Brockmann', Arial, sans-serif;
   color: var(--color-text);
   font-size: 0.9375rem;
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .footer-section ul {
@@ -533,6 +545,7 @@ a:hover {
 }
 
 .page-header h1 {
+  font-family: 'Brockmann', Arial, sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -682,6 +695,7 @@ a:hover {
 }
 
 .guide-header h1 {
+  font-family: 'Brockmann', Arial, sans-serif;
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -813,6 +827,38 @@ a:hover {
   .workflow-arrow {
     transform: rotate(90deg);
   }
+}
+
+/* Grid pattern overlay for visual brand consistency */
+.grid-overlay {
+  background-image: 
+    linear-gradient(to right, rgba(230, 30, 37, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 30, 37, 0.1) 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+/* 3D effect for key elements */
+.elevated {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.elevated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Koren brand visual elements */
+.brand-squares {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.brand-square {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
 }
 
 /* Inline code */

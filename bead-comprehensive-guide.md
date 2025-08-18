@@ -153,24 +153,20 @@ A bead is fundamentally a **zip archive** that encapsulates a complete computati
 
 ### Bead Archive Structure
 
-When you extract a bead archive, you'll find this internal structure:
+When you extract a bead archive as a zip file, you'll find this internal structure:
 
 ```
 bead-archive.zip
+├── code/
+│    ├── script1.sh      
+│    ├── script2.py
 ├── meta/
 │   ├── bead               # Core metadata (JSON format)
 │   ├── input.map          # Input dependency mappings
 │   └── manifest           # Complete file manifest with checksums
-└── data/
-    ├── README.md          # Human-readable documentation
-    ├── src/               # Source code directory
-    │   ├── script1.sh
-    │   ├── script2.py
-    │   └── ...
-    └── output/            # Computation results
-        ├── results.csv
-        ├── figures.pdf
-        └── ...
+├── data/
+│   ├── data1              # Data from the output folder
+│   ├── data2              
 ```
 
 ### Standard Workspace Directory Structure
@@ -230,7 +226,7 @@ mkdir src
 echo "#!/bin/bash\n# Script to download survey data\nwget survey-api.com/responses" > src/download.sh
 
 # 5. Save the source bead
-bead save data-archive
+bead save data-archive  # data-archive is the name of the bead box where you store your beads
 ```
 
 **Key Characteristics**:
@@ -248,31 +244,23 @@ bead save data-archive
 # 1. Create processing workspace
 bead new data-cleaning
 
-# 2. Add input dependencies
-bead input add survey-data  # References the source bead above
+# 2. Navigate to the workspace  
+cd data-cleaning
 
-# 3. Write processing code
+# 3. Add input dependencies
+bead input add data-collection-survey  # References the source bead above
+
+# 4. Write processing code
 mkdir src
-cat > src/clean_data.py << 'EOF'
-import pandas as pd
+write your code like: src/clean_data.py
 
-# Read from input (read-only)
-df = pd.read_csv('input/survey-data/survey_responses.csv')
-
-# Clean and process
-df_clean = df.dropna().reset_index(drop=True)
-
-# Save to output
-df_clean.to_csv('output/cleaned_survey.csv', index=False)
-EOF
-
-# 4. Run the processing
+# 5. Run the processing
 python src/clean_data.py
 
-# 5. Document the processing
+# 6. Document the processing
 echo "Cleaned survey data: removed NaN values" > output/README.md
 
-# 6. Save the processing bead
+# 7. Save the processing bead
 bead save data-archive  
 ```
 
@@ -291,35 +279,23 @@ bead save data-archive
 # 1. Create analysis workspace
 bead new paper-analysis
 
-# 2. Add all required inputs
+# 2. Navigate to the workspace  
+cd paper-analysis
+
+# 3. Add all required inputs
 bead input add cleaned-survey
 bead input add demographic-data
 bead input add economic-indicators
 
-# 3. Write analysis code
+# 4. Write analysis code
 mkdir src
-cat > src/analysis.R << 'EOF'
-# Load data from multiple inputs
-survey <- read.csv('input/cleaned-survey/cleaned_survey.csv')
-demo <- read.csv('input/demographic-data/demographics.csv')
+create your code like: src/analysis.R 
 
-# Perform analysis
-model <- lm(outcome ~ predictor, data=survey)
-
-# Generate outputs
-pdf('output/regression_plot.pdf')
-plot(model)
-dev.off()
-
-# Save results
-write.csv(summary(model)$coefficients, 'output/model_results.csv')
-EOF
-
-# 4. Run analysis
+# 5. Run analysis
 Rscript src/analysis.R
 
-# 5. Often never save these beads - keep as open workspaces
-# Or save occasionally: bead save results
+# 6. Often never save these beads - keep as open workspaces
+# Or save occasionally: bead save results  # results is the name of the bead box where you store your beads
 ```
 
 **Key Characteristics**:
@@ -337,28 +313,25 @@ Rscript src/analysis.R
 # 1. Create workspace for manual processing
 bead new manual-coding
 
-# 2. Add input data that needs manual review
+# 2. Navigate to the workspace  
+cd manual-coding
+
+# 3. Add input data that needs manual review
 bead input add interview-transcripts  
 
-# 3. Set up for manual work
+# 4. Set up for manual work
 mkdir manual_work
 cp input/interview-transcripts/*.txt manual_work/
 
-# 4. Perform manual coding/analysis
+# 5. Perform manual coding/analysis
 # (Researcher manually codes interviews over several days)
 
-# 5. Document the manual process
-cat > output/coding_methodology.md << 'EOF'
-# Manual Coding Process
-- Used thematic analysis approach
-- Two researchers independently coded
-- Intercoder reliability: κ = 0.83
-- Coding completed over 5 days (Jan 15-20, 2024)
-EOF
+# 6. Document the manual process
+cat > output/coding_methodology.md 
 
-# 6. Save results
+# 7. Save results
 cp manual_work/coded_themes.csv output/
-bead save analysis-archive
+bead save results
 ```
 
 **Key Characteristics**:
@@ -376,36 +349,22 @@ bead save analysis-archive
 # 1. Use efficient data formats
 bead new large-data-processing
 
-# 2. Store large data efficiently
+# 2. Navigate to the workspace  
+cd large-data-processing
+
+# 3. Store large data efficiently
 # Use parquet, DuckDB, or compressed formats
-bead input add large-dataset  # This might be 400GB as mentioned in demo
+bead input add large-dataset
 
-# 3. Process in chunks
+# 4. Process in chunks
 mkdir src  
-cat > src/process_chunks.py << 'EOF'
-import pandas as pd
-import duckdb
+cat > src/process_chunks.py 
 
-# Connect to DuckDB for efficient processing
-conn = duckdb.connect()
-
-# Process large data efficiently
-conn.execute("""
-    CREATE TABLE results AS 
-    SELECT region, AVG(value) as avg_value 
-    FROM 'input/large-dataset/data.parquet' 
-    GROUP BY region
-""")
-
-# Export manageable results
-conn.execute("COPY results TO 'output/regional_averages.csv'")
-EOF
-
-# 4. Use temp/ for intermediate large files
+# 5. Use temp/ for intermediate large files
 python src/process_chunks.py  # Creates temp files automatically cleaned
 
-# 5. Keep outputs small and manageable
-bead save processed-data
+# 6. Keep outputs small and manageable
+bead save results
 ```
 
 **Key Characteristics**:
@@ -431,18 +390,18 @@ bead save processed-data
 bead box add <box-name> <directory-path>
 
 # Real example from the demo
-bead box add demo /Users/koren/Downloads/workspace/demo-bead-box
+bead box add demo /Users/yourname/workspace/demo-bead-box
 ```
 
 **Error Handling**: If the directory doesn't exist, bead will show an error:
 ```bash
-ERROR: "/Users/koren/Downloads/workspace/demo-bead-box" is not an existing directory!
+ERROR: /Users/yourname/workspace/demo-bead-box is not an existing directory!
 ```
 
 **Solution**: Create the directory first:
 ```bash
-mkdir -p /Users/koren/Downloads/workspace/demo-bead-box
-bead box add demo /Users/koren/Downloads/workspace/demo-bead-box
+mkdir -p /Users/yourname/workspace/demo-bead-box
+bead box add demo /Users/yourname/workspace/demo-bead-box
 ```
 
 ##### Listing All Boxes
@@ -456,14 +415,14 @@ bead box list
 Boxes:
 -------------
 cat3: /Volumes/Data3/beadbox
-cat2: /Users/koren/Downloads/beadbox
+cat2: /Users/yourname/Downloads/beadbox
 private: /Volumes/Data3/cat3-bead-box
-demo: /Users/koren/Downloads/workspace/demo-bead-box
+demo: /Users/yourname/Downloads/workspace/demo-bead-box
 ```
 
 This shows four different boxes:
-- `cat3`: Production box on external drive
-- `cat2`: Local development box
+- `cat3`: Sensitive data category 3
+- `cat2`: Sensitive data category 2
 - `private`: Confidential data box
 - `demo`: Demo/tutorial box
 
@@ -478,11 +437,6 @@ bead box add        # Define a box
 bead box list       # Show known boxes  
 bead box forget     # Remove a box from configuration
 bead box rewire     # Remap input dependencies
-```
-
-**Box Environment Configuration**: Boxes are stored in bead's environment configuration at:
-```
-/Users/koren/Library/Application Support/bead_cli-6a4d9d98-8e64-4a2a-b6c2-8a753ea61daf
 ```
 
 ### Creating New Beads and Workspaces
@@ -501,7 +455,7 @@ bead new experiment-2025
 
 **What `bead new` Does**:
 1. **Creates** directory with specified name
-2. **Initializes** standard bead structure (`.bead-meta/`, `input/`, `output/`, `temp/`, `src/`)
+2. **Initializes** standard bead structure (`.bead-meta/`, `input/`, `output/`, `temp/`)
 3. **Sets up** empty bead metadata
 4. **Ready** for development immediately
 
@@ -538,7 +492,7 @@ bead save demo
 
 **Success Output**:
 ```
-Successfully stored bead at /Users/koren/Downloads/workspace/demo-bead-box/german-cities_20250730T153158789876+0200.zip.
+Successfully stored bead at /Users/yourname/Downloads/workspace/demo-bead-box/paper-analysis_20250730T153158789876+0200.zip.
 ```
 
 #### Bead Naming Convention
@@ -548,7 +502,7 @@ Saved beads follow this timestamp pattern:
 <project-name>_<YYYYMMDDTHHMMSSSSSSSS><timezone>.zip
 
 Examples:
-german-cities_20250730T153158789876+0200.zip
+foreign-cities_20250730T153158789876+0200.zip
 paper-analysis_20250730T162143891234+0200.zip
 data-processing_20250730T094567123456+0200.zip
 ```
@@ -572,16 +526,16 @@ bead save --help
 
 ```bash
 # Extract the bead archive for inspection
-unzip german-cities_20250730T153158789876+0200.zip
+unzip foreign-cities_20250730T153158789876+0200.zip
 
 # View the contents
-tree german-cities_20250730T153158789876+0200/
+tree foreign-cities_20250730T153158789876+0200.zip
 ```
 
 **Archive Information Display**:
 When you unzip, you'll see bead's informational header:
 ```
-Archive:  german-cities_20250730T153158789876+0200.zip
+Archive:  foreign-cities_20250730T153158789876+0200.zip
 
 This file is a BEAD zip archive.
 
@@ -599,13 +553,6 @@ The archive contains
   - determining the newest version
   - reproducing multi-BEAD computation sequences built by a distributed team
 
-There {is,will be,was} more info about BEADs at
-
-- https://unknot.io
-- https://github.com/ceumicrodata/bead
-- https://github.com/e3krisztian/bead
-
-----
 ```
 
 #### Method 2: Bead Develop (Active Development)
@@ -615,9 +562,9 @@ There {is,will be,was} more info about BEADs at
 bead develop <bead-reference> [target-directory]
 
 # Examples:
-bead develop german-cities_20250730T153158789876+0200.zip
-bead develop german-cities_20250730T153158789876+0200.zip my-workspace
-bead develop german-cities  # Using bead name instead of filename
+bead develop foreign-cities_20250730T153158789876+0200.zip
+bead develop foreign-cities_20250730T153158789876+0200.zip my-workspace
+bead develop foreign-cities  # Using bead name instead of filename
 ```
 
 **Bead Develop Options**:
@@ -640,7 +587,7 @@ Key options:
 
 **Example Output**:
 ```bash
-Verifying archive /Users/koren/Downloads/workspace/demo-bead-box/german-cities_20250730T153158789876+0200.zip ...
+Verifying archive /Users/yourname/Downloads/workspace/demo-bead-box/foreign-cities_20250730T153158789876+0200.zip ...
 
 # Creates workspace structure:
 ├── .bead-meta/
@@ -659,7 +606,7 @@ Verifying archive /Users/koren/Downloads/workspace/demo-bead-box/german-cities_2
 **Use Standard Unzip When**:
 - Inspecting bead contents without modifying
 - Reviewing output data and results
-- Understanding bead structure
+- Do not have the bead program
 - Extracting specific files for reference
 
 **Use Bead Develop When**:
@@ -684,9 +631,7 @@ bead zap ./my-analysis      # Delete specific workspace
 **What `bead zap` Does**:
 - Completely removes the workspace directory
 - Deletes all data, code, and intermediate files
-- **WARNING**: This is irreversible - make sure you've saved important work!
-
-**Note**: The `bead nuke` command exists but is deprecated - use `bead zap` instead.
+- **WARNING**: This is irreversible - make sure you've saved your important work!
 
 ### Advanced Bead Commands
 
@@ -724,7 +669,7 @@ cat .bead-meta/bead
 
 ```bash
 # Manual copy example from demo:
-cp ../demo-bead-box/german-cities_20250730T153158789876+0200.zip ./
+cp ../demo-bead-box/foreign-cities_20250730T153158789876+0200.zip ./
 
 # This allows you to:
 # 1. Move beads between different storage locations
@@ -759,11 +704,11 @@ Bead's dependency management system is built around **content-based addressing**
 
 ```
 workspace/input/
-├── dependency1/           # First input dependency
+├── dependency1/          # First input dependency
 │   ├── README.md         # Documentation of this input
 │   ├── data.csv          # Actual input data
 │   └── metadata.json     # Additional metadata
-├── dependency2/           # Second input dependency
+├── dependency2/          # Second input dependency
 │   ├── README.md
 │   └── processed.txt
 └── .../                  # Additional dependencies
@@ -784,12 +729,11 @@ bead input {add,delete,map,update,load,unload}
 bead input add <INPUT-NAME> [BEAD-REF]
 
 # Examples:
-bead input add german-states                    # Uses german-states as bead name
-bead input add population-data census-2024     # Maps population-data to census-2024 bead
+bead input add foreign-states                  # Uses foreign-states as bead name
 bead input add raw-data /path/to/data.zip       # Uses specific archive file
 
 # Advanced options:
-bead input add historical-data census-2020 --time 20250730T120000000000+0200
+bead input add historical-data --time 20250730T120000000000+0200
 ```
 
 **What `bead input add` Does**:
@@ -806,13 +750,13 @@ bead input add historical-data census-2020 --time 20250730T120000000000+0200
 bead input load <input-name>
 
 # Examples:
-bead input load german-states    # Load previously defined dependency
+bead input load foreign-states    # Load previously defined dependency
 bead input load --all           # Load all defined but missing inputs
 ```
 
 **Difference between `add` and `load`**:
 - `add`: Define new dependency AND load data
-- `load`: Load data from existing dependency definition (faster)
+- `load`: Load data from existing dependency definition 
 
 #### Updating Input Dependencies
 
@@ -821,7 +765,7 @@ bead input load --all           # Load all defined but missing inputs
 bead input update <input-name>
 
 # Update to specific version/time
-bead input update german-states --time 20250730T160000000000+0200
+bead input update foreign-states --time 20250730T160000000000+0200
 
 # Update all inputs
 bead input update --all
@@ -845,7 +789,7 @@ bead input update survey-results --time 20250729T090000000000+0200
 bead input map <input-name> <new-bead-ref>
 
 # Examples:
-bead input map german-states german-states-v2
+bead input map foreign-states foreign-states-v2
 bead input map test-data production-data
 bead input map survey-data /path/to/updated-survey.zip
 ```
@@ -896,16 +840,16 @@ bead input delete test-input
 
 ```bash
 # Error when running analysis:
-ERROR: Input 'german-states' not found in input/ directory
+ERROR: Input 'foreign-states' not found in input/ directory
 ```
 
 **Solution**:
 ```bash
 # Load the missing input
-bead input load german-states
+bead input load foreign-states
 
 # Verify it was loaded
-ls input/german-states/
+ls input/foreign-states/
 # Should show:
 # README.md  states.txt
 ```
@@ -916,14 +860,14 @@ ls input/german-states/
 
 **Detection**:
 ```bash
-bead input check german-states
-# Output: New version available: german-states_20250730T160000000000+0200.zip
+bead input check foreign-states
+# Output: New version available: foreign-states_20250730T160000000000+0200.zip
 ```
 
 **Options**:
 ```bash
 # Option 1: Update to latest version
-bead input update german-states
+bead input update foreign-states
 
 # Option 2: Pin to specific version (edit .bead-meta/bead)
 # Option 3: Create new bead variant with updated inputs
@@ -962,7 +906,8 @@ bead save private
 bead develop sensitive-analysis_*.zip public-version/
 # Replace sensitive inputs with synthetic data
 # Save public version
-cd public-version && bead save public
+cd public-version 
+bead save public
 ```
 
 #### Scenario 5: External Data Dependencies
@@ -991,7 +936,7 @@ The `.bead-meta/input.map` file defines how logical input names map to specific 
 
 ```json
 {
-  "german-states": "bead-content-id-abc123...",
+  "foreign-states": "bead-content-id-abc123...",
   "population-data": "bead-content-id-def456...",
   "geographic-boundaries": "bead-content-id-ghi789..."
 }
@@ -1004,7 +949,7 @@ The `.bead-meta/input.map` file defines how logical input names map to specific 
 bead box rewire <input-name> <new-bead-reference>
 
 # Examples:
-bead box rewire german-states german-states_20250730T170000000000+0200.zip
+bead box rewire foreign-states foreign-states_20250730T170000000000+0200.zip
 bead box rewire population-data census-2024
 ```
 
@@ -1173,7 +1118,7 @@ bead web rewire problems.json png fixed-network.png
 
 #### Complex Dependency Graph Example
 
-Based on the demo screencast, here's the dependency structure:
+A dependency structure for collecting german-states then creating german-cities combined with other data. 
 
 ```
 ┌─────────────────┐    ┌──────────────────┐
@@ -1211,24 +1156,13 @@ cd german-states
 # Standard bead directory structure created
 
 # Create src/extract_states.py
-cat > src/extract_states.py << 'EOF'
-#!/usr/bin/env python3
-import requests
-import re
-
-# Download German states data from Wikipedia
-url = "https://en.wikipedia.org/wiki/States_of_Germany"
-response = requests.get(url)
-# Parse and extract state information
-# Save to output/states.txt
-EOF
+cat > src/extract_states.py
 
 # Run the extraction
 python src/extract_states.py
 
 # Save as bead
 bead save demo
-cd ..
 ```
 
 **Step 2: German Cities Processing** 
@@ -1240,23 +1174,17 @@ cd german-cities
 bead input load german-states
 
 # Create processing scripts
-cat > src/download.sh << 'EOF'
-#!/bin/bash
-curl -sLo temp/raw_cities.txt "https://en.wikipedia.org/wiki/List_of_cities_and_towns_in_Germany"
-EOF
+cat > src/download.sh
 
-cat > src/filter_east.sh << 'EOF' 
 #!/bin/bash
 # Filter cities by East German states using input/german-states/states.txt
 grep -f input/german-states/states.txt temp/raw_cities.txt > output/cities.txt
-EOF
 
 # Execute pipeline
 make all  # or bash src/download.sh && bash src/filter_east.sh
 
 # Save processed data
 bead save demo
-cd ..
 ```
 
 **Step 3: Private Data Processing**
@@ -1265,20 +1193,12 @@ mkdir private-data
 cd private-data
 
 # Process confidential data
-cat > src/process_confidential.do << 'EOF'
-* Stata script for processing confidential microdata
-use "confidential_source.dta", clear
-* Apply privacy filters and aggregations
-keep if privacy_ok == 1
-collapse (mean) outcome, by(region)
-save "output/filtered_data.dta", replace
-EOF
+cat > src/process_confidential.do 
 
 stata -b do src/process_confidential.do
 
 # Save to private box
 bead save private
-cd ..
 ```
 
 **Step 4: Paper Generation**
@@ -1287,25 +1207,17 @@ mkdir paper
 cd paper
 
 # Load both dependencies
-bead input load german-cities
+bead input load foreign-cities
 bead input load private-data
 
 # Create visualization script
-cat > src/plot.sh << 'EOF'
-#!/bin/bash
-# Combine city data with private analysis results
-python3 src/generate_figure.py \
-  --cities input/german-cities/cities.txt \
-  --data input/private-data/filtered_data.dta \
-  --output output/figure.pdf
-EOF
+cat > src/plot.sh
 
 # Generate final output
 bash src/plot.sh
 
 # Save final paper bead
 bead save demo
-cd ..
 ```
 
 ### Team Collaboration Patterns

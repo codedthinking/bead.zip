@@ -1,0 +1,18 @@
+{
+    "freeze_name": "node_b_2",
+    "freeze_time": "20250824T134701137927+0200",
+    "inputs": {
+        "node_a_1": {
+            "content_id": "0bca80c66da52b309a51a41cb937e30b327a38999c379edb2b17a88d83c2816af7d1223e8a36b010366aba7e79fa7c2e5986e93a9bae6235a5570c4414ddfb1e",
+            "freeze_time": "20250824T132002274225+0200",
+            "kind": "feadb18450efcf72af2f6e94a1b87b66-273f060c-b537-46b7-b1aa-eb3d1f8efed0"
+        },
+        "node_a_2": {
+            "content_id": "d8602874f75b2268fd304f24ebd1d3dc780033df432ec872f34767b02aada32de44d2eab258227d80348a0171b0185886b8a174a5349a6cb93677ce11961cefe",
+            "freeze_time": "20250824T134056269399+0200",
+            "kind": "feadb18450efcf72af2f6e94a1b87b66-273f060c-b537-46b7-b1aa-eb3d1f8efed0"
+        }
+    },
+    "kind": "d93756738a8d1d59c6abcb5854f4036a-4cf96c1e-e0c7-41aa-9934-f0285bbea846",
+    "meta_version": "aaa947a6-1f7a-11e6-ba3a-0021cc73492e"
+}

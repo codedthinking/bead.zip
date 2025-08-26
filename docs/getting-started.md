@@ -249,6 +249,7 @@ bead box forget <name>       # Remove box reference
 - Learn about [Dependency Management]({{ '/guides/dependencies' | relative_url }}) for complex workflows
 - Explore [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) patterns
 - See [Real-World Examples]({{ '/guides/examples' | relative_url }}) from research teams
+- **Compare tools**: Check [Related Tools]({{ '/guides/alternatives' | relative_url }}) to see how Bead compares to orderly2, packit, and other alternatives
 
 ## Getting Help
 

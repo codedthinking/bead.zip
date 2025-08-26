@@ -15,10 +15,11 @@ output = code(*inputs)
 3. [What Bead Does and Doesn't Do](#what-bead-does-and-doesnt-do)
 4. [Core Concepts and Architecture](#core-concepts-and-architecture)
 5. [Common Use Cases](#common-use-cases)
-6. [Section 1: Bead Box Management and Basic Operations](#section-1-bead-box-management-and-basic-operations)
-7. [Section 2: Dependency Management with Bead Input Commands](#section-2-dependency-management-with-bead-input-commands)
-8. [Section 3: Advanced Workflows and Best Practices](#section-3-advanced-workflows-and-best-practices)
-9. [Edge Cases and Pitfalls](#edge-cases-and-pitfalls)
+6. [Comparison with Other Tools](#comparison-with-other-tools)
+7. [Section 1: Bead Box Management and Basic Operations](#section-1-bead-box-management-and-basic-operations)
+8. [Section 2: Dependency Management with Bead Input Commands](#section-2-dependency-management-with-bead-input-commands)
+9. [Section 3: Advanced Workflows and Best Practices](#section-3-advanced-workflows-and-best-practices)
+10. [Edge Cases and Pitfalls](#edge-cases-and-pitfalls)
 
 ---
 
@@ -372,6 +373,45 @@ bead save results
 - **Use temp/** for large intermediate files
 - **Keep outputs manageable** - aggregate, summarize, filter
 - **Performance may not be ideal** due to compression/decompression
+
+---
+
+## Comparison with Other Tools
+
+### How Bead Compares to Similar Tools
+
+Bead is part of a broader ecosystem of reproducible research tools. Understanding how it compares to alternatives helps you choose the right tool for your workflow or integrate multiple tools effectively.
+
+#### Quick Comparison
+
+| Tool | Focus | Language | Approach | Best For |
+|------|-------|----------|----------|----------|
+| **bead (e3krisztian)** | Data dependency management | Python CLI, any execution | Explicit dependencies, ZIP archives | Multi-language pipelines |
+| **orderly2** | Reproducible reporting | R-focused | Automated R workflows, git-like | R research teams |
+| **packit** | Result sharing | Web application | User-friendly interface | Sharing with non-technical users |
+
+#### When to Choose Bead
+
+**Choose bead when you need**:
+- **Multi-language workflows** - Works with Python, R, shell scripts, Julia, etc.
+- **Explicit dependency control** - You want to declare exactly what inputs you use
+- **Simple deployment** - Just copy ZIP files, no database or server setup
+- **Tool independence** - No assumptions about how you run your code
+- **Cross-platform compatibility** - Same workflow on Windows, Mac, Linux
+
+#### Integrating with Other Tools
+
+**bead + orderly2**: Use bead for multi-language preprocessing, orderly2 for R analysis  
+**bead + packit**: Use bead for computation, packit for sharing results with stakeholders  
+**bead concepts + any tool**: Apply bead's explicit dependency principles with any workflow
+
+#### Migration Considerations
+
+**From traditional scripts → bead**: Gradual adoption, start with `bead input add` for key dependencies  
+**From bead → orderly2**: When team moves to R-only workflows  
+**Adding packit**: When you need web-based result sharing
+
+> **For detailed comparisons**: See [tool-comparison.md](./tool-comparison.md) for comprehensive analysis of bead vs orderly2 vs packit, including architecture details, feature matrices, and migration strategies.
 
 ---
 

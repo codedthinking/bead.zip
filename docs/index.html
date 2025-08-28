@@ -24,8 +24,8 @@ layout: home
           <span class="code-title">From chaos to clarity in 4 commands</span>
         </div>
         <pre><code class="language-bash"><span class="comment"># Create a new computational unit</span>
-<span class="prompt">$</span> bead new german-cities
-<span class="prompt">$</span> cd german-cities
+<span class="prompt">$</span> bead new city-analysis
+<span class="prompt">$</span> cd city-analysis
 
 <span class="comment"># Add dependencies</span>
 <span class="prompt">$</span> bead input add population-data
@@ -94,6 +94,7 @@ layout: home
         <h3><span class="step-number">1</span> Data Collection</h3>
         <pre><code class="language-bash"><span class="comment"># Download survey responses</span>
 <span class="prompt">$</span> bead new raw-survey-data
+<span class="prompt">$</span> cd raw-survey-data
 <span class="prompt">$</span> python download_survey.py
 <span class="prompt">$</span> bead save data-archive</code></pre>
       </div>
@@ -104,6 +105,7 @@ layout: home
         <h3><span class="step-number">2</span> Data Processing</h3>
         <pre><code class="language-bash"><span class="comment"># Clean and validate</span>
 <span class="prompt">$</span> bead new clean-data
+<span class="prompt">$</span> cd clean-data
 <span class="prompt">$</span> bead input add raw-survey-data
 <span class="prompt">$</span> python clean_data.py
 <span class="prompt">$</span> bead save processed-data</code></pre>
@@ -115,6 +117,7 @@ layout: home
         <h3><span class="step-number">3</span> Analysis & Results</h3>
         <pre><code class="language-bash"><span class="comment"># Generate findings</span>
 <span class="prompt">$</span> bead new final-analysis
+<span class="prompt">$</span> cd final-analysis
 <span class="prompt">$</span> bead input add clean-data
 <span class="prompt">$</span> R --file=analyze.R
 <span class="prompt">$</span> bead save results</code></pre>

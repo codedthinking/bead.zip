@@ -1,0 +1,5 @@
+[boxes]
+graph = box
+
+[default]
+boxes = graph

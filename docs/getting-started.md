@@ -112,7 +112,7 @@ Boxes:
 -------------
 my-beads: /Users/you/bead-storage
 
-# Save your bead
+# Save your bead to the 'my-beads' box
 $ bead save my-beads
 Successfully stored bead at /Users/you/bead-storage/my-first-analysis_20250730T120000000000+0200.zip
 ```

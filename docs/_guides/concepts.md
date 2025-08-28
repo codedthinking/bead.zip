@@ -143,9 +143,9 @@ Even without Bead installed, archives are usable:
 ```bash
 $ unzip analysis_20250730T120000.zip
 $ ls
-code/       # All your scripts
-data/       # Output data  
-meta/       # Metadata files
+code/       # Your source code files
+data/       # Output data from your analysis
+meta/       # Bead metadata (bead, input.map, manifest)
 ```
 
 ## The Bead Lifecycle

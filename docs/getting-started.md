@@ -68,11 +68,9 @@ Bead creates these folders, each with a specific purpose:
 
 ### 3. Add Some Code
 
-Create a simple analysis script:
+Create a simple analysis script in `src/analyze.py`:
 
-```bash
-$ mkdir src
-$ cat > src/analyze.py << 'EOF'
+```python
 #!/usr/bin/env python3
 import pandas as pd
 
@@ -85,8 +83,11 @@ data = pd.DataFrame({
 # Save results
 data.to_csv('output/results.csv', index=False)
 print("Analysis complete! Results saved to output/results.csv")
-EOF
+```
 
+```bash
+$ mkdir src
+$ # Create src/analyze.py with the code above
 $ chmod +x src/analyze.py
 ```
 
@@ -150,7 +151,8 @@ $ ls input/raw-data/
 data.csv
 
 # Create processing script
-$ cat > process.py << 'EOF'
+# process.py:
+```python
 import pandas as pd
 
 # Load input data
@@ -162,7 +164,7 @@ df_cleaned['processed'] = True
 
 # Save output
 df_cleaned.to_csv('output/processed_data.csv', index=False)
-EOF
+```
 
 $ python process.py
 $ bead save my-beads
@@ -186,10 +188,9 @@ python analyze.py temp/intermediate.pkl > output/final.csv
 
 ### 2. Documentation
 
-Always include a README in your output folder:
+Always include a README in your output folder. Example `output/README.md`:
 
-```bash
-$ cat > output/README.md << 'EOF'
+```markdown
 # Processed Customer Data
 
 This dataset contains cleaned customer records from the 2024 survey.
@@ -203,7 +204,6 @@ This dataset contains cleaned customer records from the 2024 survey.
 3. Removed statistical outliers (>3 std dev)
 
 Generated: 2025-07-30
-EOF
 ```
 
 ### 3. Reproducible Environments

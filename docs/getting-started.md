@@ -10,26 +10,28 @@ Stop asking "what data did we use?" five times a day. This guide will get you up
 
 ## Installation
 
-### macOS / Linux
+### Quick Install (Recommended)
+
+The easiest way to install bead is using pipx:
 
 ```bash
-# Download and install bead
-curl -sSL https://bead.zip/install.sh | bash
+# Install pipx if you don't have it
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
 
-# Or with pip
-pip install bead-cli
+# Install bead
+pipx install https://github.com/e3krisztian/bead
 ```
 
-### Windows
+### Alternative Methods
 
-```powershell
-# Download the installer
-Invoke-WebRequest -Uri https://bead.zip/install.ps1 -OutFile install.ps1
-.\install.ps1
+If you prefer pip:
 
-# Or with pip
-pip install bead-cli
+```bash
+pip install --user https://github.com/e3krisztian/bead
 ```
+
+For more installation options, see the [full installation guide]({{ '/install' | relative_url }}).
 
 ### Verify Installation
 

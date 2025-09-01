@@ -26,3 +26,64 @@
 - Include proper frontmatter with title, description
 - Use code blocks with language specification
 - Keep line length reasonable for readability
+
+## Copy Style Guide
+
+### Product Name Spelling
+The product name "bead" should always be lowercase, even at the beginning of sentences.
+
+**Correct examples:**
+- ✅ "bead is a tool for reproducible research"
+- ✅ "Getting Started with bead"
+- ✅ "bead packages your computational workflows"
+- ✅ "When using bead, you can..."
+
+**Incorrect examples:**
+- ❌ "Bead is a tool for reproducible research"
+- ❌ "Getting Started with Bead"
+- ❌ "BEAD packages your computational workflows"
+
+### File Extensions and Formats
+Always use lowercase for file extensions with a period prefix.
+
+**Correct examples:**
+- ✅ "Each bead is a simple .zip file"
+- ✅ "Save your work as a .bead archive"
+- ✅ "Export to .csv format"
+- ✅ "The .zip file contains all dependencies"
+
+**Incorrect examples:**
+- ❌ "Each bead is a simple ZIP file"
+- ❌ "Save your work as a BEAD archive"
+- ❌ "Export to CSV format"
+- ❌ "The ZIP file contains all dependencies"
+
+### Command-Line Examples
+- Always show the prompt as `$` for bash commands
+- Use comments with `#` to explain commands
+- Show actual output when relevant
+- Use consistent spacing and formatting
+
+**Example:**
+```bash
+$ bead new my-analysis
+Created "my-analysis"
+
+$ cd my-analysis
+$ bead save results  # Creates .zip archive
+Successfully stored bead at ~/beads/my-analysis_20250730T120000.zip
+```
+
+### Technical Terms
+- Use "bead" (lowercase) when referring to the tool or a computational unit
+- Use "workspace" for active development directories
+- Use "archive" for saved .zip files
+- Use "box" for storage locations
+- Use "dependency" or "input" for upstream beads
+
+### Writing Tone
+- Be direct and concise
+- Use active voice
+- Avoid jargon when possible
+- Focus on practical examples
+- Address common pain points directly

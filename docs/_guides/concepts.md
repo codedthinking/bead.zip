@@ -57,7 +57,7 @@ Think of it as a computational snapshot. You can always return to recreate the e
 - Temporary state during development
 
 **Archive** (Saved bead)
-- Immutable ZIP file stored in a bead box
+- Immutable .zip file stored in a bead box
 - Timestamped and content-verified
 - The permanent, shareable record of your computation
 
@@ -172,7 +172,7 @@ $ bead save results
 
 ### 4. Sharing
 ```bash
-# Copy ZIP file to collaborator
+# Copy .zip file to collaborator
 # They can reproduce exactly
 $ bead develop my-analysis_20250730T120000.zip
 ```

@@ -1,12 +1,12 @@
 ---
 title: Core Concepts
-description: Understanding Bead's fundamental principles and design
+description: Understanding bead's fundamental principles and design
 order: 1
 ---
 
-## The Bead Philosophy
+## The bead Philosophy
 
-Research workflows are complex and hard to reproduce. Data files get moved, code gets updated, team members leave, and suddenly results can't be recreated. Bead solves this with a simple approach: **package everything needed to recreate a result into one self-contained unit**.
+Research workflows are complex and hard to reproduce. Data files get moved, code gets updated, team members leave, and suddenly results can't be recreated. bead solves this with a simple approach: **package everything needed to recreate a result into one self-contained unit**.
 
 This creates reproducible computational workflows without forcing you to change how you work.
 
@@ -17,9 +17,9 @@ output = code(*inputs)
 ```
 
 Every bead follows this pattern:
-- **Inputs**: The data you need (Bead tracks exactly which version)
-- **Code**: Your scripts, notebooks, whatever (Bead saves all of it)  
-- **Output**: The results you created (Bead packages it up nicely)
+- **Inputs**: The data you need (bead tracks exactly which version)
+- **Code**: Your scripts, notebooks, whatever (bead saves all of it)  
+- **Output**: The results you created (bead packages it up nicely)
 
 ## Key Concepts
 
@@ -35,7 +35,7 @@ Think of it as a computational snapshot. You can always return to recreate the e
 
 ## Who This Is Actually For
 
-**You'll love Bead if you:**
+**You'll love bead if you:**
 - Work with data and write code to analyze it
 - Have ever asked "what data did I use for this?" 
 - Need to share analysis with teammates
@@ -56,7 +56,7 @@ Think of it as a computational snapshot. You can always return to recreate the e
 - You can modify files, run code, test ideas
 - Temporary state during development
 
-**Archive** (Saved Bead)
+**Archive** (Saved bead)
 - Immutable ZIP file stored in a bead box
 - Timestamped and content-verified
 - The permanent, shareable record of your computation
@@ -73,11 +73,11 @@ $ bead save results
 
 ### 3. Content-Based Verification
 
-Every file in a bead has a cryptographic hash. When you load dependencies, Bead verifies you have the exact same files that produced the original results.
+Every file in a bead has a cryptographic hash. When you load dependencies, bead verifies you have the exact same files that produced the original results.
 
 ```bash
 $ bead input add processed-data
-# Bead verifies:
+# bead verifies:
 # - Correct version exists
 # - Content matches hash
 # - No corruption occurred
@@ -85,7 +85,7 @@ $ bead input add processed-data
 
 ### 4. Directed Acyclic Graphs (DAGs)
 
-Beads form dependency graphs:
+beads form dependency graphs:
 
 ```
 raw-data
@@ -129,26 +129,26 @@ data = pd.read_csv("input/validated-data/important.csv")
 
 ### 3. Tool Agnosticism
 
-Bead doesn't care about your tools:
+bead doesn't care about your tools:
 - Use any programming language
 - Use any data format
 - Use any execution method
 
-Bead only manages files and dependencies.
+bead only manages files and dependencies.
 
 ### 4. Human-Readable Archives
 
-Even without Bead installed, archives are usable:
+Even without bead installed, archives are usable:
 
 ```bash
 $ unzip analysis_20250730T120000.zip
 $ ls
 code/       # Your source code files
 data/       # Output data from your analysis
-meta/       # Bead metadata (bead, input.map, manifest)
+meta/       # bead metadata (bead, input.map, manifest)
 ```
 
-## The Bead Lifecycle
+## The bead Lifecycle
 
 ### 1. Creation
 ```bash
@@ -184,33 +184,33 @@ $ bead input add my-analysis
 # Previous outputs become new inputs
 ```
 
-## What Bead Is NOT
+## What bead Is NOT
 
-Understanding what Bead doesn't do is as important as what it does:
+Understanding what bead doesn't do is as important as what it does:
 
 ### Not a Version Control System
-- Bead tracks computational snapshots, not code evolution
+- bead tracks computational snapshots, not code evolution
 - Use Git for code versioning within beads
-- Bead complements, doesn't replace, traditional VCS
+- bead complements, doesn't replace, traditional VCS
 
 ### Not a Workflow Engine
-- Bead doesn't execute your code
+- bead doesn't execute your code
 - No job scheduling or parallelization
-- You control execution, Bead manages artifacts
+- You control execution, bead manages artifacts
 
 ### Not a Data Store
-- Bead manages references, not data hosting
+- bead manages references, not data hosting
 - No cloud storage or synchronization
 - You manage where bead boxes live
 
 ### Not a Package Manager
-- Bead doesn't install software dependencies
+- bead doesn't install software dependencies
 - Use conda, pip, or system packages
 - Document environment in your bead
 
 ## Common Patterns
 
-### Source Beads
+### Source beads
 No inputs, only outputs:
 ```bash
 $ bead new survey-data
@@ -218,7 +218,7 @@ $ curl -o output/responses.csv https://survey.com/data
 $ bead save raw-data
 ```
 
-### Processing Beads
+### Processing beads
 Transform inputs to outputs:
 ```bash
 $ bead new clean-survey
@@ -227,7 +227,7 @@ $ python clean.py input/survey-data/responses.csv output/clean.csv
 $ bead save processed
 ```
 
-### Analysis Beads
+### Analysis beads
 Final computations, often never closed:
 ```bash
 $ bead new paper-figures
@@ -238,7 +238,7 @@ $ R --file=analyze.R
 
 ## Best Practices
 
-### 1. One Concept, One Bead
+### 1. One Concept, One bead
 - Don't pack unrelated computations together
 - Split complex pipelines into logical steps
 - Each bead should have a clear purpose

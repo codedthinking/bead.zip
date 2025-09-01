@@ -1,12 +1,12 @@
 ---
 title: Dependency Management
-description: Building complex computational graphs with Bead's input system
+description: Building complex computational graphs with bead's input system
 order: 2
 ---
 
 ## Understanding Dependencies
 
-In Bead, dependencies are explicit connections between computational units. When bead B depends on bead A, it means B uses A's outputs as inputs.
+In bead, dependencies are explicit connections between computational units. When bead B depends on bead A, it means B uses A's outputs as inputs.
 
 ## The Input System
 
@@ -275,7 +275,7 @@ $ bead input map processed-data processed-data_20250730T120000+0200.zip
 
 ### Circular Dependencies
 
-Bead prevents circular dependencies:
+bead prevents circular dependencies:
 
 ```bash
 $ bead input add analysis-b
@@ -386,4 +386,4 @@ $ python full_analysis.py
 $ bead save final
 ```
 
-Ready to collaborate? Continue to [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) to learn how teams work together with Bead.
+Ready to collaborate? Continue to [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) to learn how teams work together with bead.

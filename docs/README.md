@@ -1,6 +1,6 @@
-# Bead Documentation Website
+# bead Documentation Website
 
-This is the Jekyll-based documentation website for Bead.
+This is the Jekyll-based documentation website for bead.
 
 ## Local Development
 

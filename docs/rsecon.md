@@ -12,7 +12,7 @@ permalink: /rsecon/
     </script>
 </head>
 <body>
-    <p>Redirecting to the Bead RSECon demo...</p>
+    <p>Redirecting to the bead RSECon demo...</p>
     <p>If you are not redirected automatically, <a href="https://codedthinking.github.io/bead-demo-rsecon/39-bead.html">click here</a>.</p>
 </body>
 </html>

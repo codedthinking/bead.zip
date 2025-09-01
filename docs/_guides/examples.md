@@ -1,6 +1,6 @@
 ---
 title: Real-World Examples
-description: Case studies and examples from research teams using Bead
+description: Case studies and examples from research teams using bead
 order: 4
 ---
 
@@ -394,4 +394,4 @@ $ bead save client-package
 - **Policy Alignment**: Ensure bead usage aligns with institutional data policies
 - **Workflow Design**: Design bead workflows that match team communication patterns
 
-These examples demonstrate that Bead scales from small research teams to large international collaborations, adapting to different disciplines and computational requirements while maintaining reproducibility guarantees.
+These examples demonstrate that bead scales from small research teams to large international collaborations, adapting to different disciplines and computational requirements while maintaining reproducibility guarantees.

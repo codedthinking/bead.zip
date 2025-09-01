@@ -1,13 +1,13 @@
 ---
 layout: page
 title: Installation
-description: How to install Bead for reproducible data analysis
+description: How to install bead for reproducible data analysis
 permalink: /install/
 ---
 
-# Installing Bead
+# Installing bead
 
-Bead is a tool for managing external data dependencies in reproducible research projects. Follow these instructions to install Bead on your system.
+bead is a tool for managing external data dependencies in reproducible research projects. Follow these instructions to install bead on your system.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ Bead is a tool for managing external data dependencies in reproducible research 
 
 ## Installation via pip
 
-The easiest way to install Bead is using pip:
+The easiest way to install bead is using pip:
 
 ```bash
 pip install bead
@@ -34,23 +34,23 @@ pip install -e .
 
 ## Verify installation
 
-After installation, verify that Bead is working correctly:
+After installation, verify that bead is working correctly:
 
 ```bash
 bead version
 ```
 
-This should display the installed version of Bead.
+This should display the installed version of bead.
 
 ## Getting started
 
-Once installed, you can initialize a new Bead project in any directory:
+Once installed, you can initialize a new bead project in any directory:
 
 ```bash
 bead new <project-name>
 ```
 
-Or convert an existing project to use Bead:
+Or convert an existing project to use bead:
 
 ```bash
 cd your-project-directory
@@ -74,9 +74,9 @@ If you encounter any issues during installation:
 
 ## System requirements
 
-Bead works on:
+bead works on:
 - Linux
 - macOS
 - Windows (with Python installed)
 
-Bead has minimal system requirements and should work on any system where Python runs.
+bead has minimal system requirements and should work on any system where Python runs.

@@ -4,7 +4,7 @@ title: Getting Started
 description: Get up and running with reproducible research in 5 minutes
 ---
 
-# Getting Started with Bead
+# Getting Started with bead
 
 Stop asking "what data did we use?" five times a day. This guide will get you up and running with reproducible research in just a few minutes.
 
@@ -38,11 +38,11 @@ $ bead --version
 bead version 1.0.0
 ```
 
-## Your First Bead
+## Your First bead
 
-Let's create a simple data analysis workflow to understand how Bead works.
+Let's create a simple data analysis workflow to understand how bead works.
 
-### 1. Create a New Bead
+### 1. Create a New bead
 
 ```bash
 $ bead new my-first-analysis
@@ -58,9 +58,9 @@ drwxr-xr-x  temp/
 
 ### 2. Understanding the Directory Structure
 
-Bead creates these folders, each with a specific purpose:
+bead creates these folders, each with a specific purpose:
 
-- **`input/`** - Dependencies from other beads (read-only, managed by Bead)
+- **`input/`** - Dependencies from other beads (read-only, managed by bead)
 - **`output/`** - Files you want to share with downstream beads
 - **`temp/`** - Temporary files (deleted when you save the bead)
 - **`.bead-meta/`** - Internal metadata (don't modify directly)
@@ -101,7 +101,7 @@ $ ls output/
 results.csv
 ```
 
-### 5. Save Your Bead
+### 5. Save Your bead
 
 Create an immutable snapshot of your work:
 
@@ -120,9 +120,9 @@ Successfully stored bead at /Users/you/bead-storage/my-first-analysis_20250730T1
 
 ## Working with Dependencies
 
-The real power of Bead comes from linking computations together.
+The real power of bead comes from linking computations together.
 
-### 1. Create a Data Source Bead
+### 1. Create a Data Source bead
 
 ```bash
 $ cd ..
@@ -137,7 +137,7 @@ $ bead save my-beads
 $ cd ..
 ```
 
-### 2. Use Data in Another Bead
+### 2. Use Data in Another bead
 
 ```bash
 $ bead new data-processing
@@ -245,7 +245,7 @@ bead box forget <name>       # Remove box reference
 
 ## What's Next?
 
-- Read the [Core Concepts]({{ '/guides/concepts' | relative_url }}) guide to understand Bead's philosophy
+- Read the [Core Concepts]({{ '/guides/concepts' | relative_url }}) guide to understand bead's philosophy
 - Learn about [Dependency Management]({{ '/guides/dependencies' | relative_url }}) for complex workflows
 - Explore [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) patterns
 - See [Real-World Examples]({{ '/guides/examples' | relative_url }}) from research teams

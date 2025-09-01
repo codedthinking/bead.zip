@@ -1,10 +1,10 @@
 ---
 title: Team Collaboration
-description: Patterns and practices for using Bead in team environments
+description: Patterns and practices for using bead in team environments
 order: 3
 ---
 
-## Working Together with Bead
+## Working Together with bead
 
 When you save a bead, your teammates can open it and get exactly the same setup you had. No missing files, no version confusion, no "it works on my machine" problems. They can run your analysis, modify it, and build on your work.
 
@@ -296,4 +296,4 @@ $ bead save daily-dashboard
 7. **Archive old versions** to manage storage costs
 8. **Train team members** on bead workflows and conventions
 
-Working together with Bead takes some coordination, but once your team gets the hang of it, everyone can build on each other's work without the usual headaches.
+Working together with bead takes some coordination, but once your team gets the hang of it, everyone can build on each other's work without the usual headaches.

@@ -1,6 +1,6 @@
-# Bead Documentation Website
+# bead Documentation Website
 
-This is the Jekyll-based documentation website for Bead.
+This is the Jekyll-based documentation website for bead.
 
 ## Local Development
 
@@ -39,9 +39,13 @@ bundle exec jekyll build
 
 ## Deployment
 
-The site can be deployed to:
-- GitHub Pages
-- Netlify
-- Any static hosting service
+The site is deployed to https://bead.zip/
 
-Just point to the `_site/` directory after building.
+For deployment:
+1. Build the site: `bundle exec jekyll build`
+2. Deploy the `_site/` directory to the web server
+
+The site can also be deployed to:
+- Netlify
+- Vercel
+- Any static hosting service

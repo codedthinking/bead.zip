@@ -1,14 +1,11 @@
-# Jekyll configuration for Bead documentation
-title: Bead
+# Jekyll configuration for bead documentation
+title: bead
 tagline: Reproducible Computational Research Made Simple
 description: >-
-  Bead is a lightweight CLI tool that packages your computational workflows 
+  bead is a lightweight CLI tool that packages your computational workflows 
   into self-contained, versioned units with automatic dependency tracking.
-url: "https://codedthinking.github.io"
-baseurl: "/bead.zip"
-
-# GitHub Pages compatibility
-github: [metadata]
+url: "https://bead.zip"
+baseurl: ""
 
 # Build settings
 markdown: kramdown

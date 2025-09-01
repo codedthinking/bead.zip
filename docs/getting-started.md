@@ -4,32 +4,34 @@ title: Getting Started
 description: Get up and running with reproducible research in 5 minutes
 ---
 
-# Getting Started with Bead
+# Getting Started with bead
 
 Stop asking "what data did we use?" five times a day. This guide will get you up and running with reproducible research in just a few minutes.
 
 ## Installation
 
-### macOS / Linux
+### Quick Install (Recommended)
+
+The easiest way to install bead is using pipx:
 
 ```bash
-# Download and install bead
-curl -sSL https://bead.zip/install.sh | bash
+# Install pipx if you don't have it
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
 
-# Or with pip
-pip install bead-cli
+# Install bead
+pipx install https://github.com/e3krisztian/bead
 ```
 
-### Windows
+### Alternative Methods
 
-```powershell
-# Download the installer
-Invoke-WebRequest -Uri https://bead.zip/install.ps1 -OutFile install.ps1
-.\install.ps1
+If you prefer pip:
 
-# Or with pip
-pip install bead-cli
+```bash
+pip install --user https://github.com/e3krisztian/bead
 ```
+
+For more installation options, see the [full installation guide]({{ '/install' | relative_url }}).
 
 ### Verify Installation
 
@@ -38,11 +40,11 @@ $ bead --version
 bead version 1.0.0
 ```
 
-## Your First Bead
+## Your First bead
 
-Let's create a simple data analysis workflow to understand how Bead works.
+Let's create a simple data analysis workflow to understand how bead works.
 
-### 1. Create a New Bead
+### 1. Create a New bead
 
 ```bash
 $ bead new my-first-analysis
@@ -58,9 +60,9 @@ drwxr-xr-x  temp/
 
 ### 2. Understanding the Directory Structure
 
-Bead creates these folders, each with a specific purpose:
+bead creates these folders, each with a specific purpose:
 
-- **`input/`** - Dependencies from other beads (read-only, managed by Bead)
+- **`input/`** - Dependencies from other beads (read-only, managed by bead)
 - **`output/`** - Files you want to share with downstream beads
 - **`temp/`** - Temporary files (deleted when you save the bead)
 - **`.bead-meta/`** - Internal metadata (don't modify directly)
@@ -68,11 +70,9 @@ Bead creates these folders, each with a specific purpose:
 
 ### 3. Add Some Code
 
-Create a simple analysis script:
+Create a simple analysis script in `src/analyze.py`:
 
-```bash
-$ mkdir src
-$ cat > src/analyze.py << 'EOF'
+```python
 #!/usr/bin/env python3
 import pandas as pd
 
@@ -85,8 +85,11 @@ data = pd.DataFrame({
 # Save results
 data.to_csv('output/results.csv', index=False)
 print("Analysis complete! Results saved to output/results.csv")
-EOF
+```
 
+```bash
+$ mkdir src
+$ # Create src/analyze.py with the code above
 $ chmod +x src/analyze.py
 ```
 
@@ -100,7 +103,7 @@ $ ls output/
 results.csv
 ```
 
-### 5. Save Your Bead
+### 5. Save Your bead
 
 Create an immutable snapshot of your work:
 
@@ -112,16 +115,16 @@ Boxes:
 -------------
 my-beads: /Users/you/bead-storage
 
-# Save your bead
+# Save your bead to the 'my-beads' box
 $ bead save my-beads
 Successfully stored bead at /Users/you/bead-storage/my-first-analysis_20250730T120000000000+0200.zip
 ```
 
 ## Working with Dependencies
 
-The real power of Bead comes from linking computations together.
+The real power of bead comes from linking computations together.
 
-### 1. Create a Data Source Bead
+### 1. Create a Data Source bead
 
 ```bash
 $ cd ..
@@ -136,7 +139,7 @@ $ bead save my-beads
 $ cd ..
 ```
 
-### 2. Use Data in Another Bead
+### 2. Use Data in Another bead
 
 ```bash
 $ bead new data-processing
@@ -150,7 +153,8 @@ $ ls input/raw-data/
 data.csv
 
 # Create processing script
-$ cat > process.py << 'EOF'
+# process.py:
+```python
 import pandas as pd
 
 # Load input data
@@ -162,7 +166,7 @@ df_cleaned['processed'] = True
 
 # Save output
 df_cleaned.to_csv('output/processed_data.csv', index=False)
-EOF
+```
 
 $ python process.py
 $ bead save my-beads
@@ -186,10 +190,9 @@ python analyze.py temp/intermediate.pkl > output/final.csv
 
 ### 2. Documentation
 
-Always include a README in your output folder:
+Always include a README in your output folder. Example `output/README.md`:
 
-```bash
-$ cat > output/README.md << 'EOF'
+```markdown
 # Processed Customer Data
 
 This dataset contains cleaned customer records from the 2024 survey.
@@ -203,7 +206,6 @@ This dataset contains cleaned customer records from the 2024 survey.
 3. Removed statistical outliers (>3 std dev)
 
 Generated: 2025-07-30
-EOF
 ```
 
 ### 3. Reproducible Environments
@@ -245,7 +247,7 @@ bead box forget <name>       # Remove box reference
 
 ## What's Next?
 
-- Read the [Core Concepts]({{ '/guides/concepts' | relative_url }}) guide to understand Bead's philosophy
+- Read the [Core Concepts]({{ '/guides/concepts' | relative_url }}) guide to understand bead's philosophy
 - Learn about [Dependency Management]({{ '/guides/dependencies' | relative_url }}) for complex workflows
 - Explore [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) patterns
 - See [Real-World Examples]({{ '/guides/examples' | relative_url }}) from research teams

@@ -1,12 +1,12 @@
 ---
 layout: page
 title: CLI Reference
-description: Complete command reference for Bead
+description: Complete command reference for bead
 ---
 
-# Bead CLI Reference
+# bead CLI Reference
 
-Complete reference for all Bead commands and options.
+Complete reference for all bead commands and options.
 
 ## Global Options
 
@@ -259,7 +259,7 @@ bead meta [-w <workspace>]
 
 Example:
   $ bead meta
-  Bead: my-analysis
+  bead: my-analysis
   Created: 2025-07-30T12:00:00+02:00
   Inputs: processed-data, model-config
 ```
@@ -300,7 +300,7 @@ export BEAD_WORKSPACE=/home/user/current-bead
 ```
 workspace/
 ├── .bead-meta/          # Metadata (don't edit)
-│   ├── bead            # Bead specification
+│   ├── bead            # bead specification
 │   └── input.map       # Input mappings
 ├── input/              # Input dependencies (read-only)
 │   └── <input-name>/   # One folder per input

@@ -1,6 +1,6 @@
 ---
 title: Real-World Examples
-description: Case studies and examples from research teams using Bead
+description: Case studies and examples from research teams using bead
 order: 4
 ---
 
@@ -21,10 +21,13 @@ order: 4
 ```bash
 # Data engineer creates source beads for each dataset
 $ bead new tax-records-2023
+$ cd tax-records-2023
 $ python src/import_tax_data.py  # Connects to secure database
 $ bead save confidential-data
 
-$ bead new trade-statistics  
+$ cd ..
+$ bead new trade-statistics
+$ cd trade-statistics
 $ curl -o output/trade.csv https://api.statistics.gov/trade
 $ bead save public-data
 ```
@@ -32,6 +35,7 @@ $ bead save public-data
 **Stage 2: Data Validation and Cleaning**
 ```bash
 $ bead new data-validation
+$ cd data-validation
 $ bead input add tax-records-2023
 $ bead input add trade-statistics
 
@@ -44,6 +48,7 @@ $ bead save validated-data
 **Stage 3: Analysis**
 ```bash
 $ bead new firm-analysis
+$ cd firm-analysis
 $ bead input add validated-data
 $ stata -b do src/regression_analysis.do
 $ bead save analysis-results
@@ -51,7 +56,9 @@ $ bead save analysis-results
 
 **Stage 4: Public Reporting**
 ```bash
+$ cd ..
 $ bead new public-report
+$ cd public-report
 $ bead input add analysis-results
 $ python src/anonymize_results.py  # Removes sensitive details
 $ R -f src/create_charts.R
@@ -84,12 +91,15 @@ $ bead save public-outputs
 # Each institution creates standardized data beads
 # Institution A (Germany)
 $ bead new covid-patients-germany
+$ cd covid-patients-germany
 $ python src/extract_hospital_data.py
 $ python src/standardize_format.py
 $ bead save germany-data
 
-# Institution B (USA)  
+# Institution B (USA)
+$ cd ..
 $ bead new covid-patients-usa
+$ cd covid-patients-usa
 $ SAS src/extract_ehr_data.sas
 $ python src/convert_to_standard.py
 $ bead save usa-data
@@ -98,6 +108,7 @@ $ bead save usa-data
 **Central Analysis Hub**:
 ```bash
 $ bead new meta-analysis-v1
+$ cd meta-analysis-v1
 $ bead input add germany-data
 $ bead input add usa-data
 $ bead input add italy-data
@@ -110,7 +121,9 @@ $ bead save meta-results-v1
 
 **Regulatory Submission**:
 ```bash
+$ cd ..
 $ bead new fda-submission
+$ cd fda-submission
 $ bead input add meta-results-v1
 # Create exact copies of all analysis for regulatory review
 $ python src/prepare_submission.py
@@ -142,12 +155,15 @@ $ bead save fda-package
 ```bash
 # Large climate datasets stored externally, referenced in beads
 $ bead new climate-data-2024
+$ cd climate-data-2024
 $ echo "Data location: /hpc/climate/global_2024.nc" > data_location.txt
 $ python src/create_subset.py  # Creates manageable sample
 $ bead save climate-subset
 
 # Model configurations as lightweight beads
+$ cd ..
 $ bead new model-config-v2
+$ cd model-config-v2
 $ cp config/physics_params.json output/
 $ cp config/grid_definition.nc output/
 $ bead save model-configs
@@ -158,16 +174,19 @@ $ bead save model-configs
 # Multiple model runs with different parameters
 $ for param in temperature precipitation wind; do
     bead new "climate-model-${param}"
+    cd "climate-model-${param}"
     bead input add climate-subset
     bead input add model-config-v2
     sbatch --job-name="$param" src/run_model.sh
     bead save "model-results-${param}"
+    cd ..
   done
 ```
 
 **Analysis and Reporting**:
 ```bash
-$ bead new ensemble-analysis  
+$ bead new ensemble-analysis
+$ cd ensemble-analysis
 $ bead input add model-results-temperature
 $ bead input add model-results-precipitation
 $ bead input add model-results-wind
@@ -177,7 +196,9 @@ $ python src/uncertainty_analysis.py
 $ bead save ensemble-results
 
 # Policy brief generation
+$ cd ..
 $ bead new policy-brief
+$ cd policy-brief
 $ bead input add ensemble-results
 $ python src/create_summary.py
 $ latex policy_brief.tex
@@ -209,12 +230,15 @@ $ bead save policy-outputs
 ```bash
 # Historical newspaper digitization
 $ bead new newspaper-archive
+$ cd newspaper-archive
 $ python src/scan_to_text.py archives/
 $ python src/clean_ocr_errors.py
 $ bead save digitized-texts
 
-# NLP preprocessing  
+# NLP preprocessing
+$ cd ..
 $ bead new text-preprocessing
+$ cd text-preprocessing
 $ bead input add digitized-texts
 $ python src/tokenize.py
 $ python src/named_entity_recognition.py
@@ -224,7 +248,9 @@ $ bead save processed-texts
 **Human-in-the-Loop Analysis**:
 ```bash
 # Qualitative coding with validation
+$ cd ..
 $ bead new qualitative-coding
+$ cd qualitative-coding
 $ bead input add processed-texts
 $ python src/extract_samples.py  # Creates samples for human coding
 # Manual coding step documented with inter-rater reliability
@@ -232,7 +258,9 @@ $ python src/validate_coding.py
 $ bead save coded-samples
 
 # Machine learning on coded data
+$ cd ..
 $ bead new classification-model
+$ cd classification-model
 $ bead input add coded-samples
 $ python src/train_classifier.py
 $ python src/apply_to_corpus.py
@@ -241,14 +269,18 @@ $ bead save classified-texts
 
 **Mixed-Methods Analysis**:
 ```bash
+$ cd ..
 $ bead new historical-analysis
+$ cd historical-analysis
 $ bead input add classified-texts
 $ python src/quantitative_trends.py
 $ python src/case_study_selection.py
 $ bead save analysis-results
 
 # Humanities interpretation
+$ cd ..
 $ bead new interpretation
+$ cd interpretation
 $ bead input add analysis-results
 # Qualitative analysis documented in notebooks
 $ jupyter nbconvert --execute interpretation.ipynb
@@ -280,10 +312,12 @@ $ bead save final-analysis
 ```bash
 # Master template for survey processing
 $ bead new survey-template
+$ cd survey-template
 $ cp templates/* src/
 $ bead save survey-framework
 
 # Project-specific instances
+$ cd ..
 $ bead develop survey-framework client-a-wave1/
 $ cd client-a-wave1
 $ python src/configure_survey.py --config client_a.json
@@ -293,7 +327,9 @@ $ bead save client-a-processing
 **Quality Control Pipeline**:
 ```bash
 # Automated quality checks
+$ cd ..
 $ bead new qc-wave1
+$ cd qc-wave1
 $ bead input add raw-survey-data
 $ python src/duplicate_detection.py
 $ python src/response_quality.py
@@ -301,7 +337,9 @@ $ python src/generate_qc_report.py
 $ bead save qc-results
 
 # Data cleaning decisions tracked
-$ bead new cleaning-wave1  
+$ cd ..
+$ bead new cleaning-wave1
+$ cd cleaning-wave1
 $ bead input add qc-results
 $ python src/apply_cleaning_rules.py
 $ bead save clean-data
@@ -309,7 +347,9 @@ $ bead save clean-data
 
 **Client Deliverables**:
 ```bash
+$ cd ..
 $ bead new client-deliverable
+$ cd client-deliverable
 $ bead input add clean-data
 $ python src/create_weights.py
 $ SPSS -f src/create_spss_file.sps
@@ -354,4 +394,4 @@ $ bead save client-package
 - **Policy Alignment**: Ensure bead usage aligns with institutional data policies
 - **Workflow Design**: Design bead workflows that match team communication patterns
 
-These examples demonstrate that Bead scales from small research teams to large international collaborations, adapting to different disciplines and computational requirements while maintaining reproducibility guarantees.
+These examples demonstrate that bead scales from small research teams to large international collaborations, adapting to different disciplines and computational requirements while maintaining reproducibility guarantees.

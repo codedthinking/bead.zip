@@ -1,7 +1,7 @@
 ---
 layout: page
 title: RSECon Demo
-permalink: /rsecon/
+permalink: /rsecon25/
 ---
 
 <html>

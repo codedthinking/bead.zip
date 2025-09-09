@@ -23,8 +23,8 @@
   --color-text-light: #9795B5;
   
   --color-border: #D4D2E3;
-  --color-code-bg: #1D1D40;
-  --color-code-text: #D4D2E3;
+  --color-code-bg: #D4D2E3;
+  --color-code-text: #1D1D40;
   --color-code-bg-light: #f8fafc;
   
   --font-sans: 'Brockmann', Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -244,13 +244,13 @@ a:hover {
 }
 
 .code-header {
-  background: #334155;
+  background: #9795B5;
   padding: 0.75rem 1.25rem;
-  border-bottom: 1px solid #475569;
+  border-bottom: 1px solid #5D5A88;
 }
 
 .code-title {
-  color: #cbd5e1;
+  color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -273,12 +273,12 @@ a:hover {
 }
 
 .prompt {
-  color: #10b981;
+  color: #16a34a;
   font-weight: 500;
 }
 
 .comment {
-  color: #94a3b8;
+  color: #5D5A88;
   font-style: italic;
 }
 

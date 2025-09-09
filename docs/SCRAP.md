@@ -110,3 +110,80 @@ $ bead input add data-complete
 $ python full_analysis.py
 $ bead save final
 ```
+
+## Handling Conflicts and Versions
+
+### Naming Conventions
+
+Use descriptive, timestamped names to avoid confusion:
+
+```bash
+# Good naming patterns
+survey-analysis-v1
+customer-segmentation-final
+population-model-2024q1
+```
+
+### Version Management
+
+```bash
+# Work with specific versions
+$ bead edit analysis_20250730T120000.zip
+
+# Update to latest when ready
+$ bead input update survey-data
+$ bead save team-results
+```
+
+### Conflict Resolution
+
+When team members modify the same analysis:
+
+```bash
+# Create branches with descriptive names
+$ bead edit base-analysis approach-a/
+$ bead edit base-analysis approach-b/
+
+# Compare results before merging approaches
+$ diff approach-a/output/ approach-b/output/
+```
+
+
+
+## Quality Assurance
+
+### Peer Review Process
+
+1. **Create review branch**: `bead edit analysis reviewer-name/`
+2. **Test reproduction**: Can reviewer run the analysis?
+3. **Validate outputs**: Do results make sense?
+4. **Check documentation**: Is it clear what the bead does?
+5. **Approve for sharing**: `bead save approved-results`
+
+### Testing Protocol
+
+```bash
+# Standard testing workflow
+$ bead edit analysis test-env/
+$ cd test-env
+$ make test  # Run validation tests
+$ diff output/ expected/  # Compare to known good results
+```
+
+### Workflow Orchestration
+
+```bash
+# Daily workflow coordination
+# 1. Data engineers update source data
+$ bead save raw-data-$(date +%Y%m%d)
+
+# 2. Analysts get notified and update
+$ bead input update raw-data
+$ python daily_analysis.py
+$ bead save daily-results
+
+# 3. Viz team creates reports
+$ bead input update daily-results
+$ R -f generate_dashboard.R
+$ bead save daily-dashboard
+```

@@ -73,62 +73,12 @@ $ cp ~/.beads/analysis_*.zip /shared/dropbox/
 $ bead edit /shared/dropbox/analysis_latest.zip
 ```
 
-### Version Control Integration
-
-```bash
-# Store bead metadata in git (not the data)
-$ git add .bead-meta/
-$ git commit -m "Update analysis with new methodology"
-
-# Others can see what inputs are needed
-$ git pull
-$ bead input load survey-data
-$ bead input load census-data
-```
-
 ### Network Storage
 
 ```bash
 # Mount network drive as bead box
 $ bead box add team-server /mnt/research-server/beads
 $ bead save team-server
-```
-
-## Handling Conflicts and Versions
-
-### Naming Conventions
-
-Use descriptive, timestamped names to avoid confusion:
-
-```bash
-# Good naming patterns
-survey-analysis-v1
-customer-segmentation-final
-population-model-2024q1
-```
-
-### Version Management
-
-```bash
-# Work with specific versions
-$ bead edit analysis_20250730T120000.zip
-
-# Update to latest when ready
-$ bead input update survey-data
-$ bead save team-results
-```
-
-### Conflict Resolution
-
-When team members modify the same analysis:
-
-```bash
-# Create branches with descriptive names
-$ bead edit base-analysis approach-a/
-$ bead edit base-analysis approach-b/
-
-# Compare results before merging approaches
-$ diff approach-a/output/ approach-b/output/
 ```
 
 ## Access Control and Security
@@ -150,27 +100,26 @@ $ bead box add sensitive /encrypted/sensitive-data
 
 ```bash
 # Create public versions of sensitive analyses
-$ bead edit sensitive-analysis public-version/
-# Replace sensitive data with synthetic data
-# Document what was changed
-$ bead save public-archive
+$ bead new sensitive-analysis-public
+$ cd sensitive-analysis-public
+$ bead input add sensitive-analysis
+$ python sanitize.py  # Remove PII, aggregate data
+$ bead save public-data
 ```
 
 ## Communication Patterns
 
+Some useful patterns, though not enforced by bead itself, help teams work together smoothly.
+
 ### Documentation Standards
 
-Every shared bead should include:
+Every shared bead should include a README file to help future users. See the (Social Science Template README)[https://social-science-data-editors.github.io/template_README/] for a complete documentation example.
 
 ```markdown
 # Analysis README
 
 ## Purpose
 What this bead does and why it exists
-
-## Inputs
-- survey-data: Customer survey responses (v2024-07)
-- demographics: Population statistics for weighting
 
 ## Outputs  
 - segmentation.csv: Customer segments with probabilities
@@ -190,33 +139,30 @@ python analyze.py
 Alice Smith (alice@university.edu)
 ```
 
+Take special care when documenting your data dependencies. bead explicitly declares and manages these for you. You don't want to have outdated or incorrect information in your README, which can be very confusing. No documentation is better than wrong documentation.
+
+### How to Run Your Code
+
+bead does not actually run your code, so you should communicate with your users about how to do that. The best approach is to have a single entry point script, like `run_analysis.sh` or `Makefile`, that handles all the steps. This way, users only need to know one command to get started.
+
+```bash
+# Example Makefile
+all: output/report.pdf
+output/report.pdf: src/analyze.py input/data.csv
+   python src/analyze.py input/data.csv output/report.pdf
+```
+
 ### Change Communication
 
-```bash
-# Tag major changes
-$ bead save results  # Creates timestamped version
-$ echo "Updated model with new features" > CHANGELOG.md
-```
-
-## Quality Assurance
-
-### Peer Review Process
-
-1. **Create review branch**: `bead edit analysis reviewer-name/`
-2. **Test reproduction**: Can reviewer run the analysis?
-3. **Validate outputs**: Do results make sense?
-4. **Check documentation**: Is it clear what the bead does?
-5. **Approve for sharing**: `bead save approved-results`
-
-### Testing Protocol
+Remember, your output is someone else's input. If you change something significant, let your team know.
 
 ```bash
-# Standard testing workflow
-$ bead edit analysis test-env/
-$ cd test-env
-$ make test  # Run validation tests
-$ diff output/ expected/  # Compare to known good results
+# Describe major changes
+$ echo "Updated model with new features" >> output/CHANGELOG.md
+$ bead save my-beads  # Creates timestamped version
 ```
+
+
 
 ## Large Team Coordination
 
@@ -232,50 +178,23 @@ $ diff output/ expected/  # Compare to known good results
 - Model development
 - Results interpretation
 
-**Visualization Team**: Create presentations
-- Chart and graph generation
-- Report compilation
-- Dashboard creation
-
-### Workflow Orchestration
+### Workflow 
 
 ```bash
-# Daily workflow coordination
 # 1. Data engineers update source data
-$ bead save raw-data-$(date +%Y%m%d)
+$ bead save shared-storage
 
-# 2. Analysts get notified and update
+# 2. Analysts update
 $ bead input update raw-data
-$ python daily_analysis.py
-$ bead save daily-results
+$ python analysis.py
+$ bead save my-beads
 
-# 3. Viz team creates reports
-$ bead input update daily-results
-$ R -f generate_dashboard.R
-$ bead save daily-dashboard
 ```
 
-## Common Challenges and Solutions
-
-### Challenge: Dependency Confusion
-**Problem**: Team members using different versions of inputs
-**Solution**: Use explicit version references and update notifications
-
-### Challenge: Storage Management
-**Problem**: Accumulating many bead versions
-**Solution**: Implement archival policies and cleanup procedures
-
-### Challenge: Onboarding New Team Members
-**Problem**: Complex setup for new researchers
-**Solution**: Create onboarding beads with examples and documentation
-
-### Challenge: Reproducibility Across Systems
-**Problem**: Analysis works on one system but not another
-**Solution**: Document system requirements and use containerization
 
 ## Best Practices Summary
 
-1. **Establish clear naming conventions** for beads and versions
+1. **Establish clear naming conventions** for beads
 2. **Use shared storage** that all team members can access
 3. **Document everything** - assume others will use your work
 4. **Test reproducibility** before sharing beads

@@ -180,6 +180,7 @@ df_cleaned['processed'] = True
 df_cleaned.to_csv('output/processed_data.csv', index=False)
 ```
 
+```bash
 $ python process.py
 $ bead save my-beads
 ```
@@ -262,12 +263,10 @@ bead box forget <name>       # Remove box reference
 - Read the [Core Concepts]({{ '/guides/concepts' | relative_url }}) guide to understand bead's philosophy
 - Learn about [Dependency Management]({{ '/guides/dependencies' | relative_url }}) for complex workflows
 - Explore [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) patterns
-- See [Real-World Examples]({{ '/guides/examples' | relative_url }}) from research teams
 
 ## Getting Help
 
 - **Issues**: [GitHub Issues](https://github.com/e3krisztian/bead/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/e3krisztian/bead/discussions)
 - **Documentation**: [Full Reference](/reference)
 
 Ready to make your research reproducible? Start creating beads!

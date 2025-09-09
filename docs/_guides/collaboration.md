@@ -6,7 +6,7 @@ order: 3
 
 ## Working Together with bead
 
-When you save a bead, your teammates can open it and get exactly the same setup you had. No missing files, no version confusion, no "it works on my machine" problems. They can run your analysis, modify it, and build on your work.
+When you save a bead, your teammates can open it and get exactly the same files you saved, together with the code and _references_ to upstream inputs. They can run your analysis, modify it, and build on your work.
 
 ## Basic Collaboration Pattern
 
@@ -21,9 +21,11 @@ $ python clean_data.py
 $ bead save shared-storage
 
 # Researcher B continues the work
-$ bead edit data-cleaning -x
+$ bead edit data-cleaning
 $ cd data-cleaning
-$ python analyze_cleaned.py
+# revise the data cleaning script
+$ python clean_data.py
+# save updated bead
 $ bead save shared-storage
 ```
 
@@ -45,23 +47,9 @@ $ bead box add archive /archive/project-beads
 **What people do**:
 - Work on their own computers
 - Save finished work to shared storage
-- Keep important versions in long-term archive
+- Keep past versions in long-term archive (this can be automated with scripts)
 
-### 2. Hub-and-Spoke Model
-
-**How it works**: One person manages the shared data, everyone else connects to it.
-
-```bash
-# Project lead maintains central boxes
-$ bead box add project-data /shared/data
-$ bead box add project-results /shared/results
-
-# Team members connect to shared resources
-$ bead box add shared-data /shared/data
-$ bead box add my-work ~/personal-beads
-```
-
-### 3. Pipeline Architecture
+### 2. Pipeline Architecture
 
 **Different teams handle different steps:**
 

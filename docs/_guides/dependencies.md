@@ -34,7 +34,6 @@ my-analysis/
 │   └── model-parameters/    # From another bead
 │       └── config.json
 ├── output/
-├── src/
 └── temp/
 ```
 
@@ -45,9 +44,6 @@ my-analysis/
 ```bash
 # Basic add (finds latest version)
 bead input add survey-responses
-
-# Add with custom name
-bead input add responses survey-2024
 
 # Add specific version
 bead input add survey-responses --time 20250730T120000+0200
@@ -68,7 +64,7 @@ $ ls input/
 
 # Load when needed again
 $ bead input load large-dataset
-# Data restored from bead box
+# Data restored from bead box at the exact same version
 ```
 
 ### Updating Dependencies
@@ -84,19 +80,12 @@ $ bead input update
 
 # See what would update without changing
 $ bead input update --dry-run
-```
 
-### Advanced Operations
-
-```bash
-# Remap to different source
-$ bead input map old-data new-cleaned-data
+# Go back a version (helpful if you broke something)
+$ bead input update --previous processed-data
 
 # Delete dependency entirely  
 $ bead input delete test-data
-
-# List all current inputs
-$ bead input list
 ```
 
 ## Version Management
@@ -120,20 +109,9 @@ $ bead input add survey-data
 $ bead input add survey-data --time 20250730T100000+0200
 
 # Update to previous version
-$ bead input update --prev survey-data
+$ bead input update --previous survey-data
 ```
 
-### Version Conflicts
-
-When your input is outdated:
-
-```bash
-$ bead input update
-Updating processed-data:
-  Current: processed-data_20250729T100000+0200.zip
-  Latest:  processed-data_20250730T150000+0200.zip
-Update? [y/N]: y
-```
 
 ## Complex Dependency Patterns
 
@@ -167,25 +145,29 @@ Build pipelines where each step depends on the previous:
 
 ```bash
 # Step 1: Raw data
-bead new raw-sensor-readings
+$ bead new raw-sensor-readings
+$ cd raw-sensor-readings
 # ... download data ...
-bead save data-lake
+bead save my-beads
 
-# Step 2: Cleaning  
-bead new clean-sensor-data
-bead input add raw-sensor-readings
+# Step 2: Cleaning
+$ bead new clean-sensor-data
+$ cd clean-sensor-data
+$ bead input add raw-sensor-readings
 # ... clean data ...
-bead save processed
+$ bead save my-beads
 
 # Step 3: Analysis
-bead new sensor-analysis
-bead input add clean-sensor-data
+$ bead new sensor-analysis
+$ cd sensor-analysis
+$ bead input add clean-sensor-data
 # ... analyze ...
-bead save results
+$ bead save my-beads
 
 # Step 4: Visualization
-bead new dashboard
-bead input add sensor-analysis
+$ bead new dashboard
+$ cd dashboard
+$ bead input add sensor-analysis
 # ... create plots ...
 ```
 
@@ -205,18 +187,21 @@ Implementation:
 ```bash
 # Each analysis starts with same base
 $ bead new regional-analysis
+$ cd regional-analysis
 $ bead input add base-data
 
-$ bead new temporal-analysis  
+$ bead new temporal-analysis
+$ cd temporal-analysis
 $ bead input add base-data
 
 $ bead new cohort-analysis
+$ cd cohort-analysis
 $ bead input add base-data
 ```
 
 ## Managing Large Dependencies
 
-### Selective Loading with -x Flag
+### Selective Loading with --review Flag
 
 For beads with large outputs:
 
@@ -225,23 +210,7 @@ For beads with large outputs:
 $ bead edit large-model-results
 
 # When you need to inspect outputs
-$ bead edit -x large-model-results
-```
-
-### Partial Dependencies
-
-When you only need some files:
-
-```bash
-# In your code, check what's available
-import os
-
-if os.path.exists('input/large-data/subset.csv'):
-    # Use subset for development
-    data = pd.read_csv('input/large-data/subset.csv')
-else:
-    # Full data in production
-    data = pd.read_csv('input/large-data/full.csv')
+$ bead edit --review large-model-results
 ```
 
 ## Troubleshooting Dependencies
@@ -257,133 +226,29 @@ $ bead input load model-output
 
 # Solution 2: Check if input is defined
 $ cat .bead-meta/bead | grep model-output
+
+# if not defined, add it
+$ bead input add model-output
 ```
 
 ### Wrong Version Loaded
 
 ```bash
 # Check current version
-$ ls -la input/processed-data/
-# Check timestamp in filename
+$ bead status
+Bead Name: clean-sensor-data
+
+Inputs:
+
+input/raw-sensor-readings
+	Status:      loaded
+	Bead:        raw-sensor-readings # 20250909T120353663121+0100
+	Box[es]:
+	 * -r my-beads # 20250909T120353663121+0100
 
 # Update to latest
-$ bead input update processed-data
-
-# Or pin to specific version
-$ bead input map processed-data processed-data_20250730T120000+0200.zip
+$ bead input update raw-sensor-readings
 ```
 
-### Circular Dependencies
-
-bead prevents circular dependencies:
-
-```bash
-$ bead input add analysis-b
-ERROR: Circular dependency detected:
-  analysis-a → analysis-b → analysis-a
-```
-
-Solution: Refactor into proper DAG:
-```bash
-# Extract common elements
-$ bead new shared-preprocessing
-# Both analyses can depend on this
-```
-
-## Best Practices
-
-### 1. Descriptive Input Names
-
-```bash
-# Match input name to source bead
-$ bead input add customer-demographics
-
-# Clear names in code
-demographics = pd.read_csv('input/customer-demographics/data.csv')
-```
-
-### 2. Document Dependencies
-
-In your README:
-```markdown
-## Dependencies
-
-This bead requires:
-- `survey-responses`: Raw survey data (v2024-07-30 or later)
-- `census-data`: Population statistics for weighting
-```
-
-### 3. Test with Different Versions
-
-```bash
-# Test with latest
-$ bead input update
-$ make test
-
-# Test with production version
-$ bead input map survey-data survey-data_20250701T000000+0200.zip
-$ make test
-```
-
-### 4. Handle Missing Inputs Gracefully
-
-```python
-import os
-import sys
-
-required_inputs = ['survey-data', 'model-parameters']
-for inp in required_inputs:
-    if not os.path.exists(f'input/{inp}'):
-        print(f"ERROR: Required input '{inp}' not loaded")
-        print(f"Run: bead input load {inp}")
-        sys.exit(1)
-```
-
-## Advanced Patterns
-
-### Conditional Dependencies
-
-```python
-# config.json specifies which inputs to use
-config = json.load(open('config.json'))
-
-if config['use_external_data']:
-    if not os.path.exists('input/external-source'):
-        raise ValueError("External data not loaded")
-    external = pd.read_csv('input/external-source/data.csv')
-```
-
-### Dependency Versioning in Analysis
-
-Track which versions produced results:
-
-```python
-# Record input versions in output
-import os
-import json
-
-versions = {}
-for input_dir in os.listdir('input'):
-    # Get version from symlink or metadata
-    versions[input_dir] = get_input_version(input_dir)
-
-with open('output/input-versions.json', 'w') as f:
-    json.dump(versions, f, indent=2)
-```
-
-### Multi-Stage Processing
-
-```bash
-# Stage 1: Quick prototype with subset
-$ bead input add data-subset
-$ python prototype.py
-$ bead save prototype
-
-# Stage 2: Full analysis with complete data  
-$ bead input delete data-subset
-$ bead input add data-complete
-$ python full_analysis.py
-$ bead save final
-```
 
 Ready to collaborate? Continue to [Team Collaboration]({{ '/guides/collaboration' | relative_url }}) to learn how teams work together with bead.

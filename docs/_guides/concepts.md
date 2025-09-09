@@ -12,6 +12,8 @@ This creates reproducible computational workflows without forcing you to change 
 
 ### The Fundamental Pattern
 
+Output is created by applying code to inputs:
+
 ```
 output = code(*inputs)
 ```
@@ -33,21 +35,6 @@ When you save a bead, it becomes an immutable archive containing:
 
 Think of it as a computational snapshot. You can always return to recreate the exact same results.
 
-## Who This Is Actually For
-
-**You'll love bead if you:**
-- Work with data and write code to analyze it
-- Have ever asked "what data did I use for this?" 
-- Need to share analysis with teammates
-- Want to actually reproduce your own work months later
-- Use Python, R, Stata, Julia, shell scripts, or really anything
-- Care more about getting stuff done than learning new frameworks
-
-**You might want something else if you:**
-- Just need to track code changes (use Git)
-- Want a workflow orchestrator (try Airflow or similar)  
-- Need to manage software installations (use conda/Docker)
-- Are building web apps or mobile apps (this is for data analysis)
 
 ### 2. Workspace vs Archive
 
@@ -97,7 +84,7 @@ analysis → paper
 figures
 ```
 
-Rules:
+Rules (not enforced by bead, but good practice):
 - Dependencies flow in one direction
 - No circular dependencies allowed
 - Each node is independently reproducible
@@ -190,7 +177,7 @@ Understanding what bead doesn't do is as important as what it does:
 
 ### Not a Version Control System
 - bead tracks computational snapshots, not code evolution
-- Use Git for code versioning within beads
+- Feel free to use Git for code versioning within beads
 - bead complements, doesn't replace, traditional VCS
 
 ### Not a Workflow Engine
@@ -211,11 +198,12 @@ Understanding what bead doesn't do is as important as what it does:
 ## Common Patterns
 
 ### Source beads
-No inputs, only outputs:
+No inputs, only outputs, because you have to start _somewhere_:
 ```bash
 $ bead new survey-data
 $ curl -o output/responses.csv https://survey.com/data
-$ bead save raw-data
+$ bead save my-beads
+Successfully stored bead at /Users/you/bead-storage/survey-data_20250909T142438714494+0100.zip.
 ```
 
 ### Processing beads
@@ -224,11 +212,12 @@ Transform inputs to outputs:
 $ bead new clean-survey
 $ bead input add survey-data
 $ python clean.py input/survey-data/responses.csv output/clean.csv
-$ bead save processed
+$ bead save my-beads
+Successfully stored bead at /Users/you/bead-storage/clean-survey_20250909T143500123456+0100.zip.
 ```
 
 ### Analysis beads
-Final computations, often never closed:
+Final computations, often no downstream dependencies:
 ```bash
 $ bead new paper-figures
 $ bead input add clean-survey

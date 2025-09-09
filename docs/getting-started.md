@@ -42,8 +42,15 @@ For more installation options, see the [full installation guide]({{ '/install' |
 ### Verify Installation
 
 ```bash
-$ bead --version
-bead version 1.0.0
+$ bead version
+
+Python:
+------
+3.13.0 (main, Oct  7 2024, 05:02:14) [Clang 15.0.0 (clang-1500.1.0.2.5)]
+
+Bead:
+----
+0.9.0.dev1
 ```
 
 ## Your First bead
@@ -96,7 +103,6 @@ print("Analysis complete! Results saved to output/results.csv")
 ```bash
 $ mkdir src
 $ # Create src/analyze.py with the code above
-$ chmod +x src/analyze.py
 ```
 
 ### 4. Run Your Analysis
@@ -183,11 +189,11 @@ $ bead save my-beads
 ### 1. Clear Folder Usage
 
 ```bash
-# ✅ Good: Source data in output/
-echo "data" > output/dataset.csv
+# ✅ Good: Created data in output/
+df_cleaned.to_csv('output/processed_data.csv', index=False)
 
-# ❌ Bad: Source data in temp/ (will be lost!)
-echo "data" > temp/dataset.csv
+# ❌ Bad: Created data in temp/ (will be lost!)
+df_cleaned.to_csv('temp/dataset.csv', index=False)
 
 # ✅ Good: Intermediate files in temp/
 python preprocess.py > temp/intermediate.pkl
@@ -196,7 +202,7 @@ python analyze.py temp/intermediate.pkl > output/final.csv
 
 ### 2. Documentation
 
-Always include a README in your output folder. Example `output/README.md`:
+It is good practice to include a README in your output folder. This will be loaded together with the data and your collaborators will thank you! Example `output/README.md`:
 
 ```markdown
 # Processed Customer Data
@@ -235,7 +241,7 @@ $ conda env export > environment.yml
 # Create and manage workspaces
 bead new <name>              # Create new bead
 bead edit <bead-ref>         # Open existing bead
-bead edit --review <ref>     # Open with output data
+bead edit --review <ref>     # Open with output data to review
 bead save <box>              # Save to bead box
 bead discard                 # Delete workspace
 
@@ -243,7 +249,7 @@ bead discard                 # Delete workspace
 bead input add <name>        # Add and load dependency
 bead input load <name>       # Load existing dependency
 bead input update            # Update all dependencies
-bead input unload <name>     # Free disk space
+bead input unload <name>     # Unload dependency and free disk space
 
 # Manage storage
 bead box add <name> <path>   # Add storage location
@@ -260,8 +266,8 @@ bead box forget <name>       # Remove box reference
 
 ## Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/codedthinking/bead.zip/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/codedthinking/bead.zip/discussions)
+- **Issues**: [GitHub Issues](https://github.com/e3krisztian/bead/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/e3krisztian/bead/discussions)
 - **Documentation**: [Full Reference](/reference)
 
 Ready to make your research reproducible? Start creating beads!

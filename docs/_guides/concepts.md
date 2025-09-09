@@ -132,7 +132,7 @@ $ unzip analysis_20250730T120000.zip
 $ ls
 code/       # Your source code files
 data/       # Output data from your analysis
-meta/       # bead metadata (bead, input.map, manifest)
+meta/       # bead metadata (bead, manifest)
 ```
 
 ## The bead Lifecycle

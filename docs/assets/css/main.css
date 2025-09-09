@@ -23,8 +23,8 @@
   --color-text-light: #9795B5;
   
   --color-border: #D4D2E3;
-  --color-code-bg: #1D1D40;
-  --color-code-text: #D4D2E3;
+  --color-code-bg: #D4D2E3;
+  --color-code-text: #1D1D40;
   --color-code-bg-light: #f8fafc;
   
   --font-sans: 'Brockmann', Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -244,13 +244,13 @@ a:hover {
 }
 
 .code-header {
-  background: #334155;
+  background: #9795B5;
   padding: 0.75rem 1.25rem;
-  border-bottom: 1px solid #475569;
+  border-bottom: 1px solid #5D5A88;
 }
 
 .code-title {
-  color: #cbd5e1;
+  color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -262,22 +262,23 @@ a:hover {
   padding: 1.25rem;
   overflow-x: auto;
   background: var(--color-code-bg);
+  line-height: 1.0;
 }
 
 .code-example code {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
-  line-height: 1.6;
+  line-height: 1.0;
   color: var(--color-code-text);
 }
 
 .prompt {
-  color: #10b981;
+  color: #16a34a;
   font-weight: 500;
 }
 
 .comment {
-  color: #94a3b8;
+  color: #5D5A88;
   font-style: italic;
 }
 
@@ -396,12 +397,14 @@ a:hover {
   border-radius: 0.5rem;
   padding: 1rem;
   overflow-x: auto;
+  line-height: 1.0;
 }
 
 .workflow-step code {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--color-code-text);
+  line-height: 1.0;
 }
 
 
@@ -595,6 +598,7 @@ a:hover {
   overflow-x: auto;
   margin: 1.5rem 0;
   border: 1px solid var(--color-border);
+  line-height: 1.0;
 }
 
 .page-body ul,
@@ -745,6 +749,7 @@ a:hover {
   overflow-x: auto;
   margin: 1.5rem 0;
   border: 1px solid var(--color-border);
+  line-height: 1.0;
 }
 
 .guide-body ul,
@@ -829,6 +834,30 @@ a:hover {
   }
 }
 
+/* Fix line-height for all code blocks to prevent ASCII art breaking */
+.language-plaintext,
+.language-bash,
+.language-shell,
+.language-text,
+.language-console,
+.language-terminal {
+  line-height: 1 !important;
+}
+
+/* Ensure no paragraph spacing within code blocks */
+pre p {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+/* Ensure proper white-space handling for code blocks */
+pre, pre code {
+  white-space: pre !important;
+  white-space-collapse: preserve !important;
+  line-height: 1 !important;
+  font-size: 0.8125rem !important;
+}
+
 /* Grid pattern overlay for visual brand consistency */
 .grid-overlay {
   background-image: 
@@ -877,5 +906,27 @@ pre code {
   padding: 0;
   border: none;
   font-size: 0.8125rem;
+  line-height: 1 !important;
+  display: block;
+}
+
+/* Ensure all pre elements have proper line-height */
+pre {
+  line-height: 1 !important;
+}
+
+/* Target all code blocks specifically */
+.highlight pre,
+.highlighter-rouge pre,
+div.highlight pre,
+div.highlighter-rouge pre {
+  line-height: 1 !important;
+}
+
+.highlight code,
+.highlighter-rouge code,
+div.highlight code,
+div.highlighter-rouge code {
+  line-height: 1 !important;
 }
 

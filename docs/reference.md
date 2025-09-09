@@ -331,8 +331,7 @@ Example:
 ```
 workspace/
 ├── .bead-meta/          # Metadata (don't edit)
-│   ├── bead            # bead specification
-│   └── input.map       # Input mappings
+│   └── bead            # bead specification
 ├── input/              # Input dependencies (read-only)
 │   └── <input-name>/   # One folder per input
 ├── output/             # Files to share

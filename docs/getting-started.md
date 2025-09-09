@@ -163,9 +163,9 @@ $ bead input add raw-data
 # Check what was loaded
 $ ls input/raw-data/
 data.csv
+```
 
-# Create processing script
-# process.py:
+Create processing script `process.py`:
 ```python
 import pandas as pd
 

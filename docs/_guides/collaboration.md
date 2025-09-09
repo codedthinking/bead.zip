@@ -21,7 +21,7 @@ $ python clean_data.py
 $ bead save shared-storage
 
 # Researcher B continues the work
-$ bead develop data-cleaning -x
+$ bead edit data-cleaning -x
 $ cd data-cleaning
 $ python analyze_cleaned.py
 $ bead save shared-storage
@@ -82,7 +82,7 @@ Team A finishes their work and saves a bead. Team B uses that bead as input for 
 $ cp ~/.beads/analysis_*.zip /shared/dropbox/
 
 # Team member loads from shared location
-$ bead develop /shared/dropbox/analysis_latest.zip
+$ bead edit /shared/dropbox/analysis_latest.zip
 ```
 
 ### Version Control Integration
@@ -123,7 +123,7 @@ population-model-2024q1
 
 ```bash
 # Work with specific versions
-$ bead develop analysis_20250730T120000.zip
+$ bead edit analysis_20250730T120000.zip
 
 # Update to latest when ready
 $ bead input update survey-data
@@ -136,8 +136,8 @@ When team members modify the same analysis:
 
 ```bash
 # Create branches with descriptive names
-$ bead develop base-analysis approach-a/
-$ bead develop base-analysis approach-b/
+$ bead edit base-analysis approach-a/
+$ bead edit base-analysis approach-b/
 
 # Compare results before merging approaches
 $ diff approach-a/output/ approach-b/output/
@@ -162,7 +162,7 @@ $ bead box add sensitive /encrypted/sensitive-data
 
 ```bash
 # Create public versions of sensitive analyses
-$ bead develop sensitive-analysis public-version/
+$ bead edit sensitive-analysis public-version/
 # Replace sensitive data with synthetic data
 # Document what was changed
 $ bead save public-archive
@@ -214,7 +214,7 @@ $ echo "Updated model with new features" > CHANGELOG.md
 
 ### Peer Review Process
 
-1. **Create review branch**: `bead develop analysis reviewer-name/`
+1. **Create review branch**: `bead edit analysis reviewer-name/`
 2. **Test reproduction**: Can reviewer run the analysis?
 3. **Validate outputs**: Do results make sense?
 4. **Check documentation**: Is it clear what the bead does?
@@ -224,7 +224,7 @@ $ echo "Updated model with new features" > CHANGELOG.md
 
 ```bash
 # Standard testing workflow
-$ bead develop analysis test-env/
+$ bead edit analysis test-env/
 $ cd test-env
 $ make test  # Run validation tests
 $ diff output/ expected/  # Compare to known good results

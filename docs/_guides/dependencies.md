@@ -222,10 +222,10 @@ For beads with large outputs:
 
 ```bash
 # Development: don't load outputs
-$ bead develop large-model-results
+$ bead edit large-model-results
 
 # When you need to inspect outputs
-$ bead develop -x large-model-results
+$ bead edit -x large-model-results
 ```
 
 ### Partial Dependencies

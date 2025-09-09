@@ -318,7 +318,7 @@ $ bead save survey-framework
 
 # Project-specific instances
 $ cd ..
-$ bead develop survey-framework client-a-wave1/
+$ bead edit survey-framework client-a-wave1/
 $ cd client-a-wave1
 $ python src/configure_survey.py --config client_a.json
 $ bead save client-a-processing

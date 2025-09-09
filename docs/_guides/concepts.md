@@ -174,7 +174,7 @@ $ bead save results
 ```bash
 # Copy .zip file to collaborator
 # They can reproduce exactly
-$ bead develop my-analysis_20250730T120000.zip
+$ bead edit my-analysis_20250730T120000.zip
 ```
 
 ### 5. Building Upon

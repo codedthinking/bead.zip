@@ -20,7 +20,7 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
 # Install bead
-pipx install https://github.com/e3krisztian/bead
+pipx install git+https://github.com/e3krisztian/bead.git
 ```
 
 ### Alternative Methods
@@ -28,7 +28,13 @@ pipx install https://github.com/e3krisztian/bead
 If you prefer pip:
 
 ```bash
-pip install --user https://github.com/e3krisztian/bead
+pip install --user git+https://github.com/e3krisztian/bead.git
+```
+
+To install the latest development version, use the `--force` flag with pipx to update:
+
+```bash
+pipx install --force git+https://github.com/e3krisztian/bead.git
 ```
 
 For more installation options, see the [full installation guide]({{ '/install' | relative_url }}).
@@ -228,10 +234,10 @@ $ conda env export > environment.yml
 ```bash
 # Create and manage workspaces
 bead new <name>              # Create new bead
-bead develop <bead-ref>      # Open existing bead
-bead develop -x <bead-ref>   # Open with output data
+bead edit <bead-ref>         # Open existing bead
+bead edit --review <ref>     # Open with output data
 bead save <box>              # Save to bead box
-bead zap                     # Delete workspace
+bead discard                 # Delete workspace
 
 # Manage dependencies
 bead input add <name>        # Add and load dependency

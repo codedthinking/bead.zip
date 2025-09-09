@@ -323,50 +323,6 @@ Example:
   $ bead status -v  # More detailed output
 ```
 
-## Metadata Commands
-
-### `bead meta`
-
-View bead metadata.
-
-```bash
-bead meta [-w <workspace>]
-
-Example:
-  $ bead meta
-  bead: my-analysis
-  Created: 2025-07-30T12:00:00+02:00
-  Inputs: processed-data, model-config
-```
-
-### `bead xmeta`
-
-Export extended metadata.
-
-```bash
-bead xmeta <bead-archive>
-
-Example:
-  $ bead xmeta my-analysis_20250730.zip > metadata.json
-```
-
-## Environment Variables
-
-### `BEAD_PATH`
-
-Colon-separated list of directories to search for bead boxes.
-
-```bash
-export BEAD_PATH=/shared/beads:/archive/beads
-```
-
-### `BEAD_WORKSPACE`
-
-Default workspace directory.
-
-```bash
-export BEAD_WORKSPACE=/home/user/current-bead
-```
 
 ## File Structure
 
@@ -395,68 +351,6 @@ bead-name_TIMESTAMP.zip
     └── manifest       # File checksums
 ```
 
-## Exit Codes
-
-- `0` - Success
-- `1` - General error
-- `2` - Usage error (invalid arguments)
-- `3` - Workspace error (not a valid bead)
-- `4` - Dependency error (missing/invalid input)
-- `5` - Box error (storage issues)
-
-## Common Workflows
-
-### Basic Development Cycle
-
-```bash
-# 1. Create new bead
-$ bead new my-analysis
-$ cd my-analysis
-
-# 2. Add dependencies
-$ bead input add clean-data
-
-# 3. Develop
-$ python analyze.py
-
-# 4. Save snapshot
-$ bead save results
-
-# 5. Clean up
-$ cd ..
-$ bead discard my-analysis
-```
-
-### Updating Dependencies
-
-```bash
-# Check for updates
-$ bead input update --dry-run
-
-# Update all inputs
-$ bead input update --all
-
-# Rerun analysis
-$ make all
-
-# Save new version
-$ bead save results
-```
-
-### Debugging Dependencies
-
-```bash
-# List current inputs
-$ ls -la input/
-
-# Check input metadata
-$ cat .bead-meta/input.map
-
-# Verify input contents
-$ head input/my-data/data.csv
-
-# Check available versions
-$ ls /path/to/box/my-data_*.zip
-```
+## Usage Patterns
 
 For more detailed examples and patterns, see our [Guides](/guides).

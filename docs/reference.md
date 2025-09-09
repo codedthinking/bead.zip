@@ -275,47 +275,6 @@ Example:
   Box forgotten
 ```
 
-### `bead box rebuild`
-
-Rebuild the SQLite index for bead boxes.
-
-```bash
-bead box rebuild [--box BOX | --dir DIR | --all]
-
-Options:
-  --box BOX    Box name to rebuild
-  --dir DIR    Box directory to rebuild  
-  --all        Rebuild all boxes
-
-Examples:
-  $ bead box rebuild --box demo
-  Rebuilding index for box "demo" at /path/to/box
-  ✓ Success
-  
-  $ bead box rebuild --all
-  $ bead box rebuild  # Rebuilds default box if only one defined
-```
-
-### `bead box sync`
-
-Sync the SQLite index for bead boxes (incremental update).
-
-```bash
-bead box sync [--box BOX | --dir DIR | --all]
-
-Options:
-  --box BOX    Box name to sync
-  --dir DIR    Box directory to sync
-  --all        Sync all boxes
-
-Examples:
-  $ bead box sync --box shared
-  Syncing index for box "shared"
-  ✓ Updated
-  
-  $ bead box sync --all
-  $ bead box sync  # Syncs default box if only one defined
-```
 
 ## Web Visualization
 

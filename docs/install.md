@@ -11,7 +11,7 @@ bead is a tool for managing external data dependencies in reproducible research 
 
 ## Prerequisites
 
-- Python 3.7 or higher
+- Python 3.10 or higher
 - pipx (recommended) or pip
 - Git (for installation from GitHub)
 
@@ -25,7 +25,7 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
 # Install bead
-pipx install git+https://github.com/e3krisztian/bead.git
+pipx install git+https://github.com/e3krisztian/bead
 ```
 
 This ensures bead is available globally without interfering with other Python packages.
@@ -35,13 +35,13 @@ This ensures bead is available globally without interfering with other Python pa
 If you prefer using pip directly:
 
 ```bash
-pip install --user git+https://github.com/e3krisztian/bead.git
+pip install --user git+https://github.com/e3krisztian/bead
 ```
 
 To force reinstall/update to the latest version:
 
 ```bash
-pipx install --force git+https://github.com/e3krisztian/bead.git
+pipx install --force git+https://github.com/e3krisztian/bead
 ```
 
 Note: Using `--user` is recommended to avoid conflicts with system packages.
@@ -51,7 +51,7 @@ Note: Using `--user` is recommended to avoid conflicts with system packages.
 To install the latest development version for contributing:
 
 ```bash
-git clone https://github.com/e3krisztian/bead.git
+git clone https://github.com/e3krisztian/bead
 cd bead
 pip install -e .
 ```

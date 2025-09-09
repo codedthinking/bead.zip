@@ -20,7 +20,7 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
 # Install bead
-pipx install git+https://github.com/e3krisztian/bead.git
+pipx install git+https://github.com/e3krisztian/bead
 ```
 
 ### Alternative Methods
@@ -28,13 +28,12 @@ pipx install git+https://github.com/e3krisztian/bead.git
 If you prefer pip:
 
 ```bash
-pip install --user git+https://github.com/e3krisztian/bead.git
+pip install --user git+https://github.com/e3krisztian/bead
 ```
 
 To install the latest development version, use the `--force` flag with pipx to update:
-
 ```bash
-pipx install --force git+https://github.com/e3krisztian/bead.git
+pipx install --force git+https://github.com/e3krisztian/bead
 ```
 
 For more installation options, see the [full installation guide]({{ '/install' | relative_url }}).

@@ -13,6 +13,7 @@ bead is a tool for managing external data dependencies in reproducible research 
 
 - Python 3.7 or higher
 - pipx (recommended) or pip
+- Git (for installation from GitHub)
 
 ## Recommended: Installation via pipx
 
@@ -24,7 +25,7 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
 # Install bead
-pipx install https://github.com/e3krisztian/bead
+pipx install git+https://github.com/e3krisztian/bead.git
 ```
 
 This ensures bead is available globally without interfering with other Python packages.
@@ -34,7 +35,13 @@ This ensures bead is available globally without interfering with other Python pa
 If you prefer using pip directly:
 
 ```bash
-pip install --user https://github.com/e3krisztian/bead
+pip install --user git+https://github.com/e3krisztian/bead.git
+```
+
+To force reinstall/update to the latest version:
+
+```bash
+pipx install --force git+https://github.com/e3krisztian/bead.git
 ```
 
 Note: Using `--user` is recommended to avoid conflicts with system packages.
@@ -67,12 +74,7 @@ Once installed, you can initialize a new bead project in any directory:
 bead new <project-name>
 ```
 
-Or convert an existing project to use bead:
 
-```bash
-cd your-project-directory
-bead init
-```
 
 ## Next steps
 
@@ -95,5 +97,16 @@ bead works on:
 - Linux
 - macOS
 - Windows (with Python installed)
+
+### SQLite Index (v0.9+)
+
+Starting with version 0.9, bead uses SQLite to index bead boxes for improved performance. The SQLite database (`.index.sqlite`) is automatically created in each box directory when you:
+
+- Add a new box with `bead box add`
+- Save beads to a box with `bead save`
+- Rebuild the index with `bead box rebuild`
+- Sync the index with `bead box sync`
+
+This index enables fast searching and dependency resolution across large collections of beads. No additional SQLite installation is required as Python includes SQLite support by default.
 
 bead has minimal system requirements and should work on any system where Python runs.

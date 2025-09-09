@@ -11,12 +11,43 @@ Complete reference for all bead commands and options.
 ## Global Options
 
 ```bash
-bead [--version] [--help] <command> [<args>]
+bead [-h] [--help] <command> [<args>]
 
 Options:
-  --version    Show version information
-  --help       Show help message
-  -w PATH      Workspace directory (default: current directory)
+  -h, --help   Show help message
+
+Commands:
+  new          Create and initialize new workspace
+  edit         Create workspace from specified bead
+  discard      Delete workspace
+  save         Save workspace in a box
+  status       Show workspace information
+  web          Manage/visualize dependency graphs
+  nuke         Delete workspace (alias for discard)
+  version      Show program version
+  input        Manage data from other beads
+  box          Manage bead boxes
+```
+
+## Version Information
+
+### `bead version`
+
+Show bead and Python version information.
+
+```bash
+bead version [-h]
+
+Example:
+  $ bead version
+  
+  Python:
+  ------
+  3.13.0 (main, Oct  7 2024, 05:02:14) [Clang 15.0.0]
+  
+  Bead:
+  ----
+  0.9.0.dev1
 ```
 
 ## Core Commands
@@ -36,23 +67,25 @@ Example:
   Created "customer-analysis"
 ```
 
-### `bead develop`
+### `bead edit`
 
-Open an existing bead for development.
+Create workspace from specified bead (formerly `develop`).
 
 ```bash
-bead develop <bead-ref> [-w <workspace>] [-x|--extract-output]
+bead edit <bead-ref> [<workspace>] [-t TIME] [--review]
 
 Arguments:
   bead-ref     Bead name, timestamp, or archive path
+  workspace    Directory for workspace (default: derive from bead name)
 
 Options:
-  -x, --extract-output    Also extract output data
+  -t, --time TIME    Use specific version timestamp (default: latest)
+  --review           Include output data for review
 
 Examples:
-  $ bead develop my-analysis                    # Latest version
-  $ bead develop my-analysis_20250730T120000.zip  # Specific version
-  $ bead develop -x my-analysis                 # With outputs
+  $ bead edit my-analysis                    # Latest version
+  $ bead edit my-analysis_20250730T120000.zip  # Specific version
+  $ bead edit --review my-analysis            # With outputs
 ```
 
 ### `bead save`
@@ -70,77 +103,91 @@ Example:
   Successfully stored bead at /path/to/box/my-bead_20250730T120000.zip
 ```
 
-### `bead zap`
+### `bead discard` / `bead nuke`
 
-Delete a workspace (handles read-only input folders).
+Delete workspace directory (handles read-only input folders).
 
 ```bash
-bead zap [-w <workspace>]
+bead discard [<workspace>] [-f|--force]
+bead nuke [<workspace>] [-f|--force]  # Alias for discard
 
-Example:
-  $ bead zap
-  Workspace deleted
+Arguments:
+  workspace    Directory to delete (default: current directory)
+
+Options:
+  -f, --force  Delete even if not a valid workspace (DANGER!)
+
+Examples:
+  $ bead discard
+  Deleted workspace /path/to/workspace
+  
+  $ bead discard ../old-project
+  $ bead nuke -f damaged-workspace  # Force delete
 ```
 
 ## Input Management
 
 ### `bead input add`
 
-Add a new input dependency.
+Define dependency and load its data.
 
 ```bash
-bead input add <input-name> [<bead-ref>] [--time TIME]
+bead input add <input-name> [<bead-ref>] [-t TIME] [-w WORKSPACE]
 
 Arguments:
   input-name   Name for this input in your workspace
   bead-ref     Source bead (default: same as input-name)
 
 Options:
-  --time TIME  Use specific version timestamp
+  -t, --time TIME        Use specific version timestamp
+  -w, --workspace DIR    Workspace directory
 
 Examples:
   $ bead input add survey-data
   $ bead input add responses survey-2024
-  $ bead input add old-model model --time 20250601T000000+0200
+  $ bead input add old-model model -t 20250601T000000+0200
 ```
 
 ### `bead input load`
 
-Load data for existing input dependencies.
+Load data from already defined dependency.
 
 ```bash
-bead input load [<input-name>] [--all]
+bead input load [<input-name>] [-w WORKSPACE]
 
 Arguments:
-  input-name   Specific input to load
+  input-name   Specific input to load (default: all inputs)
 
 Options:
-  --all        Load all defined inputs
+  -w, --workspace DIR    Workspace directory
 
 Examples:
   $ bead input load survey-data
-  $ bead input load --all
+  $ bead input load  # Load all inputs
 ```
 
 ### `bead input update`
 
-Update inputs to newer versions.
+Update input[s] to newest version or defined bead.
 
 ```bash
-bead input update [<input-name>] [--all] [--time TIME] [--prev]
+bead input update [<input-name>] [<bead-ref>] [-t TIME] [-N] [-P] [-w WORKSPACE]
 
 Arguments:
-  input-name   Specific input to update
+  input-name   Specific input to update (default: all inputs)
+  bead-ref     Bead to load data from (default: same bead, newest version)
 
 Options:
-  --all        Update all inputs
-  --time TIME  Update to specific timestamp
-  --prev       Update to previous version
+  -t, --time TIME        Use specific version timestamp
+  -N, --next             Update to next version
+  -P, --prev, --previous Update to previous version
+  -w, --workspace DIR    Workspace directory
 
 Examples:
   $ bead input update processed-data
-  $ bead input update --all
-  $ bead input update --prev my-model
+  $ bead input update  # Update all inputs
+  $ bead input update -P my-model  # Previous version
+  $ bead input update data-input other-bead  # Remap to different bead
 ```
 
 ### `bead input unload`
@@ -148,38 +195,41 @@ Examples:
 Remove input data but keep dependency definition.
 
 ```bash
-bead input unload <input-name>
+bead input unload [<input-name>] [-w WORKSPACE]
 
-Example:
+Arguments:
+  input-name   Specific input to unload (default: all inputs)
+
+Options:
+  -w, --workspace DIR    Workspace directory
+
+Examples:
   $ bead input unload large-dataset
-  Input data removed (definition kept)
+  $ bead input unload  # Unload all inputs
 ```
 
-### `bead input delete`
+### `bead input delete` / `bead input rm`
 
 Remove input dependency entirely.
 
 ```bash
-bead input delete <input-name>
+bead input delete <input-name> [-w WORKSPACE]
+bead input rm <input-name> [-w WORKSPACE]  # Alias for delete
 
-Example:
+Arguments:
+  input-name   Input to remove
+
+Options:
+  -w, --workspace DIR    Workspace directory
+
+Examples:
   $ bead input delete old-data
-  Input dependency removed
-```
-
-### `bead input map`
-
-Remap input to different source bead.
-
-```bash
-bead input map <input-name> <new-bead-ref>
-
-Example:
-  $ bead input map test-data production-data
-  Input remapped
+  $ bead input rm unused-model
 ```
 
 ## Box Management
+
+bead boxes are storage locations for your bead archives. Starting with version 0.9+, boxes use SQLite indexes for fast searching and dependency resolution. The `.index.sqlite` file in each box directory maintains metadata about all beads stored there.
 
 ### `bead box add`
 
@@ -225,6 +275,7 @@ Example:
   Box forgotten
 ```
 
+
 ## Web Visualization
 
 ### `bead web`
@@ -248,50 +299,30 @@ Example Pipeline:
   $ bead web heads color png graph.png view graph.png
 ```
 
-## Metadata Commands
+## Workspace Information
 
-### `bead meta`
+### `bead status`
 
-View bead metadata.
+Show workspace information and input status.
 
 ```bash
-bead meta [-w <workspace>]
+bead status [-w WORKSPACE] [-v]
+
+Options:
+  -w, --workspace DIR    Workspace directory
+  -v, --verbose          Show more detailed information
 
 Example:
-  $ bead meta
-  bead: my-analysis
+  $ bead status
+  Workspace: my-analysis
   Created: 2025-07-30T12:00:00+02:00
-  Inputs: processed-data, model-config
+  Inputs:
+    ✓ processed-data (loaded)
+    ✗ model-config (not loaded)
+    
+  $ bead status -v  # More detailed output
 ```
 
-### `bead xmeta`
-
-Export extended metadata.
-
-```bash
-bead xmeta <bead-archive>
-
-Example:
-  $ bead xmeta my-analysis_20250730.zip > metadata.json
-```
-
-## Environment Variables
-
-### `BEAD_PATH`
-
-Colon-separated list of directories to search for bead boxes.
-
-```bash
-export BEAD_PATH=/shared/beads:/archive/beads
-```
-
-### `BEAD_WORKSPACE`
-
-Default workspace directory.
-
-```bash
-export BEAD_WORKSPACE=/home/user/current-bead
-```
 
 ## File Structure
 
@@ -320,68 +351,6 @@ bead-name_TIMESTAMP.zip
     └── manifest       # File checksums
 ```
 
-## Exit Codes
-
-- `0` - Success
-- `1` - General error
-- `2` - Usage error (invalid arguments)
-- `3` - Workspace error (not a valid bead)
-- `4` - Dependency error (missing/invalid input)
-- `5` - Box error (storage issues)
-
-## Common Workflows
-
-### Basic Development Cycle
-
-```bash
-# 1. Create new bead
-$ bead new my-analysis
-$ cd my-analysis
-
-# 2. Add dependencies
-$ bead input add clean-data
-
-# 3. Develop
-$ python analyze.py
-
-# 4. Save snapshot
-$ bead save results
-
-# 5. Clean up
-$ cd ..
-$ bead zap my-analysis
-```
-
-### Updating Dependencies
-
-```bash
-# Check for updates
-$ bead input update --dry-run
-
-# Update all inputs
-$ bead input update --all
-
-# Rerun analysis
-$ make all
-
-# Save new version
-$ bead save results
-```
-
-### Debugging Dependencies
-
-```bash
-# List current inputs
-$ ls -la input/
-
-# Check input metadata
-$ cat .bead-meta/input.map
-
-# Verify input contents
-$ head input/my-data/data.csv
-
-# Check available versions
-$ ls /path/to/box/my-data_*.zip
-```
+## Usage Patterns
 
 For more detailed examples and patterns, see our [Guides](/guides).

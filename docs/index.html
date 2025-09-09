@@ -54,7 +54,7 @@ layout: home
       <div class="feature-card">
         <div class="feature-icon">🔥</div>
         <h3>"It Worked on My Machine"</h3>
-        <p>Your collaborator gets the exact same setup. No more missing files, wrong versions, or mysterious bugs.</p>
+        <p>Your collaborator gets the exact same data files. No more missing files, wrong versions, or mysterious bugs.</p>
       </div>
 
       <div class="feature-card">
@@ -96,7 +96,7 @@ layout: home
 <span class="prompt">$</span> bead new raw-survey-data
 <span class="prompt">$</span> cd raw-survey-data
 <span class="prompt">$</span> python download_survey.py
-<span class="prompt">$</span> bead save data-archive</code></pre>
+<span class="prompt">$</span> bead save shared-box</code></pre>
       </div>
 
       <div class="workflow-arrow">→</div>
@@ -108,7 +108,7 @@ layout: home
 <span class="prompt">$</span> cd clean-data
 <span class="prompt">$</span> bead input add raw-survey-data
 <span class="prompt">$</span> python clean_data.py
-<span class="prompt">$</span> bead save processed-data</code></pre>
+<span class="prompt">$</span> bead save shared-box</code></pre>
       </div>
 
       <div class="workflow-arrow">→</div>
@@ -120,7 +120,7 @@ layout: home
 <span class="prompt">$</span> cd final-analysis
 <span class="prompt">$</span> bead input add clean-data
 <span class="prompt">$</span> R --file=analyze.R
-<span class="prompt">$</span> bead save results</code></pre>
+<span class="prompt">$</span> bead save shared-box</code></pre>
       </div>
     </div>
   </div>

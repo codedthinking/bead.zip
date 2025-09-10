@@ -4,7 +4,7 @@ A compact overview of how bead works: create a workspace, declare explicit input
 
 ## Folder roles
 
-- `input/` — Dependencies from upstream beads (managed by bead; treat as read-only).
+- `input/` — Dependencies from upstream beads (read-only, managed by bead).
 - `output/` — Results to share with downstream beads; only save final deliverables here.
 - `temp/` — Scratch and intermediates; cleared when saving.
 - `.bead-meta/` — Internal metadata; do not edit.
@@ -39,7 +39,6 @@ $ bead input update  # pulls the latest versions of all declared inputs
 ### 4) Save an immutable archive (.zip) to a box
 ```bash
 $ bead box add my-beads ~/bead-storage  # run once per box
-$ bead box list
 $ bead save my-beads
 ```
 - Produces a timestamped .zip archive in the box.
@@ -50,9 +49,9 @@ $ bead save my-beads
 $ bead edit <ref>            # recreate workspace for editing/re-running
 $ bead edit --review <ref>   # mount outputs for review; avoid accidental edits
 ```
-- `<ref>` can be a name, path, or identifier shown by your box/browser.
+- `<ref>` can be a short bead name or a full path.
 
-### 6) Discard a workspace (safe to remove)
+### 6) Discard a workspace (removes all files)
 ```bash
 $ bead discard
 ```
@@ -100,15 +99,18 @@ $ bead version                 # print versions
 - Chain of provenance (A → B → C):
 ```bash
 $ bead new raw-data
+$ cd raw-data
 # write data to output/...
 $ bead save my-beads
 
 $ bead new clean-data
+$ cd clean-data
 $ bead input add raw-data
 # read from input/raw-data/, write to output/...
 $ bead save my-beads
 
 $ bead new final-analysis
+$ cd final-analysis
 $ bead input add clean-data
 # read from input/clean-data/, write to output/...
 $ bead save my-beads
@@ -116,7 +118,7 @@ $ bead save my-beads
 
 - Review past results without editing:
 ```bash
-$ bead edit --review final-analysis@2025-07-30T12:00:00Z
+$ bead edit --review final-analysis
 ```
 
 - Free space after inspection:

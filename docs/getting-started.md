@@ -99,11 +99,6 @@ data.to_csv('output/results.csv', index=False)
 print("Analysis complete! Results saved to output/results.csv")
 ```
 
-```bash
-$ mkdir src
-$ # Create src/analyze.py with the code above
-```
-
 ### 4. Run Your Analysis
 
 ```bash
@@ -178,6 +173,8 @@ df_cleaned['processed'] = True
 # Save output
 df_cleaned.to_csv('output/processed_data.csv', index=False)
 ```
+
+Run it:
 
 ```bash
 $ python process.py

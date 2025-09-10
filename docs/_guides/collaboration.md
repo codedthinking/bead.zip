@@ -126,12 +126,10 @@ What this bead does and why it exists
 - report.pdf: Analysis summary
 
 ## Usage
-```bash
 python analyze.py
-```
 
 ## Dependencies
-- Python 3.9+
+- Python 3.11+
 - pandas, scikit-learn
 - R for some statistics
 

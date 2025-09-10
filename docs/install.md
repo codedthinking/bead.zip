@@ -38,7 +38,7 @@ If you prefer using pip directly:
 pip install --user git+https://github.com/e3krisztian/bead
 ```
 
-To force reinstall/update to the latest version:
+## To force reinstall/update to the latest version
 
 ```bash
 pipx install --force git+https://github.com/e3krisztian/bead

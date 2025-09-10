@@ -55,7 +55,14 @@
   v(3pt)
 }
 
-// Title
+// Header with logo and title
+#place(
+  top + left,
+  dx: 0pt,
+  dy: 0pt,
+  image("bead-zip.svg", width: 80pt)
+)
+
 #align(center)[
   #text(size: 20pt, weight: 700, fill: brand-red)[bead cheatsheet]
   #v(1pt)
@@ -186,8 +193,21 @@ $ bead input add clean-data
 $ bead save my-beads", lang: "bash")
 ]
 
+#v(5pt)
+
 #rounded-box(fill: bg-alt)[
-  #text(size: 7pt, fill: text-muted, style: "italic")[
+  #text(size: 7pt, fill: text-muted)[
+    #text(weight: 600)[Website:] #link("https://bead.zip")[bead.zip]\
+    #text(weight: 600)[© 2025] Krisztián Fekete\
+    #text(weight: 600)[License:] UNLICENSE\
+    \
+    #text(size: 6.5pt, style: "italic")[Supported by European Research Council\
+    Starting Grant #313164]
+  ]
+  #v(3pt)
+  #line(length: 100%, stroke: 0.5pt + border-color)
+  #v(3pt)
+  #text(size: 6.5pt, fill: text-muted, style: "italic")[
     bead gives you immutable snapshots, explicit inputs, and a clear chain of provenance—so results are reproducible and sharable beyond tomorrow.
   ]
 ]

@@ -87,3 +87,33 @@ Successfully stored bead at ~/beads/my-analysis_20250730T120000.zip
 - Avoid jargon when possible
 - Focus on practical examples
 - Address common pain points directly
+- Avoid idioms and slang; prefer neutral, professional phrasing
+- Make precise claims; avoid hype or exaggeration
+
+### Headlines and Taglines
+- Use sentence case for taglines and marketing lines
+- Canonical tagline: "Reproducible research, preserved beyond tomorrow."
+- Use Title Case for short feature headings and page titles
+- Headings generally omit terminal periods; taglines may include them when written as full sentences
+
+### Numbers
+- Spell out zero–nine in running copy (e.g., "five times a day", "four commands")
+- Use numerals for 10+, versions, timestamps, step labels, and command counts
+- Never alter numerals in code blocks or CLI output
+
+### Dashes and Punctuation
+- Use em dashes (—) without surrounding spaces for asides (e.g., "outputs—so you always…")
+- Use en dashes (–) for numeric ranges only (e.g., "2019–2024")
+- Use hyphens (-) for compound modifiers (e.g., "read-only")
+- Use the Oxford comma in lists ("code, data, and outputs")
+
+### Messaging Terms
+- Prefer: "immutable snapshots", "explicit inputs", "chain of provenance"
+- Prefer: "tool- and language-agnostic"
+- Prefer: "works even without bead installed" and "open as a .zip"
+- Keep terminology consistent with Technical Terms: "workspace", "archive (.zip)", "box", "input/dependency"
+
+### Literal CLI Output
+- Preserve actual CLI outputs exactly as emitted (including capitalization)
+- In narrative text and labels, always use lowercase "bead"
+- Do not edit terminal output sections to conform to prose style

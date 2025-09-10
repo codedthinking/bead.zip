@@ -1,19 +1,19 @@
 #set page(
   paper: "a4",
   flipped: true,
-  margin: (x: 1.5cm, y: 1.5cm),
+  margin: (x: 1.0cm, y: 1.0cm),
   fill: white,
 )
 
 #set text(
   font: ("Helvetica Neue", "Arial", "sans-serif"),
-  size: 8.5pt,
+  size: 8pt,
   fill: rgb("#232324"),
 )
 
 #set par(
   justify: false,
-  leading: 0.52em,
+  leading: 0.48em,
 )
 
 #let brand-red = rgb("#E61E25")
@@ -27,13 +27,13 @@
   block(
     fill: fill,
     stroke: 1pt + border-color,
-    radius: 6pt,
-    inset: 10pt,
+    radius: 5pt,
+    inset: 7pt,
     width: 100%,
     {
       if title != none {
-        text(size: 10pt, weight: 700, fill: brand-red)[#title]
-        v(6pt)
+        text(size: 9pt, weight: 700, fill: brand-red)[#title]
+        v(3pt)
       }
       content
     }
@@ -43,29 +43,29 @@
 #let code-block(content) = {
   block(
     fill: code-bg,
-    radius: 4pt,
-    inset: 6pt,
+    radius: 3pt,
+    inset: 4pt,
     width: 100%,
     raw(content, lang: "bash")
   )
 }
 
 #let section-heading(content) = {
-  text(size: 11pt, weight: 700, fill: brand-red)[#content]
-  v(4pt)
+  text(size: 10pt, weight: 700, fill: brand-red)[#content]
+  v(3pt)
 }
 
 // Title
 #align(center)[
-  #text(size: 24pt, weight: 700, fill: brand-red)[bead cheatsheet]
-  #v(2pt)
-  #text(size: 10pt, fill: text-muted)[Create a workspace, declare explicit inputs, write outputs, save an immutable archive (.zip) into a box.]
+  #text(size: 20pt, weight: 700, fill: brand-red)[bead cheatsheet]
+  #v(1pt)
+  #text(size: 9pt, fill: text-muted)[Create a workspace, declare explicit inputs, write outputs, save an immutable archive (.zip) into a box.]
 ]
 
-#v(8pt)
+#v(4pt)
 
 // Main content in 3 columns
-#columns(3, gutter: 12pt)[
+#columns(3, gutter: 10pt)[
 
 // Column 1: Folder structure and common workflows
 #rounded-box(title: "Folder Roles")[
@@ -76,7 +76,7 @@
   #text(weight: 600)[Everything else] — Your code, notebooks, docs
 ]
 
-#v(8pt)
+#v(5pt)
 
 #section-heading[Most Common Workflows]
 
@@ -120,7 +120,7 @@ $ bead edit --review <ref>")
   Safe to remove; deletes current workspace
 ]
 
-#v(8pt)
+#v(5pt)
 
 #section-heading[What Goes Where]
 
@@ -131,7 +131,7 @@ $ bead edit --review <ref>")
   • #text(weight: 600)[Include] a short `output/README.md`
 ]
 
-#v(8pt)
+#v(5pt)
 
 #section-heading[Language-Agnostic Usage]
 
@@ -166,7 +166,7 @@ bead box list               # list boxes
 bead box forget <name>      # remove reference", lang: "bash")
 ]
 
-#v(8pt)
+#v(5pt)
 
 #section-heading[Quick Patterns]
 
@@ -187,7 +187,7 @@ $ bead save my-beads", lang: "bash")
 ]
 
 #rounded-box(fill: bg-alt)[
-  #text(size: 7.5pt, fill: text-muted, style: "italic")[
+  #text(size: 7pt, fill: text-muted, style: "italic")[
     bead gives you immutable snapshots, explicit inputs, and a clear chain of provenance—so results are reproducible and sharable beyond tomorrow.
   ]
 ]

@@ -1,3 +1,20 @@
+// === ADJUSTABLE PARAMETERS ===
+#let base-font-size = 8pt
+#let title-font-size = 20pt
+#let subtitle-font-size = 9pt
+#let section-font-size = 10pt
+#let box-title-font-size = 9pt
+#let meta-font-size = 7pt
+#let meta-small-font-size = 6.5pt
+
+#let box-padding = 5pt
+#let code-padding = 3pt
+#let section-vspace = 3pt
+#let title-vspace-after = 2pt
+#let header-vspace-after = 3pt
+#let leading-height = 0.48em
+
+// === PAGE AND TEXT SETUP ===
 #set page(
   paper: "a4",
   flipped: true,
@@ -7,15 +24,16 @@
 
 #set text(
   font: ("Helvetica Neue", "Arial", "sans-serif"),
-  size: 8pt,
+  size: base-font-size,
   fill: rgb("#232324"),
 )
 
 #set par(
   justify: false,
-  leading: 0.48em,
+  leading: leading-height,
 )
 
+// === COLOR DEFINITIONS ===
 #let brand-red = rgb("#E61E25")
 #let secondary = rgb("#5D5A88")
 #let text-muted = rgb("#5D5A88")
@@ -28,12 +46,12 @@
     fill: fill,
     stroke: 1pt + border-color,
     radius: 5pt,
-    inset: 7pt,
+    inset: box-padding,
     width: 100%,
     {
       if title != none {
-        text(size: 9pt, weight: 700, fill: brand-red)[#title]
-        v(3pt)
+        text(size: box-title-font-size, weight: 700, fill: brand-red)[#title]
+        v(title-vspace-after)
       }
       content
     }
@@ -44,15 +62,15 @@
   block(
     fill: code-bg,
     radius: 3pt,
-    inset: 4pt,
+    inset: code-padding,
     width: 100%,
     raw(content, lang: "bash")
   )
 }
 
 #let section-heading(content) = {
-  text(size: 10pt, weight: 700, fill: brand-red)[#content]
-  v(3pt)
+  text(size: section-font-size, weight: 700, fill: brand-red)[#content]
+  v(title-vspace-after)
 }
 
 // Header with logo and title
@@ -64,12 +82,12 @@
 )
 
 #align(center)[
-  #text(size: 20pt, weight: 700, fill: brand-red)[bead cheatsheet]
+  #text(size: title-font-size, weight: 700, fill: brand-red)[bead cheatsheet]
   #v(1pt)
-  #text(size: 9pt, fill: text-muted)[Create a workspace, declare explicit inputs, write outputs, save an immutable archive (.zip) into a box.]
+  #text(size: subtitle-font-size, fill: text-muted)[Create a workspace, declare explicit inputs, write outputs, save an immutable archive (.zip) into a box.]
 ]
 
-#v(4pt)
+#v(header-vspace-after)
 
 // Main content in 3 columns
 #columns(3, gutter: 10pt)[
@@ -83,7 +101,7 @@
   #text(weight: 600)[Everything else] — Your code, notebooks, docs
 ]
 
-#v(5pt)
+#v(section-vspace)
 
 #section-heading[Most Common Workflows]
 
@@ -127,7 +145,7 @@ $ bead edit --review <ref>")
   Safe to remove; deletes current workspace
 ]
 
-#v(5pt)
+#v(section-vspace)
 
 #section-heading[What Goes Where]
 
@@ -138,7 +156,7 @@ $ bead edit --review <ref>")
   • #text(weight: 600)[Include] a short `output/README.md`
 ]
 
-#v(5pt)
+#v(section-vspace)
 
 #section-heading[Language-Agnostic Usage]
 
@@ -173,7 +191,7 @@ bead box list               # list boxes
 bead box forget <name>      # remove reference", lang: "bash")
 ]
 
-#v(5pt)
+#v(section-vspace)
 
 #section-heading[Quick Patterns]
 
@@ -193,21 +211,21 @@ $ bead input add clean-data
 $ bead save my-beads", lang: "bash")
 ]
 
-#v(5pt)
+#v(section-vspace)
 
 #rounded-box(fill: bg-alt)[
-  #text(size: 7pt, fill: text-muted)[
+  #text(size: meta-font-size, fill: text-muted)[
     #text(weight: 600)[Website:] #link("https://bead.zip")[bead.zip]\
     #text(weight: 600)[Author:] © 2017--2025 Krisztián Fekete\
     #text(weight: 600)[License:] UNLICENSE\
     \
-    #text(size: 6.5pt, style: "italic")[Supported by European Research Council\
+    #text(size: meta-small-font-size, style: "italic")[Supported by European Research Council\
     Starting Grant #313164]
   ]
-  #v(3pt)
+  #v(title-vspace-after)
   #line(length: 100%, stroke: 0.5pt + border-color)
-  #v(3pt)
-  #text(size: 6.5pt, fill: text-muted, style: "italic")[
+  #v(title-vspace-after)
+  #text(size: meta-small-font-size, fill: text-muted, style: "italic")[
     bead gives you immutable snapshots, explicit inputs, and a clear chain of provenance—so results are reproducible and sharable beyond tomorrow.
   ]
 ]

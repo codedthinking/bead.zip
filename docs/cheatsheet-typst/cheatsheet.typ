@@ -1,18 +1,18 @@
 // === ADJUSTABLE PARAMETERS ===
 #let base-font-size = 8pt
 #let title-font-size = 20pt
-#let subtitle-font-size = 9pt
+#let subtitle-font-size = 10pt
 #let section-font-size = 10pt
-#let box-title-font-size = 9pt
-#let meta-font-size = 7pt
-#let meta-small-font-size = 6.5pt
+#let box-title-font-size = 10pt
+#let meta-font-size = 8pt
+#let meta-small-font-size = 7pt
 
-#let box-padding = 5pt
-#let code-padding = 3pt
-#let section-vspace = 3pt
+#let box-padding = 4pt
+#let code-padding = 4pt
+#let section-vspace = 4pt
 #let title-vspace-after = 2pt
 #let header-vspace-after = 3pt
-#let leading-height = 0.48em
+#let leading-height = 0.54em
 
 // === PAGE AND TEXT SETUP ===
 #set page(

@@ -198,7 +198,7 @@ $ bead save my-beads", lang: "bash")
 #rounded-box(fill: bg-alt)[
   #text(size: 7pt, fill: text-muted)[
     #text(weight: 600)[Website:] #link("https://bead.zip")[bead.zip]\
-    #text(weight: 600)[© 2025] Krisztián Fekete\
+    #text(weight: 600)[Author:] © 2017--2025 Krisztián Fekete\
     #text(weight: 600)[License:] UNLICENSE\
     \
     #text(size: 6.5pt, style: "italic")[Supported by European Research Council\

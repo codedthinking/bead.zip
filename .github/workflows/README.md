@@ -17,7 +17,7 @@ The `deploy-docs.yml` workflow automatically builds and deploys the Jekyll docum
 3. **The workflow will:**
    - Trigger automatically when changes are pushed to the `docs/` directory
    - Build the Jekyll site with the correct base URL for GitHub Pages
-   - Deploy to `https://codedthinking.github.io/bead.zip/`
+   - Deploy to `https://bead.zip/`
 
 ### Manual Deployment
 

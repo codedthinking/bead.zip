@@ -25,7 +25,7 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
 # Install bead
-pipx install git+https://github.com/e3krisztian/bead
+pipx install git+https://github.com/bead-project/bead
 ```
 
 This ensures bead is available globally without interfering with other Python packages.
@@ -35,13 +35,13 @@ This ensures bead is available globally without interfering with other Python pa
 If you prefer using pip directly:
 
 ```bash
-pip install --user git+https://github.com/e3krisztian/bead
+pip install --user git+https://github.com/bead-project/bead
 ```
 
 ## To force reinstall/update to the latest version
 
 ```bash
-pipx install --force git+https://github.com/e3krisztian/bead
+pipx install --force git+https://github.com/bead-project/bead
 ```
 
 Note: Using `--user` is recommended to avoid conflicts with system packages.
@@ -51,7 +51,7 @@ Note: Using `--user` is recommended to avoid conflicts with system packages.
 To install the latest development version for contributing:
 
 ```bash
-git clone https://github.com/e3krisztian/bead
+git clone https://github.com/bead-project/bead
 cd bead
 pip install -e .
 ```
@@ -88,7 +88,7 @@ If you encounter any issues during installation:
 
 1. Ensure Python and pip are up to date
 2. Try installing in a virtual environment
-3. Check the [GitHub issues](https://github.com/e3krisztian/bead/issues) for known problems
+3. Check the [GitHub issues](https://github.com/bead-project/bead/issues) for known problems
 4. Report new issues with detailed error messages
 
 ## System requirements

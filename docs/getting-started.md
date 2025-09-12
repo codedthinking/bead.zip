@@ -20,7 +20,7 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
 # Install bead
-pipx install git+https://github.com/e3krisztian/bead
+pipx install git+https://github.com/bead-project/bead
 ```
 
 ### Alternative Methods
@@ -28,12 +28,12 @@ pipx install git+https://github.com/e3krisztian/bead
 If you prefer pip:
 
 ```bash
-pip install --user git+https://github.com/e3krisztian/bead
+pip install --user git+https://github.com/bead-project/bead
 ```
 
 To install the latest development version, use the `--force` flag with pipx to update:
 ```bash
-pipx install --force git+https://github.com/e3krisztian/bead
+pipx install --force git+https://github.com/bead-project/bead
 ```
 
 For more installation options, see the [full installation guide]({{ '/install' | relative_url }}).
@@ -262,7 +262,7 @@ bead box forget <name>       # Remove box reference
 
 ## Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/e3krisztian/bead/issues)
+- **Issues**: [GitHub Issues](https://github.com/bead-project/bead/issues)
 - **Documentation**: [Full Reference](/reference)
 
 Ready to make your research reproducible? Start creating beads!
